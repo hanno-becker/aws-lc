@@ -379,10 +379,8 @@ $code.=<<___;
 						@ loaded twice, but last
 						@ copy is not processed
 	vld1.64		{$H-$Hhl},[$Htbl],#32	@ load twisted H, ..., H^2
-	vext.8		$H,$H,$H,#8
 	vmov.i8		$xC2,#0xe1
 	vld1.64		{$H2},[$Htbl]
-	vext.8		$H2,$H2,$H2,#8
 	cclr		$inc,eq			@ is it time to zero $inc?
 	vext.8		$Xl,$Xl,$Xl,#8		@ rotate Xi
 	vld1.64		{$t0},[$inp],#16	@ load [rotated] I[0]
@@ -407,21 +405,37 @@ $code.=<<___;
 #endif
 	vext.8		$In,$t1,$t1,#8
 	veor		$IN,$IN,$Xl		@ I[i]^=Xi
-	vpmull.p64	$Xln,$H,$In		@ H·Ii+1
+
+        vext.8          $In, $In, $In, #8
+	vpmull2.p64	$Xln,$H,$In		@ H·Ii+1
+        vext.8          $In, $In, $In, #8
+
 	veor		$t1,$t1,$In		@ Karatsuba pre-processing
-	vpmull2.p64	$Xhn,$H,$In
+
+        vext.8          $In, $In, $In, #8
+	vpmull.p64	$Xhn,$H,$In
+        vext.8          $In, $In, $In, #8
+
 	b		.Loop_mod2x_v8
 
 .align	4
 .Loop_mod2x_v8:
 	vext.8		$t2,$IN,$IN,#8
 	subs		$len,$len,#32		@ is there more data?
-	vpmull.p64	$Xl,$H2,$IN		@ H^2.lo·Xi.lo
+
+        vext.8          $IN, $IN, $IN, #8
+	vpmull2.p64	$Xl,$H2,$IN		@ H^2.lo·Xi.lo
+        vext.8          $IN, $IN, $IN, #8
+
 	cclr		$inc,lo			@ is it time to zero $inc?
 
 	vpmull.p64	$Xmn,$Hhl,$t1
 	veor		$t2,$t2,$IN		@ Karatsuba pre-processing
-	vpmull2.p64	$Xh,$H2,$IN		@ H^2.hi·Xi.hi
+
+        vext.8          $IN, $IN, $IN, #8
+	vpmull.p64	$Xh,$H2,$IN		@ H^2.hi·Xi.hi
+        vext.8          $IN, $IN, $IN, #8
+
 	veor		$Xl,$Xl,$Xln		@ accumulate
 	vpmull2.p64	$Xm,$Hhl,$t2		@ (H^2.lo+H^2.hi)·(Xi.lo+Xi.hi)
 	vld1.64	{$t0},[$inp],$inc	@ load [rotated] I[i+2]
@@ -448,7 +462,11 @@ $code.=<<___;
 	vext.8		$In,$t1,$t1,#8
 	vext.8		$IN,$t0,$t0,#8
 	veor		$Xl,$Xm,$t2
-	vpmull.p64	$Xln,$H,$In		@ H·Ii+1
+
+        vext.8          $In, $In, $In, #8
+	vpmull2.p64	$Xln,$H,$In		@ H·Ii+1
+        vext.8          $In, $In, $In, #8
+
 	veor		$IN,$IN,$Xh		@ accumulate $IN early
 
 	vext.8		$t2,$Xl,$Xl,#8		@ 2nd phase of reduction
@@ -456,7 +474,11 @@ $code.=<<___;
 	veor		$IN,$IN,$t2
 	veor		$t1,$t1,$In		@ Karatsuba pre-processing
 	veor		$IN,$IN,$Xl
-	vpmull2.p64	$Xhn,$H,$In
+
+        vext.8          $In, $In, $In, #8
+	vpmull.p64	$Xhn,$H,$In
+        vext.8          $In, $In, $In, #8
+
 	b.hs		.Loop_mod2x_v8		@ there was at least 32 more bytes
 
 	veor		$Xh,$Xh,$t2
@@ -472,9 +494,16 @@ $code.=<<___;
 	veor		$IN,$IN,$Xl		@ inp^=Xi
 	veor		$t1,$t0,$t2		@ $t1 is rotated inp^Xi
 
-	vpmull.p64	$Xl,$H,$IN		@ H.lo·Xi.lo
+        vext.8          $IN, $IN, $IN, #8
+        vpmull2.p64	$Xl,$H,$IN		@ H.lo·Xi.lo
+        vext.8          $IN, $IN, $IN, #8
+
 	veor		$t1,$t1,$IN		@ Karatsuba pre-processing
-	vpmull2.p64	$Xh,$H,$IN		@ H.hi·Xi.hi
+
+        vext.8          $IN, $IN, $IN, #8
+        vpmull.p64	$Xh,$H,$IN		@ H.hi·Xi.hi
+        vext.8          $IN, $IN, $IN, #8
+
 	vpmull.p64	$Xm,$Hhl,$t1		@ (H.lo+H.hi)·(Xi.lo+Xi.hi)
 
 	vext.8		$t1,$Xl,$Xh,#8		@ Karatsuba post-processing
