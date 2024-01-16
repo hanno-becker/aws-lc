@@ -407,10 +407,7 @@ $code.=<<___;
 	veor		$IN,$IN,$Xl		@ I[i]^=Xi
 
 	vpmull2.p64	$Xln,$H,$t1		@ H·Ii+1
-
-        vext.8          $In, $In, $In, #8
-	vpmull.p64	$Xhn,$H,$In
-        vext.8          $In, $In, $In, #8
+	vpmull.p64	$Xhn,$H,$t1
 
 	veor		$t1,$t1,$In		@ Karatsuba pre-processing
 
@@ -461,9 +458,7 @@ $code.=<<___;
 	vext.8		$IN,$t0,$t0,#8
 	veor		$Xl,$Xm,$t2
 
-        vext.8          $In, $In, $In, #8
-	vpmull2.p64	$Xln,$H,$In		@ H·Ii+1
-        vext.8          $In, $In, $In, #8
+	vpmull2.p64	$Xln,$H,$t1		@ H·Ii+1
 
 	veor		$IN,$IN,$Xh		@ accumulate $IN early
 
@@ -472,9 +467,7 @@ $code.=<<___;
 	veor		$IN,$IN,$t2
 	veor		$IN,$IN,$Xl
 
-        vext.8          $In, $In, $In, #8
-	vpmull.p64	$Xhn,$H,$In
-        vext.8          $In, $In, $In, #8
+	vpmull.p64	$Xhn,$H,$t1
 
 	veor		$t1,$t1,$In		@ Karatsuba pre-processing
 
