@@ -406,9 +406,7 @@ $code.=<<___;
 	vext.8		$In,$t1,$t1,#8
 	veor		$IN,$IN,$Xl		@ I[i]^=Xi
 
-        vext.8          $In, $In, $In, #8
-	vpmull2.p64	$Xln,$H,$In		@ H·Ii+1
-        vext.8          $In, $In, $In, #8
+	vpmull2.p64	$Xln,$H,$t1		@ H·Ii+1
 
 	veor		$t1,$t1,$In		@ Karatsuba pre-processing
 
