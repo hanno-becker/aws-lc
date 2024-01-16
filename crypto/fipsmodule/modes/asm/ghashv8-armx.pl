@@ -303,17 +303,16 @@ gcm_gmult_v8:
 	vld1.64		{$t1},[$Xi]		@ load Xi
 	vmov.i8		$xC2,#0xe1
 	vld1.64		{$H-$Hhl},[$Htbl]	@ load twisted H, ...
-	vext.8		$H,$H,$H,#8
 	vshl.u64	$xC2,$xC2,#57
 #ifndef __ARMEB__
 	vrev64.8	$t1,$t1
 #endif
 	vext.8		$IN,$t1,$t1,#8
 
-	vpmull.p64	$Xl,$H,$IN		@ H.lo·Xi.lo
-	veor		$t1,$t1,$IN		@ Karatsuba pre-processing
-	vpmull2.p64	$Xh,$H,$IN		@ H.hi·Xi.hi
-	vpmull.p64	$Xm,$Hhl,$t1		@ (H.lo+H.hi)·(Xi.lo+Xi.hi)
+	vpmull2.p64	$Xl,$H,$t1		@ H.lo·Xi.lo
+	veor		$IN,$t1,$IN		@ Karatsuba pre-processing
+	vpmull.p64	$Xh,$H,$t1		@ H.hi·Xi.hi
+	vpmull.p64	$Xm,$Hhl,$IN		@ (H.lo+H.hi)·(Xi.lo+Xi.hi)
 
 	vext.8		$t1,$Xl,$Xh,#8		@ Karatsuba post-processing
 	veor		$t2,$Xl,$Xh
