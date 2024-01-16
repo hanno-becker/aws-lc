@@ -483,8 +483,7 @@ ___
 $code.=<<___;
 .Lodd_tail_v8:
 	vext.8		$t2,$Xl,$Xl,#8
-	veor		$IN,$IN,$Xl		@ inp^=Xi
-        vext.8          $IN, $IN, $IN, #8
+	veor		$IN,$t0,$t2		@ inp^=Xi
 	veor		$t1,$t0,$t2		@ $t1 is rotated inp^Xi
 
         vpmull2.p64	$Xl,$H,$IN		@ H.lo·Xi.lo
