@@ -207,17 +207,16 @@ gcm_gmult_v8:
 	ld1	{v17.2d},[x0]		//load Xi
 	movi	v19.16b,#0xe1
 	ld1	{v20.2d,v21.2d},[x1]	//load twisted H, ...
-	ext	v20.16b,v20.16b,v20.16b,#8
 	shl	v19.2d,v19.2d,#57
 #ifndef __AARCH64EB__
 	rev64	v17.16b,v17.16b
 #endif
 	ext	v3.16b,v17.16b,v17.16b,#8
 
-	pmull	v0.1q,v20.1d,v3.1d		//H.lo·Xi.lo
-	eor	v17.16b,v17.16b,v3.16b		//Karatsuba pre-processing
-	pmull2	v2.1q,v20.2d,v3.2d		//H.hi·Xi.hi
-	pmull	v1.1q,v21.1d,v17.1d		//(H.lo+H.hi)·(Xi.lo+Xi.hi)
+	pmull2	v0.1q,v20.2d,v17.2d		//H.lo·Xi.lo
+	eor	v3.16b,v17.16b,v3.16b		//Karatsuba pre-processing
+	pmull	v2.1q,v20.1d,v17.1d		//H.hi·Xi.hi
+	pmull	v1.1q,v21.1d,v3.1d		//(H.lo+H.hi)·(Xi.lo+Xi.hi)
 
 	ext	v17.16b,v0.16b,v2.16b,#8		//Karatsuba post-processing
 	eor	v18.16b,v0.16b,v2.16b
@@ -269,10 +268,8 @@ gcm_ghash_v8:
 						//loaded twice, but last
 						//copy is not processed
 	ld1	{v20.2d,v21.2d},[x1],#32	//load twisted H, ..., H^2
-	ext	v20.16b,v20.16b,v20.16b,#8
 	movi	v19.16b,#0xe1
 	ld1	{v22.2d},[x1]
-	ext	v22.16b,v22.16b,v22.16b,#8
 	csel	x12,xzr,x12,eq			//is it time to zero x12?
 	ext	v0.16b,v0.16b,v0.16b,#8		//rotate Xi
 	ld1	{v16.2d},[x2],#16	//load [rotated] I[0]
@@ -289,21 +286,29 @@ gcm_ghash_v8:
 #endif
 	ext	v7.16b,v17.16b,v17.16b,#8
 	eor	v3.16b,v3.16b,v0.16b		//I[i]^=Xi
-	pmull	v4.1q,v20.1d,v7.1d		//H·Ii+1
+
+	pmull2	v4.1q,v20.2d,v17.2d		//H·Ii+1
+	pmull	v6.1q,v20.1d,v17.1d
+
 	eor	v17.16b,v17.16b,v7.16b		//Karatsuba pre-processing
-	pmull2	v6.1q,v20.2d,v7.2d
+
 	b	Loop_mod2x_v8
 
 .align	4
 Loop_mod2x_v8:
 	ext	v18.16b,v3.16b,v3.16b,#8
 	subs	x3,x3,#32		//is there more data?
-	pmull	v0.1q,v22.1d,v3.1d		//H^2.lo·Xi.lo
+
+	pmull2	v0.1q,v22.2d,v18.2d		//H^2.lo·Xi.lo
+
 	csel	x12,xzr,x12,lo			//is it time to zero x12?
 
 	pmull	v5.1q,v21.1d,v17.1d
+
+	pmull	v2.1q,v22.1d,v18.1d		//H^2.hi·Xi.hi
+
 	eor	v18.16b,v18.16b,v3.16b		//Karatsuba pre-processing
-	pmull2	v2.1q,v22.2d,v3.2d		//H^2.hi·Xi.hi
+
 	eor	v0.16b,v0.16b,v4.16b		//accumulate
 	pmull2	v1.1q,v21.2d,v18.2d		//(H^2.lo+H^2.hi)·(Xi.lo+Xi.hi)
 	ld1	{v16.2d},[x2],x12	//load [rotated] I[i+2]
@@ -330,15 +335,20 @@ Loop_mod2x_v8:
 	ext	v7.16b,v17.16b,v17.16b,#8
 	ext	v3.16b,v16.16b,v16.16b,#8
 	eor	v0.16b,v1.16b,v18.16b
-	pmull	v4.1q,v20.1d,v7.1d		//H·Ii+1
+
+	pmull2	v4.1q,v20.2d,v17.2d		//H·Ii+1
+
 	eor	v3.16b,v3.16b,v2.16b		//accumulate v3.16b early
 
 	ext	v18.16b,v0.16b,v0.16b,#8		//2nd phase of reduction
 	pmull	v0.1q,v0.1d,v19.1d
 	eor	v3.16b,v3.16b,v18.16b
-	eor	v17.16b,v17.16b,v7.16b		//Karatsuba pre-processing
 	eor	v3.16b,v3.16b,v0.16b
-	pmull2	v6.1q,v20.2d,v7.2d
+
+	pmull	v6.1q,v20.1d,v17.1d
+
+	eor	v17.16b,v17.16b,v7.16b		//Karatsuba pre-processing
+
 	b.hs	Loop_mod2x_v8		//there was at least 32 more bytes
 
 	eor	v2.16b,v2.16b,v18.16b
@@ -348,13 +358,15 @@ Loop_mod2x_v8:
 	b.eq	Ldone_v8		//is x3 zero?
 Lodd_tail_v8:
 	ext	v18.16b,v0.16b,v0.16b,#8
-	eor	v3.16b,v3.16b,v0.16b		//inp^=Xi
-	eor	v17.16b,v16.16b,v18.16b		//v17.16b is rotated inp^Xi
+	eor	v17.16b,v3.16b,v0.16b
+	eor	v3.16b,v16.16b,v18.16b		//inp^=Xi
 
-	pmull	v0.1q,v20.1d,v3.1d		//H.lo·Xi.lo
+	pmull2	v0.1q,v20.2d,v3.2d		//H.lo·Xi.lo
+
 	eor	v17.16b,v17.16b,v3.16b		//Karatsuba pre-processing
-	pmull2	v2.1q,v20.2d,v3.2d		//H.hi·Xi.hi
 	pmull	v1.1q,v21.1d,v17.1d		//(H.lo+H.hi)·(Xi.lo+Xi.hi)
+
+	pmull	v2.1q,v20.1d,v3.1d		//H.hi·Xi.hi
 
 	ext	v17.16b,v0.16b,v2.16b,#8		//Karatsuba post-processing
 	eor	v18.16b,v0.16b,v2.16b
@@ -388,12 +400,8 @@ gcm_ghash_v8_4x:
 Lgcm_ghash_v8_4x:
 	ld1	{v0.2d},[x0]		//load [rotated] Xi
 	ld1	{v20.2d,v21.2d,v22.2d},[x1],#48	//load twisted H, ..., H^2
-	ext	v20.16b,v20.16b,v20.16b,#8
-	ext	v22.16b,v22.16b,v22.16b,#8
 	movi	v19.16b,#0xe1
 	ld1	{v26.2d,v27.2d,v28.2d},[x1]	//load twisted H^3, ..., H^4
-	ext	v26.16b,v26.16b,v26.16b,#8
-	ext	v28.16b,v28.16b,v28.16b,#8
 	shl	v19.2d,v19.2d,#57		//compose 0xc2.0 constant
 
 	ld1	{v4.2d,v5.2d,v6.2d,v7.2d},[x2],#64
@@ -408,28 +416,31 @@ Lgcm_ghash_v8_4x:
 	ext	v24.16b,v6.16b,v6.16b,#8
 	ext	v23.16b,v5.16b,v5.16b,#8
 
-	pmull	v29.1q,v20.1d,v25.1d		//H·Ii+3
+	pmull2	v29.1q,v20.2d,v7.2d		//H·Ii+3
+	pmull	v31.1q,v20.1d,v7.1d
+
 	eor	v7.16b,v7.16b,v25.16b
-	pmull2	v31.1q,v20.2d,v25.2d
 	pmull	v30.1q,v21.1d,v7.1d
 
-	pmull	v16.1q,v22.1d,v24.1d		//H^2·Ii+2
-	eor	v6.16b,v6.16b,v24.16b
-	pmull2	v24.1q,v22.2d,v24.2d
-	pmull2	v6.1q,v21.2d,v6.2d
+	pmull2	v16.1q,v22.2d,v6.2d		//H^2·Ii+2
+	eor	v24.16b,v6.16b,v24.16b
+	pmull	v6.1q,v22.1d,v6.1d
+
+	pmull2	v24.1q,v21.2d,v24.2d
 
 	eor	v29.16b,v29.16b,v16.16b
-	eor	v31.16b,v31.16b,v24.16b
-	eor	v30.16b,v30.16b,v6.16b
+	eor	v31.16b,v31.16b,v6.16b
+	eor	v30.16b,v30.16b,v24.16b
 
-	pmull	v7.1q,v26.1d,v23.1d		//H^3·Ii+1
-	eor	v5.16b,v5.16b,v23.16b
-	pmull2	v23.1q,v26.2d,v23.2d
-	pmull	v5.1q,v27.1d,v5.1d
+	pmull2	v7.1q,v26.2d,v5.2d		//H^3·Ii+1
+	eor	v23.16b,v5.16b,v23.16b
+	pmull	v5.1q,v26.1d,v5.1d
+
+	pmull	v23.1q,v27.1d,v23.1d
 
 	eor	v29.16b,v29.16b,v7.16b
-	eor	v31.16b,v31.16b,v23.16b
-	eor	v30.16b,v30.16b,v5.16b
+	eor	v31.16b,v31.16b,v5.16b
+	eor	v30.16b,v30.16b,v23.16b
 
 	subs	x3,x3,#128
 	b.lo	Ltail4x
@@ -448,9 +459,11 @@ Loop4x:
 	rev64	v4.16b,v4.16b
 #endif
 
-	pmull	v0.1q,v28.1d,v3.1d		//H^4·(Xi+Ii)
+	pmull2	v0.1q,v28.2d,v16.2d		//H^4·(Xi+Ii)
+	pmull	v2.1q,v28.1d,v16.1d
+
 	eor	v16.16b,v16.16b,v3.16b
-	pmull2	v2.1q,v28.2d,v3.2d
+
 	ext	v25.16b,v7.16b,v7.16b,#8
 	pmull2	v1.1q,v27.2d,v16.2d
 
@@ -462,39 +475,48 @@ Loop4x:
 
 	ext	v17.16b,v0.16b,v2.16b,#8		//Karatsuba post-processing
 	eor	v18.16b,v0.16b,v2.16b
-	pmull	v29.1q,v20.1d,v25.1d		//H·Ii+3
+
+	pmull2	v29.1q,v20.2d,v7.2d		//H·Ii+3
+	pmull	v31.1q,v20.1d,v7.1d
+
 	eor	v7.16b,v7.16b,v25.16b
 	eor	v1.16b,v1.16b,v17.16b
-	pmull2	v31.1q,v20.2d,v25.2d
+
 	eor	v1.16b,v1.16b,v18.16b
 	pmull	v30.1q,v21.1d,v7.1d
 
 	pmull	v18.1q,v0.1d,v19.1d		//1st phase of reduction
 	ins	v2.d[0],v1.d[1]
 	ins	v1.d[1],v0.d[0]
-	pmull	v16.1q,v22.1d,v24.1d		//H^2·Ii+2
-	eor	v6.16b,v6.16b,v24.16b
-	pmull2	v24.1q,v22.2d,v24.2d
+
+	pmull2	v16.1q,v22.2d,v6.2d		//H^2·Ii+2
+	eor	v24.16b,v6.16b,v24.16b
+	pmull	v6.1q,v22.1d,v6.1d
+
+
 	eor	v0.16b,v1.16b,v18.16b
-	pmull2	v6.1q,v21.2d,v6.2d
+	pmull2	v24.1q,v21.2d,v24.2d
 
 	eor	v29.16b,v29.16b,v16.16b
-	eor	v31.16b,v31.16b,v24.16b
-	eor	v30.16b,v30.16b,v6.16b
+	eor	v31.16b,v31.16b,v6.16b
+	eor	v30.16b,v30.16b,v24.16b
 
 	ext	v18.16b,v0.16b,v0.16b,#8		//2nd phase of reduction
 	pmull	v0.1q,v0.1d,v19.1d
-	pmull	v7.1q,v26.1d,v23.1d		//H^3·Ii+1
-	eor	v5.16b,v5.16b,v23.16b
+
+	pmull2	v7.1q,v26.2d,v5.2d		//H^3·Ii+1
+	eor	v23.16b,v5.16b,v23.16b
+	pmull	v5.1q,v26.1d,v5.1d
+
 	eor	v18.16b,v18.16b,v2.16b
-	pmull2	v23.1q,v26.2d,v23.2d
-	pmull	v5.1q,v27.1d,v5.1d
+
+	pmull	v23.1q,v27.1d,v23.1d
 
 	eor	v0.16b,v0.16b,v18.16b
 	eor	v29.16b,v29.16b,v7.16b
-	eor	v31.16b,v31.16b,v23.16b
+	eor	v31.16b,v31.16b,v5.16b
 	ext	v0.16b,v0.16b,v0.16b,#8
-	eor	v30.16b,v30.16b,v5.16b
+	eor	v30.16b,v30.16b,v23.16b
 
 	subs	x3,x3,#64
 	b.hs	Loop4x
@@ -503,9 +525,11 @@ Ltail4x:
 	eor	v16.16b,v4.16b,v0.16b
 	ext	v3.16b,v16.16b,v16.16b,#8
 
-	pmull	v0.1q,v28.1d,v3.1d		//H^4·(Xi+Ii)
+	pmull2	v0.1q,v28.2d,v16.2d		//H^4·(Xi+Ii)
+	pmull	v2.1q,v28.1d,v16.1d
+
 	eor	v16.16b,v16.16b,v3.16b
-	pmull2	v2.1q,v28.2d,v3.2d
+
 	pmull2	v1.1q,v27.2d,v16.2d
 
 	eor	v0.16b,v0.16b,v29.16b
@@ -537,31 +561,38 @@ Lthree:
 	ext	v23.16b,v5.16b,v5.16b,#8
 	eor	v0.16b,v1.16b,v18.16b
 
-	pmull	v29.1q,v20.1d,v24.1d		//H·Ii+2
+	pmull2	v29.1q,v20.2d,v6.2d		//H·Ii+2
+	pmull	v31.1q,v20.1d,v6.1d
+
 	eor	v6.16b,v6.16b,v24.16b
 
 	ext	v18.16b,v0.16b,v0.16b,#8		//2nd phase of reduction
 	pmull	v0.1q,v0.1d,v19.1d
 	eor	v18.16b,v18.16b,v2.16b
-	pmull2	v31.1q,v20.2d,v24.2d
+
 	pmull	v30.1q,v21.1d,v6.1d
 	eor	v0.16b,v0.16b,v18.16b
-	pmull	v7.1q,v22.1d,v23.1d		//H^2·Ii+1
-	eor	v5.16b,v5.16b,v23.16b
+
+	pmull2	v7.1q,v22.2d,v5.2d		//H^2·Ii+1
+
+	eor	v23.16b,v5.16b,v23.16b
 	ext	v0.16b,v0.16b,v0.16b,#8
 
-	pmull2	v23.1q,v22.2d,v23.2d
+	pmull	v5.1q,v22.1d,v5.1d
+
 	eor	v16.16b,v4.16b,v0.16b
-	pmull2	v5.1q,v21.2d,v5.2d
+	pmull2	v23.1q,v21.2d,v23.2d
 	ext	v3.16b,v16.16b,v16.16b,#8
 
 	eor	v29.16b,v29.16b,v7.16b
-	eor	v31.16b,v31.16b,v23.16b
-	eor	v30.16b,v30.16b,v5.16b
+	eor	v31.16b,v31.16b,v5.16b
+	eor	v30.16b,v30.16b,v23.16b
 
-	pmull	v0.1q,v26.1d,v3.1d		//H^3·(Xi+Ii)
+	pmull2	v0.1q,v26.2d,v16.2d		//H^3·(Xi+Ii)
+	pmull	v2.1q,v26.1d,v16.1d
+
 	eor	v16.16b,v16.16b,v3.16b
-	pmull2	v2.1q,v26.2d,v3.2d
+
 	pmull	v1.1q,v27.1d,v16.1d
 
 	eor	v0.16b,v0.16b,v29.16b
@@ -593,18 +624,21 @@ Ltwo:
 	eor	v0.16b,v0.16b,v18.16b
 	ext	v0.16b,v0.16b,v0.16b,#8
 
-	pmull	v29.1q,v20.1d,v23.1d		//H·Ii+1
+	pmull2	v29.1q,v20.2d,v5.2d		//H·Ii+1
+	pmull	v31.1q,v20.1d,v5.1d
+
 	eor	v5.16b,v5.16b,v23.16b
 
 	eor	v16.16b,v4.16b,v0.16b
 	ext	v3.16b,v16.16b,v16.16b,#8
 
-	pmull2	v31.1q,v20.2d,v23.2d
 	pmull	v30.1q,v21.1d,v5.1d
 
-	pmull	v0.1q,v22.1d,v3.1d		//H^2·(Xi+Ii)
+	pmull2	v0.1q,v22.2d,v16.2d		//H^2·(Xi+Ii)
+	pmull	v2.1q,v22.1d,v16.1d
+
 	eor	v16.16b,v16.16b,v3.16b
-	pmull2	v2.1q,v22.2d,v3.2d
+
 	pmull2	v1.1q,v21.2d,v16.2d
 
 	eor	v0.16b,v0.16b,v29.16b
@@ -637,9 +671,11 @@ Lone:
 	eor	v16.16b,v4.16b,v0.16b
 	ext	v3.16b,v16.16b,v16.16b,#8
 
-	pmull	v0.1q,v20.1d,v3.1d
+	pmull2	v0.1q,v20.2d,v16.2d
+	pmull	v2.1q,v20.1d,v16.1d
+
 	eor	v16.16b,v16.16b,v3.16b
-	pmull2	v2.1q,v20.2d,v3.2d
+
 	pmull	v1.1q,v21.1d,v16.1d
 
 Ldone4x:
