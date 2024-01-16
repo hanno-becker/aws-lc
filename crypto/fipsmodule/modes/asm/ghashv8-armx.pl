@@ -418,17 +418,13 @@ $code.=<<___;
 	vext.8		$t2,$IN,$IN,#8
 	subs		$len,$len,#32		@ is there more data?
 
-        vext.8          $IN, $IN, $IN, #8
-	vpmull2.p64	$Xl,$H2,$IN		@ H^2.lo·Xi.lo
-        vext.8          $IN, $IN, $IN, #8
+	vpmull2.p64	$Xl,$H2,$t2		@ H^2.lo·Xi.lo
 
 	cclr		$inc,lo			@ is it time to zero $inc?
 
 	vpmull.p64	$Xmn,$Hhl,$t1
 
-        vext.8          $IN, $IN, $IN, #8
-	vpmull.p64	$Xh,$H2,$IN		@ H^2.hi·Xi.hi
-        vext.8          $IN, $IN, $IN, #8
+	vpmull.p64	$Xh,$H2,$t2		@ H^2.hi·Xi.hi
 
 	veor		$t2,$t2,$IN		@ Karatsuba pre-processing
 
