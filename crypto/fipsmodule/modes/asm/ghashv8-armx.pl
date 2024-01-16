@@ -479,11 +479,11 @@ ___
 }
 $code.=<<___;
 .Lodd_tail_v8:
-	vext.8		$t2,$Xl,$Xl,#8
+        vext.8		$t2,$Xl,$Xl,#8
+        veor            $t1,$IN,$Xl
 	veor		$IN,$t0,$t2		@ inp^=Xi
 
         vpmull2.p64	$Xl,$H,$IN		@ H.lo·Xi.lo
-        vext.8          $t1, $IN, $IN, #8
 
 	veor		$t1,$t1,$IN		@ Karatsuba pre-processing
 	vpmull.p64	$Xm,$Hhl,$t1		@ (H.lo+H.hi)·(Xi.lo+Xi.hi)
@@ -532,12 +532,8 @@ gcm_ghash_v8_4x:
 .Lgcm_ghash_v8_4x:
 	vld1.64		{$Xl},[$Xi]		@ load [rotated] Xi
 	vld1.64		{$H-$H2},[$Htbl],#48	@ load twisted H, ..., H^2
-	vext.8		$H,$H,$H,#8
-	vext.8		$H2,$H2,$H2,#8
 	vmov.i8		$xC2,#0xe1
 	vld1.64		{$H3-$H4},[$Htbl]	@ load twisted H^3, ..., H^4
-	vext.8		$H3,$H3,$H3,#8
-	vext.8		$H4,$H4,$H4,#8
 	vshl.u64	$xC2,$xC2,#57		@ compose 0xc2.0 constant
 
 	vld1.64		{$I0-$j3},[$inp],#64
@@ -552,28 +548,31 @@ gcm_ghash_v8_4x:
 	vext.8		$I2,$j2,$j2,#8
 	vext.8		$I1,$j1,$j1,#8
 
-	vpmull.p64	$Yl,$H,$I3		@ H·Ii+3
-	veor		$j3,$j3,$I3
-	vpmull2.p64	$Yh,$H,$I3
-	vpmull.p64	$Ym,$Hhl,$j3
+	vpmull2.p64	$Yl,$H,$j3		@ H·Ii+3
+        vpmull.p64	$Yh,$H,$j3
 
-	vpmull.p64	$t0,$H2,$I2		@ H^2·Ii+2
-	veor		$j2,$j2,$I2
-	vpmull2.p64	$I2,$H2,$I2
-	vpmull2.p64	$j2,$Hhl,$j2
+        veor		$j3,$j3,$I3
+        vpmull.p64	$Ym,$Hhl,$j3
+
+	vpmull2.p64	$t0,$H2,$j2		@ H^2·Ii+2
+        veor		$I2,$j2,$I2
+	vpmull.p64	$j2,$H2,$j2
+
+	vpmull2.p64	$I2,$Hhl,$I2
 
 	veor		$Yl,$Yl,$t0
-	veor		$Yh,$Yh,$I2
-	veor		$Ym,$Ym,$j2
+	veor		$Yh,$Yh,$j2
+	veor		$Ym,$Ym,$I2
 
-	vpmull.p64	$j3,$H3,$I1		@ H^3·Ii+1
-	veor		$j1,$j1,$I1
-	vpmull2.p64	$I1,$H3,$I1
-	vpmull.p64	$j1,$H34,$j1
+	vpmull2.p64	$j3,$H3,$j1		@ H^3·Ii+1
+        veor		$I1,$j1,$I1
+        vpmull.p64	$j1,$H3,$j1
+
+        vpmull.p64	$I1,$H34,$I1
 
 	veor		$Yl,$Yl,$j3
-	veor		$Yh,$Yh,$I1
-	veor		$Ym,$Ym,$j1
+	veor		$Yh,$Yh,$j1
+	veor		$Ym,$Ym,$I1
 
 	subs		$len,$len,#128
 	b.lo		.Ltail4x
@@ -592,10 +591,12 @@ gcm_ghash_v8_4x:
 	vrev64.8	$I0,$I0
 #endif
 
-	vpmull.p64	$Xl,$H4,$IN		@ H^4·(Xi+Ii)
-	veor		$t0,$t0,$IN
-	vpmull2.p64	$Xh,$H4,$IN
-	vext.8		$I3,$j3,$j3,#8
+	vpmull2.p64	$Xl,$H4,$t0		@ H^4·(Xi+Ii)
+        vpmull.p64	$Xh,$H4,$t0
+
+        veor		$t0,$t0,$IN
+
+        vext.8		$I3,$j3,$j3,#8
 	vpmull2.p64	$Xm,$H34,$t0
 
 	veor		$Xl,$Xl,$Yl
@@ -606,39 +607,48 @@ gcm_ghash_v8_4x:
 
 	vext.8		$t1,$Xl,$Xh,#8		@ Karatsuba post-processing
 	veor		$t2,$Xl,$Xh
-	vpmull.p64	$Yl,$H,$I3		@ H·Ii+3
-	veor		$j3,$j3,$I3
+
+	vpmull2.p64	$Yl,$H,$j3		@ H·Ii+3
+        vpmull.p64	$Yh,$H,$j3
+
+        veor		$j3,$j3,$I3
 	veor		$Xm,$Xm,$t1
-	vpmull2.p64	$Yh,$H,$I3
-	veor		$Xm,$Xm,$t2
+
+        veor		$Xm,$Xm,$t2
 	vpmull.p64	$Ym,$Hhl,$j3
 
 	vpmull.p64	$t2,$Xl,$xC2		@ 1st phase of reduction
 	vmov		$Xh#lo,$Xm#hi		@ Xh|Xm - 256-bit result
 	vmov		$Xm#hi,$Xl#lo		@ Xm is rotated Xl
-	vpmull.p64	$t0,$H2,$I2		@ H^2·Ii+2
-	veor		$j2,$j2,$I2
-	vpmull2.p64	$I2,$H2,$I2
-	veor		$Xl,$Xm,$t2
-	vpmull2.p64	$j2,$Hhl,$j2
+
+	vpmull2.p64	$t0,$H2,$j2		@ H^2·Ii+2
+        veor		$I2,$j2,$I2
+        vpmull.p64	$j2,$H2,$j2
+
+
+        veor		$Xl,$Xm,$t2
+	vpmull2.p64	$I2,$Hhl,$I2
 
 	veor		$Yl,$Yl,$t0
-	veor		$Yh,$Yh,$I2
-	veor		$Ym,$Ym,$j2
+	veor		$Yh,$Yh,$j2
+	veor		$Ym,$Ym,$I2
 
 	vext.8		$t2,$Xl,$Xl,#8		@ 2nd phase of reduction
 	vpmull.p64	$Xl,$Xl,$xC2
-	vpmull.p64	$j3,$H3,$I1		@ H^3·Ii+1
-	veor		$j1,$j1,$I1
+
+	vpmull2.p64	$j3,$H3,$j1		@ H^3·Ii+1
+        veor		$I1,$j1,$I1
+	vpmull.p64	$j1,$H3,$j1
+
 	veor		$t2,$t2,$Xh
-	vpmull2.p64	$I1,$H3,$I1
-	vpmull.p64	$j1,$H34,$j1
+
+        vpmull.p64	$I1,$H34,$I1
 
 	veor		$Xl,$Xl,$t2
 	veor		$Yl,$Yl,$j3
-	veor		$Yh,$Yh,$I1
+	veor		$Yh,$Yh,$j1
 	vext.8		$Xl,$Xl,$Xl,#8
-	veor		$Ym,$Ym,$j1
+	veor		$Ym,$Ym,$I1
 
 	subs		$len,$len,#64
 	b.hs		.Loop4x
@@ -647,10 +657,12 @@ gcm_ghash_v8_4x:
 	veor		$t0,$I0,$Xl
 	vext.8		$IN,$t0,$t0,#8
 
-	vpmull.p64	$Xl,$H4,$IN		@ H^4·(Xi+Ii)
-	veor		$t0,$t0,$IN
-	vpmull2.p64	$Xh,$H4,$IN
-	vpmull2.p64	$Xm,$H34,$t0
+	vpmull2.p64	$Xl,$H4,$t0		@ H^4·(Xi+Ii)
+	vpmull.p64	$Xh,$H4,$t0
+
+        veor		$t0,$t0,$IN
+
+        vpmull2.p64	$Xm,$H34,$t0
 
 	veor		$Xl,$Xl,$Yl
 	veor		$Xh,$Xh,$Yh
@@ -681,32 +693,39 @@ gcm_ghash_v8_4x:
 	vext.8		$I1,$j1,$j1,#8
 	veor		$Xl,$Xm,$t2
 
-	vpmull.p64	$Yl,$H,$I2		@ H·Ii+2
-	veor		$j2,$j2,$I2
+	vpmull2.p64	$Yl,$H,$j2		@ H·Ii+2
+	vpmull.p64	$Yh,$H,$j2
+
+        veor		$j2,$j2,$I2
 
 	vext.8		$t2,$Xl,$Xl,#8		@ 2nd phase of reduction
 	vpmull.p64	$Xl,$Xl,$xC2
 	veor		$t2,$t2,$Xh
-	vpmull2.p64	$Yh,$H,$I2
-	vpmull.p64	$Ym,$Hhl,$j2
+
+        vpmull.p64	$Ym,$Hhl,$j2
 	veor		$Xl,$Xl,$t2
-	vpmull.p64	$j3,$H2,$I1		@ H^2·Ii+1
-	veor		$j1,$j1,$I1
+
+        vpmull2.p64	$j3,$H2,$j1		@ H^2·Ii+1
+
+        veor		$I1,$j1,$I1
 	vext.8		$Xl,$Xl,$Xl,#8
 
-	vpmull2.p64	$I1,$H2,$I1
-	veor		$t0,$I0,$Xl
-	vpmull2.p64	$j1,$Hhl,$j1
+	vpmull.p64	$j1,$H2,$j1
+
+        veor		$t0,$I0,$Xl
+	vpmull2.p64	$I1,$Hhl,$I1
 	vext.8		$IN,$t0,$t0,#8
 
 	veor		$Yl,$Yl,$j3
-	veor		$Yh,$Yh,$I1
-	veor		$Ym,$Ym,$j1
+	veor		$Yh,$Yh,$j1
+	veor		$Ym,$Ym,$I1
 
-	vpmull.p64	$Xl,$H3,$IN		@ H^3·(Xi+Ii)
-	veor		$t0,$t0,$IN
-	vpmull2.p64	$Xh,$H3,$IN
-	vpmull.p64	$Xm,$H34,$t0
+	vpmull2.p64	$Xl,$H3,$t0		@ H^3·(Xi+Ii)
+        vpmull.p64	$Xh,$H3,$t0
+
+        veor		$t0,$t0,$IN
+
+        vpmull.p64	$Xm,$H34,$t0
 
 	veor		$Xl,$Xl,$Yl
 	veor		$Xh,$Xh,$Yh
@@ -737,19 +756,22 @@ gcm_ghash_v8_4x:
 	veor		$Xl,$Xl,$t2
 	vext.8		$Xl,$Xl,$Xl,#8
 
-	vpmull.p64	$Yl,$H,$I1		@ H·Ii+1
-	veor		$j1,$j1,$I1
+	vpmull2.p64	$Yl,$H,$j1		@ H·Ii+1
+	vpmull.p64	$Yh,$H,$j1
+
+        veor		$j1,$j1,$I1
 
 	veor		$t0,$I0,$Xl
 	vext.8		$IN,$t0,$t0,#8
 
-	vpmull2.p64	$Yh,$H,$I1
-	vpmull.p64	$Ym,$Hhl,$j1
+        vpmull.p64	$Ym,$Hhl,$j1
 
-	vpmull.p64	$Xl,$H2,$IN		@ H^2·(Xi+Ii)
-	veor		$t0,$t0,$IN
-	vpmull2.p64	$Xh,$H2,$IN
-	vpmull2.p64	$Xm,$Hhl,$t0
+	vpmull2.p64	$Xl,$H2,$t0		@ H^2·(Xi+Ii)
+        vpmull.p64	$Xh,$H2,$t0
+
+        veor		$t0,$t0,$IN
+
+        vpmull2.p64	$Xm,$Hhl,$t0
 
 	veor		$Xl,$Xl,$Yl
 	veor		$Xh,$Xh,$Yh
@@ -781,10 +803,12 @@ gcm_ghash_v8_4x:
 	veor		$t0,$I0,$Xl
 	vext.8		$IN,$t0,$t0,#8
 
-	vpmull.p64	$Xl,$H,$IN
-	veor		$t0,$t0,$IN
-	vpmull2.p64	$Xh,$H,$IN
-	vpmull.p64	$Xm,$Hhl,$t0
+	vpmull2.p64	$Xl,$H,$t0
+        vpmull.p64	$Xh,$H,$t0
+
+        veor		$t0,$t0,$IN
+
+        vpmull.p64	$Xm,$Hhl,$t0
 
 .Ldone4x:
 	vext.8		$t1,$Xl,$Xh,#8		@ Karatsuba post-processing
