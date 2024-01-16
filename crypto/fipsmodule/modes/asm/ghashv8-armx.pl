@@ -425,11 +425,12 @@ $code.=<<___;
 	cclr		$inc,lo			@ is it time to zero $inc?
 
 	vpmull.p64	$Xmn,$Hhl,$t1
-	veor		$t2,$t2,$IN		@ Karatsuba pre-processing
 
         vext.8          $IN, $IN, $IN, #8
 	vpmull.p64	$Xh,$H2,$IN		@ H^2.hi·Xi.hi
         vext.8          $IN, $IN, $IN, #8
+
+	veor		$t2,$t2,$IN		@ Karatsuba pre-processing
 
 	veor		$Xl,$Xl,$Xln		@ accumulate
 	vpmull2.p64	$Xm,$Hhl,$t2		@ (H^2.lo+H^2.hi)·(Xi.lo+Xi.hi)
