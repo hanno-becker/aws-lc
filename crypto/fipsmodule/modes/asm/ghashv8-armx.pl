@@ -408,11 +408,11 @@ $code.=<<___;
 
 	vpmull2.p64	$Xln,$H,$t1		@ H·Ii+1
 
-	veor		$t1,$t1,$In		@ Karatsuba pre-processing
-
         vext.8          $In, $In, $In, #8
 	vpmull.p64	$Xhn,$H,$In
         vext.8          $In, $In, $In, #8
+
+	veor		$t1,$t1,$In		@ Karatsuba pre-processing
 
 	b		.Loop_mod2x_v8
 
@@ -470,12 +470,13 @@ $code.=<<___;
 	vext.8		$t2,$Xl,$Xl,#8		@ 2nd phase of reduction
 	vpmull.p64	$Xl,$Xl,$xC2
 	veor		$IN,$IN,$t2
-	veor		$t1,$t1,$In		@ Karatsuba pre-processing
 	veor		$IN,$IN,$Xl
 
         vext.8          $In, $In, $In, #8
 	vpmull.p64	$Xhn,$H,$In
         vext.8          $In, $In, $In, #8
+
+	veor		$t1,$t1,$In		@ Karatsuba pre-processing
 
 	b.hs		.Loop_mod2x_v8		@ there was at least 32 more bytes
 
