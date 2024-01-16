@@ -235,7 +235,7 @@ my ($acc_h,$acc_m,$acc_l)=map("v$_",(9..11));
 my ($acc_hd,$acc_md,$acc_ld)=map("d$_",(9..11));
 
 my ($h1,$h2,$h3,$h4,$h12k,$h34k)=map("v$_",(12..17));
-my ($h1q,$h2q,$h3q,$h4q)=map("q$_",(12..15));
+my ($h1q,$h2q,$h3q,$h4q,$h12kq,$h34kq)=map("q$_",(12..17));
 my ($h1b,$h2b,$h3b,$h4b)=map("v$_.16b",(12..15));
 
 my $t0="v8";
@@ -383,7 +383,6 @@ aes_gcm_enc_kernel:
 	aese    $ctr3b, $rk5  \n  aesmc   $ctr3b, $ctr3b          // AES block 3 - round 5
 	aese    $ctr2b, $rk5  \n  aesmc   $ctr2b, $ctr2b          // AES block 2 - round 5
 	aese    $ctr1b, $rk6  \n  aesmc   $ctr1b, $ctr1b          // AES block 1 - round 6
-	trn2    $h34k.2d,  $h3.2d,    $h4.2d                      // h4l | h3l
 	aese    $ctr3b, $rk6  \n  aesmc   $ctr3b, $ctr3b          // AES block 3 - round 6
 	ldr     $rk9q, [$cc, #144]                                // load rk9
 	aese    $ctr0b, $rk6  \n  aesmc   $ctr0b, $ctr0b          // AES block 0 - round 6
@@ -391,11 +390,9 @@ aes_gcm_enc_kernel:
 	aese    $ctr2b, $rk6  \n  aesmc   $ctr2b, $ctr2b          // AES block 2 - round 6
 	ldr     $rk10q, [$cc, #160]                               // load rk10
 	aese    $ctr1b, $rk7  \n  aesmc   $ctr1b, $ctr1b          // AES block 1 - round 7
-	trn1    $acc_h.2d, $h3.2d,    $h4.2d                      // h4h | h3h
 	aese    $ctr0b, $rk7  \n  aesmc   $ctr0b, $ctr0b          // AES block 0 - round 7
 	aese    $ctr2b, $rk7  \n  aesmc   $ctr2b, $ctr2b          // AES block 2 - round 7
 	aese    $ctr3b, $rk7  \n  aesmc   $ctr3b, $ctr3b          // AES block 3 - round 7
-	trn2    $h12k.2d,  $h1.2d,    $h2.2d                      // h2l | h1l
 	aese    $ctr1b, $rk8  \n  aesmc   $ctr1b, $ctr1b          // AES block 1 - round 8
 	aese    $ctr2b, $rk8  \n  aesmc   $ctr2b, $ctr2b          // AES block 2 - round 8
 	aese    $ctr3b, $rk8  \n  aesmc   $ctr3b, $ctr3b          // AES block 3 - round 8
@@ -423,13 +420,12 @@ aes_gcm_enc_kernel:
 
 .Lenc_finish_first_blocks:
 	cmp     $input_ptr, $main_end_input_ptr                   // check if we have <= 4 blocks
-	eor     $h34k.16b, $h34k.16b, $acc_h.16b                  // h4k | h3k
+	ldr	$h34kq, [$Htable, #64]				  // load h4k | h3k
 	aese    $ctr2b, $rkNm1                                    // AES block 2 - round N-1
-	trn1    $t0.2d,    $h1.2d,    $h2.2d                      // h2h | h1h
 	aese    $ctr1b, $rkNm1                                    // AES block 1 - round N-1
 	aese    $ctr0b, $rkNm1                                    // AES block 0 - round N-1
 	aese    $ctr3b, $rkNm1                                    // AES block 3 - round N-1
-	eor     $h12k.16b, $h12k.16b, $t0.16b                     // h2k | h1k
+	ldr	$h12kq, [$Htable, #16]				  // load h2k | h1k
 	b.ge    .Lenc_tail                                        // handle tail
 
 	ldp     $input_l1, $input_h1, [$input_ptr, #16]           // AES block 1 - load plaintext
@@ -1043,14 +1039,10 @@ aes_gcm_dec_kernel:
 
 .Ldec_finish_first_blocks:
 	cmp     $input_ptr, $main_end_input_ptr                   // check if we have <= 4 blocks
-	trn1    $acc_h.2d, $h3.2d,    $h4.2d                      // h4h | h3h
-	trn2    $h34k.2d,  $h3.2d,    $h4.2d                      // h4l | h3l
-	trn1    $t0.2d,    $h1.2d,    $h2.2d                      // h2h | h1h
-	trn2    $h12k.2d,  $h1.2d,    $h2.2d                      // h2l | h1l
-	eor     $h34k.16b, $h34k.16b, $acc_h.16b                  // h4k | h3k
+	ldr	$h12kq, [$Htable, #16]				  // load h2k | h1k
+	ldr	$h34kq, [$Htable, #64]				  // load h4k | h3k
 	aese    $ctr1b, $rkNm1                                    // AES block 1 - round N-1
 	aese    $ctr2b, $rkNm1                                    // AES block 2 - round N-1
-	eor     $h12k.16b, $h12k.16b, $t0.16b                     // h2k | h1k
 	aese    $ctr3b, $rkNm1                                    // AES block 3 - round N-1
 	aese    $ctr0b, $rkNm1                                    // AES block 0 - round N-1
 	b.ge    .Ldec_tail                                        // handle tail
