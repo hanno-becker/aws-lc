@@ -492,7 +492,6 @@ $code.=<<___;
 	vpmull.p64	$Xm,$Hhl,$t1		@ (H.lo+H.hi)·(Xi.lo+Xi.hi)
 
         vpmull.p64	$Xh,$H,$IN		@ H.hi·Xi.hi
-        vext.8          $IN, $IN, $IN, #8
 
 	vext.8		$t1,$Xl,$Xh,#8		@ Karatsuba post-processing
 	veor		$t2,$Xl,$Xh
