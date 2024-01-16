@@ -484,15 +484,13 @@ $code.=<<___;
 .Lodd_tail_v8:
 	vext.8		$t2,$Xl,$Xl,#8
 	veor		$IN,$t0,$t2		@ inp^=Xi
-	veor		$t1,$t0,$t2		@ $t1 is rotated inp^Xi
 
         vpmull2.p64	$Xl,$H,$IN		@ H.lo·Xi.lo
-        vext.8          $IN, $IN, $IN, #8
+        vext.8          $t1, $IN, $IN, #8
 
 	veor		$t1,$t1,$IN		@ Karatsuba pre-processing
 	vpmull.p64	$Xm,$Hhl,$t1		@ (H.lo+H.hi)·(Xi.lo+Xi.hi)
 
-        vext.8          $IN, $IN, $IN, #8
         vpmull.p64	$Xh,$H,$IN		@ H.hi·Xi.hi
         vext.8          $IN, $IN, $IN, #8
 
