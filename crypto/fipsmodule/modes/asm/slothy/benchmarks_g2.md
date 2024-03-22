@@ -78,28 +78,41 @@ Did 128000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1007080us (127100
 ### SLOTHY
 
 ```
+* Testing variant: x4_basic
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4713000 EVP-AES-192-GCM encrypt init operations in 1000208us (4712019.9 ops/sec)
+Did 7854500 EVP-AES-192-GCM encrypt (16 bytes) operations in 1000009us (7854429.3 ops/sec): 125.7 MB/s
+Did 4535500 EVP-AES-192-GCM encrypt (256 bytes) operations in 1000025us (4535386.6 ops/sec): 1161.1 MB/s
+Did 1463250 EVP-AES-192-GCM encrypt (1350 bytes) operations in 1000127us (1463064.2 ops/sec): 1975.1 MB/s
+Did 298000 EVP-AES-192-GCM encrypt (8192 bytes) operations in 1000327us (297902.6 ops/sec): 2440.4 MB/s
+Did 152000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1002068us (151686.3 ops/sec): 2485.2 MB/s
+
 * Testing variant: x4_dual_acc
  - Copy... OK!
  - Build... OK!
  - Test... OK!
  - Bench...
-Did 4690000 EVP-AES-192-GCM encrypt init operations in 1000189us (4689113.8 ops/sec)
-Did 7826500 EVP-AES-192-GCM encrypt (16 bytes) operations in 1000026us (7826296.5 ops/sec):   125.2 MB/s
-Did 4446000 EVP-AES-192-GCM encrypt (256 bytes) operations in 1000041us (4445817.7 ops/sec):  1138.1 MB/s
-Did 1413000 EVP-AES-192-GCM encrypt (1350 bytes) operations in 1000259us (1412634.1 ops/sec): 1907.1 MB/s
-Did 283000 EVP-AES-192-GCM encrypt (8192 bytes) operations in 1002500us (282294.3 ops/sec):   2312.6 MB/s
-Did 144000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1001812us (143739.5 ops/sec):  2355.0 MB/s
+Did 4667000 EVP-AES-192-GCM encrypt init operations in 1000145us (4666323.4 ops/sec)
+Did 7881750 EVP-AES-192-GCM encrypt (16 bytes) operations in 1000029us (7881521.4 ops/sec): 126.1 MB/s     + 8.7%
+Did 4526250 EVP-AES-192-GCM encrypt (256 bytes) operations in 1000014us (4526186.6 ops/sec): 1158.7 MB/s   + 9.3%
+Did 1464000 EVP-AES-192-GCM encrypt (1350 bytes) operations in 1000387us (1463433.7 ops/sec): 1975.6 MB/s  +15.2%
+Did 299000 EVP-AES-192-GCM encrypt (8192 bytes) operations in 1002508us (298252.0 ops/sec): 2443.3 MB/s    +19.1%
+Did 152000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1000833us (151873.5 ops/sec): 2488.3 MB/s   +19.5%
+
 * Testing variant: x4_reload_round_keys_partial
  - Copy... OK!
  - Build... OK!
  - Test... OK!
  - Bench...
-Did 4713000 EVP-AES-192-GCM encrypt init operations in 1000022us (4712896.3 ops/sec)
-Did 7898000 EVP-AES-192-GCM encrypt (16 bytes) operations in 1000016us (7897873.6 ops/sec):   126.4 MB/s     + 9.5%
-Did 4412000 EVP-AES-192-GCM encrypt (256 bytes) operations in 1000019us (4411916.2 ops/sec):  1129.5 MB/s    + 6.6%
-Did 1411000 EVP-AES-192-GCM encrypt (1350 bytes) operations in 1000051us (1410928.0 ops/sec): 1904.8 MB/s    +11.1%
-Did 286000 EVP-AES-192-GCM encrypt (8192 bytes) operations in 1000653us (285813.4 ops/sec):   2341.4 MB/s    +14.2%
-Did 146000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1001567us (145771.6 ops/sec):  2388.3 MB/s    +14.6%
+Did 4677000 EVP-AES-192-GCM encrypt init operations in 1000023us (4676892.4 ops/sec)
+Did 7889000 EVP-AES-192-GCM encrypt (16 bytes) operations in 1000114us (7888100.8 ops/sec): 126.2 MB/s
+Did 4451750 EVP-AES-192-GCM encrypt (256 bytes) operations in 1000014us (4451687.7 ops/sec): 1139.6 MB/s
+Did 1430000 EVP-AES-192-GCM encrypt (1350 bytes) operations in 1000236us (1429662.6 ops/sec): 1930.0 MB/s
+Did 289000 EVP-AES-192-GCM encrypt (8192 bytes) operations in 1002697us (288222.7 ops/sec): 2361.1 MB/s
+Did 147000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1001238us (146818.2 ops/sec): 2405.5 MB/s
 ```
 
 ## AES-256-GCM
