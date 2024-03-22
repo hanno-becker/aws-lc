@@ -136,12 +136,13 @@ Did 116000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1007694us (115114
  - Build... OK!
  - Test... OK!
  - Bench...
-Did 4558000 EVP-AES-256-GCM encrypt init operations in 1000111us (4557494.1 ops/sec)
-Did 7623250 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000019us (7623105.2 ops/sec):   122.0 MB/s
-Did 4154250 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000008us (4154216.8 ops/sec):  1063.5 MB/s
-Did 1283000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000623us (1282201.2 ops/sec): 1731.0 MB/s
-Did 252000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1003554us (251107.6 ops/sec):   2057.1 MB/s
-Did 128000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1002387us (127695.2 ops/sec):  2092.2 MB/s
+Did 4543000 EVP-AES-256-GCM encrypt init operations in 1000165us (4542250.5 ops/sec)
+Did 7651000 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000003us (7650977.0 ops/sec): 122.4 MB/s
+Did 4273750 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000012us (4273698.7 ops/sec): 1094.1 MB/s
+Did 1344000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000228us (1343693.6 ops/sec): 1814.0 MB/s
+Did 269000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1003541us (268050.8 ops/sec): 2195.9 MB/s
+Did 137000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1004970us (136322.5 ops/sec): 2233.5 MB/s
+
 * Testing variant: x4_dual_acc
  - Copy... OK!
  - Build... OK!
@@ -153,6 +154,7 @@ Did 4259500 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000003us (4259487
 Did 1337000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000482us (1336355.9 ops/sec): 1804.1 MB/s
 Did 268000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1002398us (267358.9 ops/sec):   2190.2 MB/s
 Did 136000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1000287us (135961.0 ops/sec):  2227.6 MB/s
+
 * Testing variant: x4_reload_round_keys_partial
  - Copy... OK!
  - Build... OK!
