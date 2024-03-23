@@ -136,34 +136,58 @@ Did 116000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1007694us (115114
  - Build... OK!
  - Test... OK!
  - Bench...
-Did 4543000 EVP-AES-256-GCM encrypt init operations in 1000165us (4542250.5 ops/sec)
-Did 7651000 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000003us (7650977.0 ops/sec): 122.4 MB/s
-Did 4273750 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000012us (4273698.7 ops/sec): 1094.1 MB/s
-Did 1344000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000228us (1343693.6 ops/sec): 1814.0 MB/s
-Did 269000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1003541us (268050.8 ops/sec): 2195.9 MB/s
-Did 137000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1004970us (136322.5 ops/sec): 2233.5 MB/s
+Did 4540000 EVP-AES-256-GCM encrypt init operations in 1000064us (4539709.5 ops/sec)
+Did 7628750 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000027us (7628544.0 ops/sec): 122.1 MB/s
+Did 4250000 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000013us (4249944.8 ops/sec): 1088.0 MB/s
+Did 1335000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000529us (1334294.2 ops/sec): 1801.3 MB/s
+Did 267000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1002147us (266428.0 ops/sec): 2182.6 MB/s
+Did 136000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1004652us (135370.3 ops/sec): 2217.9 MB/s
+
+SLOTHY expectations:
+// Instructions:    131
+// Expected cycles: 70
+// Expected IPC:    0.5343511450381679
+
+SLOTHY expectation would correspond to:
+- 64/70 * 2.5ghz = 2.28gb/s
 
 * Testing variant: x4_dual_acc
  - Copy... OK!
  - Build... OK!
  - Test... OK!
  - Bench...
-Did 4530000 EVP-AES-256-GCM encrypt init operations in 1000177us (4529198.3 ops/sec)
-Did 7573250 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000025us (7573060.7 ops/sec):   121.2 MB/s
-Did 4259500 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000003us (4259487.2 ops/sec):  1090.4 MB/s
-Did 1337000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000482us (1336355.9 ops/sec): 1804.1 MB/s
-Did 268000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1002398us (267358.9 ops/sec):   2190.2 MB/s
-Did 136000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1000287us (135961.0 ops/sec):  2227.6 MB/s
+Did 4543000 EVP-AES-256-GCM encrypt init operations in 1000184us (4542164.2 ops/sec)
+Did 7634250 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000002us (7634234.7 ops/sec): 122.1 MB/s         +10.0%
+Did 4262000 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000230us (4261020.0 ops/sec): 1090.8 MB/s       + 8.5%
+Did 1338000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000192us (1337743.2 ops/sec): 1806.0 MB/s      +14.6%
+Did 268000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1001890us (267494.4 ops/sec): 2191.3 MB/s        +17.9%
+Did 136000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1000111us (135984.9 ops/sec): 2228.0 MB/s       +18.1%
+
+SLOTHY expectations:
+// Instructions:    130
+// Expected cycles: 70
+// Expected IPC:    0.5384615384615384
+
+SLOTHY expectations would correspond to:
+- 64/70 * 2.5ghz = 2.28gb/s
 
 * Testing variant: x4_reload_round_keys_partial
  - Copy... OK!
  - Build... OK!
  - Test... OK!
  - Bench...
-Did 4569000 EVP-AES-256-GCM encrypt init operations in 1000171us (4568218.8 ops/sec)
-Did 7670500 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000030us (7670269.9 ops/sec):   122.7 MB/s      + 9.9%
-Did 4244500 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000045us (4244309.0 ops/sec):  1086.5 MB/s     + 8.1%
-Did 1339000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000587us (1338214.5 ops/sec): 1806.6 MB/s     +14.6%
-Did 267000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1001554us (266585.7 ops/sec):   2183.9 MB/s     +17.4%
-Did 136000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1000491us (135933.3 ops/sec):  2227.1 MB/s     +18.1%
+Did 4546000 EVP-AES-256-GCM encrypt init operations in 1000094us (4545572.7 ops/sec)
+Did 7716500 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000011us (7716415.1 ops/sec): 123.5 MB/s
+Did 4226500 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000029us (4226377.4 ops/sec): 1082.0 MB/s
+Did 1318250 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000048us (1318186.7 ops/sec): 1779.6 MB/s
+Did 263000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1001114us (262707.3 ops/sec): 2152.1 MB/s
+Did 134000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1003098us (133586.2 ops/sec): 2188.7 MB/s
+
+SLOTHY expectations:
+// Instructions:    139
+// Expected cycles: 70
+// Expected IPC:    0.5035971223021583
+
+SLOTHY expectations would correspond to:
+- 64/70 * 2.5ghz = 2.28gb/s
 ```
