@@ -101,7 +101,7 @@ optimize_variant() {
     INFILE=$CLEAN_DIR/${CLEAN_STEM}_$1.S
     OUTFILE=$OPT_DIR/${OPT_STEM}_$1.S
     case $1 in
-        x4_basic | x4_ilp | x4_dual_acc | x4_dual_acc_keep_htable | x4_keep_htable | x4_keep_htable_rotate | x4_reload_round_keys_partial | x4_reload_round_keys_full )
+        x4_basic | x4_late_tag | x4_ilp | x4_dual_acc | x4_dual_acc_keep_htable | x4_keep_htable | x4_keep_htable_rotate | x4_reload_round_keys_partial | x4_reload_round_keys_full )
 
             slothy-cli Arm_AArch64 $MODEL                      \
                   ${INFILE}                                    \
