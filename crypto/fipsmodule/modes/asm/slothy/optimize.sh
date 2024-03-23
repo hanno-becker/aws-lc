@@ -112,6 +112,7 @@ optimize_variant() {
                -c constraints.stalls_first_attempt=36          \
                -c sw_pipelining.enabled                        \
                -c timeout=$TIMEOUT                             \
+               -c visualize_expected_performance               \
                -c sw_pipelining.allow_post                     \
                -c /sw_pipelining.minimize_overlapping          \
                -c sw_pipelining.unknown_iteration_count        \
@@ -128,6 +129,7 @@ optimize_variant() {
                -l Lloop_unrolled_start                         \
                -c compiler_binary=clang                        \
                -c inputs_are_outputs                           \
+               -c visualize_expected_performance               \
                -c variable_size                                \
                -c constraints.stalls_first_attempt=36          \
                -c sw_pipelining.enabled                        \
