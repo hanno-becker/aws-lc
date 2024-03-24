@@ -42,10 +42,20 @@ fi
 if [ $SZ = "128" ]; then
     VARIANTS_ALL="
     x4_basic
+    x4_late_tag
+    x4_ilp
+    x4_dual_acc
+    x4_dual_acc_keep_htable
     x4_keep_htable
+    x4_keep_htable_rotate
+    x4_reload_round_keys_partial
+    x4_reload_round_keys_full
+    x4_scalar_iv
+    x4_scalar_iv_mem
+    x4_scalar_iv_mem_late_tag
+    x4_scalar_iv_mem_late_tag_keep_htable
     x6_basic
     x8_basic
-    x4_ilp
     x6_ilp
     x8_ilp
     x8_ilp_dual_acc
@@ -91,7 +101,7 @@ fi
 
 if [ "$DRY_RUN" = "1" ]; then
     echo "NOTE: Performing dry run -- no renaming/rescheduling allowed, but checking that SLOTHY understands the code and commands."
-    DRY_RUN_FLAGS=" -c /constraints.allow_reordering -c /constraints.allow_renaming"
+    DRY_RUN_FLAGS=" -c /constraints.allow_reordering -c /constraints.allow_renaming -c constraints.stalls_first_attempt=256"
 else
     DRY_RUN_FLAGS=""
 fi
@@ -100,8 +110,22 @@ optimize_variant() {
     echo "Optimizing variant $1 ..."
     INFILE=$CLEAN_DIR/${CLEAN_STEM}_$1.S
     OUTFILE=$OPT_DIR/${OPT_STEM}_$1.S
-    case $1 in
-        x4_basic | x4_late_tag | x4_ilp | x4_dual_acc | x4_dual_acc_keep_htable | x4_keep_htable | x4_keep_htable_rotate | x4_reload_round_keys_partial | x4_reload_round_keys_full )
+    case $1 in                            \
+        x4_basic                          \
+      | x4_late_tag                       \
+      | x4_ilp                            \
+      | x4_dual_acc                       \
+      | x4_dual_acc_keep_htable           \
+      | x4_keep_htable                    \
+      | x4_keep_htable_rotate             \
+      | x4_reload_round_keys_partial      \
+      | x4_reload_round_keys_full         \
+      | x4_scalar_iv                      \
+      | x4_scalar_iv_mem                  \
+      | x4_scalar_iv_mem_late_tag         \
+      | x4_scalar_iv_mem_late_tag_keep_htable \
+      | x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk \
+      | x4_scalar_iv_mem_late_tag_scalar_rk )
 
             slothy-cli Arm_AArch64 $MODEL                      \
                   ${INFILE}                                    \
@@ -109,14 +133,14 @@ optimize_variant() {
                -c compiler_binary=clang                        \
                -c inputs_are_outputs                           \
                -c variable_size                                \
-               -c constraints.stalls_first_attempt=36          \
+               -c constraints.stalls_first_attempt=48          \
                -c sw_pipelining.enabled                        \
                -c timeout=$TIMEOUT                             \
                -c visualize_expected_performance               \
                -c sw_pipelining.allow_post                     \
                -c /sw_pipelining.minimize_overlapping          \
                -c sw_pipelining.unknown_iteration_count        \
-               -c reserved_regs=[sp,x1,x3,x4,x5,x15,x16,x18]   \
+               -c reserved_regs=[sp,x1,x3,x4,x5,x6,x9,x15,x16,x18]\
                -o $OUTFILE                                     \
                ${SLOTHY_FLAGS} ${DRY_RUN_FLAGS}
             ;;

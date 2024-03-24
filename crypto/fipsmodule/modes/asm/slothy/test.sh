@@ -113,10 +113,20 @@ do_variant() {
 if [ $SZ = "128" ]; then
     VARIANTS="
     x4_basic
+    x4_late_tag
+    x4_ilp
+    x4_dual_acc
+    x4_dual_acc_keep_htable
     x4_keep_htable
+    x4_keep_htable_rotate
+    x4_reload_round_keys_partial
+    x4_reload_round_keys_full
+    x4_scalar_iv
+    x4_scalar_iv_mem
+    x4_scalar_iv_mem_late_tag
+    x4_scalar_iv_mem_late_tag_keep_htable
     x6_basic
     x8_basic
-    x4_ilp
     x6_ilp
     x8_ilp
     x8_ilp_dual_acc

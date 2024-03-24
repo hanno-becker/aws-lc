@@ -60,6 +60,18 @@ Did 4857000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000176us (4856145
 Did 1617000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000521us (1616158.0 ops/sec): 2181.8 MB/s   +18.9%
 Did 335000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001923us (334357.0 ops/sec):   2739.1 MB/s   +23.9%
 Did 171000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1002551us (170564.9 ops/sec):  2794.5 MB/s   +24.3%
+
+* Testing variant: x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4586000 EVP-AES-128-GCM encrypt init operations in 1000218us (4585000.5 ops/sec)
+Did 7992250 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000016us (7992122.1 ops/sec): 127.9 MB/s     + 8.4%
+Did 4851750 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000020us (4851653.0 ops/sec): 1242.0 MB/s   +11.5%
+Did 1644750 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000096us (1644592.1 ops/sec): 2220.2 MB/s  +21.0%
+Did 347000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002653us (346081.8 ops/sec): 2835.1 MB/s    +28.2%
+Did 177000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001611us (176715.3 ops/sec): 2895.3 MB/s   +28.8%
 ```
 
 ## AES-192-GCM
