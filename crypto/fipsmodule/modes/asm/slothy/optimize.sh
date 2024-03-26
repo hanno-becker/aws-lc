@@ -16,6 +16,7 @@ set -e
 
 CLEAN_DIR=./clean
 OPT_DIR=./opt
+TMP_DIR=./tmp
 ASM_DIR=../
 
 if [ "$SZ" = "" ]; then
@@ -28,6 +29,7 @@ BUILD_DIR=build_release
 
 CLEAN_STEM=aesv8-gcm-armv8-base-${SZ}
 OPT_STEM=aesv8-gcm-armv8-opt-${SZ}
+TMP_STEM=aesv8-gcm-armv8-tmp-${SZ}
 
 UARCH=${UARCH:=N1}
 if [ $UARCH = "N1" ]; then
@@ -106,10 +108,69 @@ else
     DRY_RUN_FLAGS=""
 fi
 
+optimize_x4() {
+            slothy-cli Arm_AArch64 $MODEL                      \
+                  ${INFILE}                                    \
+               -l Lloop_unrolled_start                         \
+               -c compiler_binary=clang                        \
+               -c inputs_are_outputs                           \
+               -c variable_size                                \
+               -c constraints.stalls_first_attempt=48          \
+               -c sw_pipelining.enabled                        \
+               -c timeout=$TIMEOUT                             \
+               -c visualize_expected_performance               \
+               -c sw_pipelining.allow_post                     \
+               -c /sw_pipelining.minimize_overlapping          \
+               -c sw_pipelining.unknown_iteration_count        \
+               -c reserved_regs=[sp,x1,x3,x4,x5,x6,x9,x15,x16,x18]\
+               -o $OUTFILE                                     \
+               ${SLOTHY_FLAGS} ${DRY_RUN_FLAGS}
+}
+
+optimize_x8() {
+    slothy-cli Arm_AArch64 Arm_Big_experimental ${INFILE} -l Lloop_unrolled_start               \
+                 -c compiler_binary=clang                        \
+                 -c inputs_are_outputs                           \
+                 -c variable_size                                \
+                 -c constraints.stalls_first_attempt=16          \
+                 -c sw_pipelining.enabled                        \
+                 -c split_heuristic                              \
+                 --fusion                                        \
+                 -c split_heuristic_repeat=2                     \
+                 -c split_heuristic_factor=2                     \
+                 -c sw_pipelining.halving_heuristic              \
+                 -c sw_pipelining.allow_post                     \
+                 -c /sw_pipelining.minimize_overlapping          \
+                 -c sw_pipelining.unknown_iteration_count        \
+                 -c reserved_regs=[sp,x1,x3,x4,x5,x6,x9,x15,x16,x18]\
+                 -o $OUTFILE
+}
+
+optimize_generic() {
+            slothy-cli Arm_AArch64 $MODEL                      \
+                  ${INFILE}                                    \
+               -l Lloop_unrolled_start                         \
+               -c compiler_binary=clang                        \
+               -c inputs_are_outputs                           \
+               -c visualize_expected_performance               \
+               -c variable_size                                \
+               -c constraints.stalls_first_attempt=36          \
+               -c sw_pipelining.enabled                        \
+               -c timeout=$TIMEOUT                             \
+               -c /sw_pipelining.minimize_overlapping          \
+               -c sw_pipelining.unknown_iteration_count        \
+               -c reserved_regs=[sp,x1,x3,x4,x5,x15,x16,x18]   \
+               -o $OUTFILE                                     \
+               ${SLOTHY_FLAGS} ${DRY_RUN_FLAGS}
+}
+
 optimize_variant() {
     echo "Optimizing variant $1 ..."
     INFILE=$CLEAN_DIR/${CLEAN_STEM}_$1.S
     OUTFILE=$OPT_DIR/${OPT_STEM}_$1.S
+    TMP0=$TMP_DIR/${TMP_STEM}_$1_0.S
+    TMP1=$TMP_DIR/${TMP_STEM}_$1_1.S
+    TMP2=$TMP_DIR/${TMP_STEM}_$1_2.S
     case $1 in                            \
         x4_basic                          \
       | x4_late_tag                       \
@@ -127,42 +188,18 @@ optimize_variant() {
       | x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk \
       | x4_scalar_iv_mem_late_tag_scalar_rk )
 
-            slothy-cli Arm_AArch64 $MODEL                      \
-                  ${INFILE}                                    \
-               -l Lloop_unrolled_start                         \
-               -c compiler_binary=clang                        \
-               -c inputs_are_outputs                           \
-               -c variable_size                                \
-               -c constraints.stalls_first_attempt=48          \
-               -c sw_pipelining.enabled                        \
-               -c timeout=$TIMEOUT                             \
-               -c visualize_expected_performance               \
-               -c sw_pipelining.allow_post                     \
-               -c /sw_pipelining.minimize_overlapping          \
-               -c sw_pipelining.unknown_iteration_count        \
-               -c reserved_regs=[sp,x1,x3,x4,x5,x6,x9,x15,x16,x18]\
-               -o $OUTFILE                                     \
-               ${SLOTHY_FLAGS} ${DRY_RUN_FLAGS}
+            optimize_x4
+            ;;
+
+        x8_*)
+
+            optimize_x8
             ;;
 
         *)
             echo "NOTE: No dedicated optimization command for $1 registered -- trying default optimization via software pipelining..."
 
-            slothy-cli Arm_AArch64 $MODEL                      \
-                  ${INFILE}                                    \
-               -l Lloop_unrolled_start                         \
-               -c compiler_binary=clang                        \
-               -c inputs_are_outputs                           \
-               -c visualize_expected_performance               \
-               -c variable_size                                \
-               -c constraints.stalls_first_attempt=36          \
-               -c sw_pipelining.enabled                        \
-               -c timeout=$TIMEOUT                             \
-               -c /sw_pipelining.minimize_overlapping          \
-               -c sw_pipelining.unknown_iteration_count        \
-               -c reserved_regs=[sp,x1,x3,x4,x5,x15,x16,x18]   \
-               -o $OUTFILE                                     \
-               ${SLOTHY_FLAGS} ${DRY_RUN_FLAGS}
+            optimize_generic
     esac
 }
 
