@@ -301,28 +301,31 @@ tag_q  .req q11
         aesmc \data, \data
 .endm
 
+
+.macro aesr_x4 st0, st1, st2, st3, rk // @slothy:no-unfold
+        aesr \st0, \rk
+        aesr \st1, \rk
+        aesr \st2, \rk
+        aesr \st3, \rk
+.endm
+
+.macro aese_x4 st0, st1, st2, st3, rk // @slothy:no-unfold
+        aese \st0, \rk
+        aese \st1, \rk
+        aese \st2, \rk
+        aese \st3, \rk
+.endm
+
 .macro aesr_x8 i
         load_round_key \i
-        aesr aes_st0.16b, rk\i\().16b
-        aesr aes_st1.16b, rk\i\().16b // @slothy:after_last
-        aesr aes_st2.16b, rk\i\().16b // @slothy:after_last
-        aesr aes_st3.16b, rk\i\().16b // @slothy:after_last
-        aesr aes_st4.16b, rk\i\().16b // @slothy:after_last
-        aesr aes_st5.16b, rk\i\().16b // @slothy:after_last
-        aesr aes_st6.16b, rk\i\().16b // @slothy:after_last
-        aesr aes_st7.16b, rk\i\().16b // @slothy:after_last
+        aesr_x4 aes_st0.16b, aes_st1.16b, aes_st2.16b, aes_st3.16b, rk\i\().16b
+        aesr_x4 aes_st4.16b, aes_st5.16b, aes_st6.16b, aes_st7.16b, rk\i\().16b
 .endm
 
 .macro aese_x8 i
         load_round_key \i
-        aese aes_st0.16b, rk\i\().16b
-        aese aes_st1.16b, rk\i\().16b // @slothy:after_last
-        aese aes_st2.16b, rk\i\().16b // @slothy:after_last
-        aese aes_st3.16b, rk\i\().16b // @slothy:after_last
-        aese aes_st4.16b, rk\i\().16b // @slothy:after_last
-        aese aes_st5.16b, rk\i\().16b // @slothy:after_last
-        aese aes_st6.16b, rk\i\().16b // @slothy:after_last
-        aese aes_st7.16b, rk\i\().16b // @slothy:after_last
+        aese_x4 aes_st0.16b, aes_st1.16b, aes_st2.16b, aes_st3.16b, rk\i\().16b
+        aese_x4 aes_st4.16b, aes_st5.16b, aes_st6.16b, aes_st7.16b, rk\i\().16b
 .endm
 
 .macro aesr_final aes_st, plain, out
@@ -332,7 +335,7 @@ tag_q  .req q11
 
 // Load i-th round key
 .macro load_round_key i
-        ldr rk\()\i\()q, [key, #((\i)*16)]
+        ldr rk\i\()q, [key, #((\i)*16)]
 .endm
 
 .macro load_round_keys
@@ -445,41 +448,41 @@ tag_q  .req q11
 
 .macro ghash_init_pair inputa, inputb, Ha, Hb, Hk_mid, i
         // Low product
-        pmull   ghash_lo\()\i\().1q,  \inputa\().1d, \Ha\().1d
+        pmull   ghash_lo\i\().1q,  \inputa\().1d, \Ha\().1d
         pmull   ghash_tmp.1q, \inputb\().1d, \Hb\().1d
-        eor     ghash_lo\()\i\().16b, ghash_lo\()\i\().16b, ghash_tmp.16b
+        eor     ghash_lo\i\().16b, ghash_lo\i\().16b, ghash_tmp.16b
         // High product
-        pmull2  ghash_hi\()\i\().1q, \inputa\().2d, \Ha\().2d
+        pmull2  ghash_hi\i\().1q, \inputa\().2d, \Ha\().2d
         pmull2  ghash_tmp.1q, \inputb\().2d, \Hb\().2d
-        eor     ghash_hi\()\i\().16b, ghash_hi\()\i\().16b, ghash_tmp.16b
+        eor     ghash_hi\i\().16b, ghash_hi\i\().16b, ghash_tmp.16b
         // Middle product
         trn1    ghash_tmp.2d,  \inputb\().2d, \inputa\().2d
         trn2    \inputb\().2d, \inputb\().2d, \inputa\().2d
         eor     ghash_tmp.16b, ghash_tmp.16b, \inputb\().16b
-        pmull2  ghash_mid\()\i\().1q, ghash_tmp.2d, \Hk_mid\().2d
+        pmull2  ghash_mid\i\().1q, ghash_tmp.2d, \Hk_mid\().2d
         pmull   ghash_tmp.1q, ghash_tmp.1d, \Hk_mid\().1d
-        eor     ghash_mid\()\i\().16b, ghash_mid\()\i\().16b, ghash_tmp.16b
+        eor     ghash_mid\i\().16b, ghash_mid\i\().16b, ghash_tmp.16b
 .endm
 
 .macro ghash_acc_pair inputa, inputb, Ha, Hb, Hk_mid, i
         // Low product
         pmull   ghash_tmp.1q, \inputa\().1d, \Ha\().1d
-        eor     ghash_lo\()\i\().16b, ghash_lo\()\i\().16b, ghash_tmp.16b
+        eor     ghash_lo\i\().16b, ghash_lo\i\().16b, ghash_tmp.16b
         pmull   ghash_tmp.1q, \inputb\().1d, \Hb\().1d
-        eor     ghash_lo\()\i\().16b, ghash_lo\()\i\().16b, ghash_tmp.16b
+        eor     ghash_lo\i\().16b, ghash_lo\i\().16b, ghash_tmp.16b
         // High product
         pmull2  ghash_tmp.1q, \inputa\().2d, \Ha\().2d
-        eor     ghash_hi\()\i\().16b, ghash_hi\()\i\().16b, ghash_tmp.16b
+        eor     ghash_hi\i\().16b, ghash_hi\i\().16b, ghash_tmp.16b
         pmull2  ghash_tmp.1q, \inputb\().2d, \Hb\().2d
-        eor     ghash_hi\()\i\().16b, ghash_hi\()\i\().16b, ghash_tmp.16b
+        eor     ghash_hi\i\().16b, ghash_hi\i\().16b, ghash_tmp.16b
         // Middle product
         trn1    ghash_tmp.2d,  \inputb\().2d, \inputa\().2d
         trn2    \inputb\().2d, \inputb\().2d, \inputa\().2d
         eor     ghash_tmp.16b, ghash_tmp.16b, \inputb\().16b
         pmull2  \inputa\().1q, ghash_tmp.2d, \Hk_mid\().2d
-        eor     ghash_mid\()\i\().16b, ghash_mid\()\i\().16b, \inputa\().16b
+        eor     ghash_mid\i\().16b, ghash_mid\i\().16b, \inputa\().16b
         pmull   ghash_tmp.1q, ghash_tmp.1d, \Hk_mid\().1d
-        eor     ghash_mid\()\i\().16b, ghash_mid\()\i\().16b, ghash_tmp.16b
+        eor     ghash_mid\i\().16b, ghash_mid\i\().16b, ghash_tmp.16b
 .endm
 
 .macro ghash_init_0 input, Hk, Hk_mid, tag
