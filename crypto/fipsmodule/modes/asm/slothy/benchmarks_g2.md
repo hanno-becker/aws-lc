@@ -21,12 +21,12 @@ Did 138000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1006107us (137162
  - Build... OK!
  - Test... OK!
  - Bench...
-Did 4720000 EVP-AES-128-GCM encrypt init operations in 1000151us (4719287.4 ops/sec)
-Did 8131000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000024us (8130804.9 ops/sec):   130.1 MB/s
-Did 4723250 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000041us (4723056.4 ops/sec):  1209.1 MB/s
-Did 1542000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000115us (1541822.7 ops/sec): 2081.5 MB/s
-Did 314000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002600us (313185.7 ops/sec):   2565.6 MB/s
-Did 160000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1003209us (159488.2 ops/sec):  2613.1 MB/s
+Did 4704000 EVP-AES-128-GCM encrypt init operations in 1000131us (4703383.9 ops/sec)
+Did 8095750 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000012us (8095652.9 ops/sec): 129.5 MB/s
+Did 4701500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000007us (4701467.1 ops/sec): 1203.6 MB/s
+Did 1566000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000334us (1565477.1 ops/sec): 2113.4 MB/s
+Did 320000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000793us (319746.4 ops/sec): 2619.4 MB/s
+Did 163000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001165us (162810.3 ops/sec): 2667.5 MB/s
 * Testing variant: x4_dual_acc
  - Copy... OK!
  - Build... OK!
@@ -43,12 +43,12 @@ Did 165000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001290us (164787
  - Build... OK!
  - Test... OK!
  - Bench...
-Did 4722000 EVP-AES-128-GCM encrypt init operations in 1000117us (4721447.6 ops/sec)
-Did 8060750 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000025us (8060548.5 ops/sec):   129.0 MB/s
-Did 4737750 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000011us (4737697.9 ops/sec):  1212.9 MB/s
-Did 1574000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000206us (1573675.8 ops/sec): 2124.5 MB/s
-Did 320000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001713us (319452.8 ops/sec):   2617.0 MB/s
-Did 163000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001344us (162781.2 ops/sec):  2667.0 MB/s
+Did 4726000 EVP-AES-128-GCM encrypt init operations in 1000024us (4725886.6 ops/sec)
+Did 8040000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000020us (8039839.2 ops/sec): 128.6 MB/s
+Did 4800500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000009us (4800456.8 ops/sec): 1228.9 MB/s
+Did 1577250 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000083us (1577119.1 ops/sec): 2129.1 MB/s
+Did 331000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001715us (330433.3 ops/sec): 2706.9 MB/s
+Did 169000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1002330us (168607.1 ops/sec): 2762.5 MB/s
 * Testing variant: x4_dual_acc_keep_htable
  - Copy... OK!
  - Build... OK!
