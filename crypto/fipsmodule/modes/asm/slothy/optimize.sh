@@ -128,14 +128,13 @@ optimize_x4() {
 }
 
 optimize_x8() {
-    slothy-cli Arm_AArch64 Arm_Big_experimental ${INFILE} -l Lloop_unrolled_start               \
+    slothy-cli Arm_AArch64 $MODEL ${INFILE} -l Lloop_unrolled_start               \
                  -c compiler_binary=clang                        \
                  -c inputs_are_outputs                           \
                  -c variable_size                                \
                  -c constraints.stalls_first_attempt=16          \
                  -c sw_pipelining.enabled                        \
                  -c split_heuristic                              \
-                 --fusion                                        \
                  -c split_heuristic_repeat=2                     \
                  -c split_heuristic_factor=2                     \
                  -c sw_pipelining.halving_heuristic              \
@@ -143,7 +142,8 @@ optimize_x8() {
                  -c /sw_pipelining.minimize_overlapping          \
                  -c sw_pipelining.unknown_iteration_count        \
                  -c reserved_regs=[sp,x1,x3,x4,x5,x6,x9,x15,x16,x18]\
-                 -o $OUTFILE
+                 -o $OUTFILE                                        \
+                 ${SLOTHY_FLAGS} ${DRY_RUN_FLAGS}
 }
 
 optimize_generic() {
