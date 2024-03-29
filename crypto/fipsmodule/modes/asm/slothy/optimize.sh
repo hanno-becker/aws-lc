@@ -24,7 +24,12 @@ if [ "$SZ" = "" ]; then
     echo "No keysize specified -- defaulting to 128 bit"
 fi
 
-AWS_LC_BASE=~/repos/aws-lc/
+if [ "$AWS_LC_BASE" = "" ]; then
+    # Oof... bit gross
+    AWS_LC_BASE=$(dirname $(dirname $(dirname $(dirname $(dirname $(pwd))))))
+    echo "Environment variable AWS_LC_BASE not set. Defaulting to $AWS_LC_BASE."
+fi
+
 BUILD_DIR=build_release
 
 CLEAN_STEM=aesv8-gcm-armv8-base-${SZ}
@@ -113,6 +118,7 @@ optimize_x4() {
                   ${INFILE}                                    \
                -l Lloop_unrolled_start                         \
                -c compiler_binary=clang                        \
+               -c compiler_include_paths="${AWS_LC_BASE}/include"\
                -c inputs_are_outputs                           \
                -c variable_size                                \
                -c constraints.stalls_first_attempt=48          \
@@ -120,6 +126,7 @@ optimize_x4() {
                -c timeout=$TIMEOUT                             \
                -c visualize_expected_performance               \
                -c sw_pipelining.allow_post                     \
+               -c with_llvm_mca -c llvm_mca_full               \
                -c /sw_pipelining.minimize_overlapping          \
                -c sw_pipelining.unknown_iteration_count        \
                -c reserved_regs=[sp,x1,x3,x4,x5,x6,x9,x15,x16,x18]\
@@ -131,16 +138,18 @@ optimize_x8() {
     slothy-cli Arm_AArch64 $MODEL ${INFILE} -l Lloop_unrolled_start               \
                  -c compiler_binary=clang                        \
                  -c inputs_are_outputs                           \
+                 -c visualize_expected_performance               \
                  -c variable_size                                \
                  -c constraints.stalls_first_attempt=16          \
-                 -c sw_pipelining.enabled                        \
                  -c split_heuristic                              \
-                 -c split_heuristic_repeat=2                     \
+                 -c timeout=$TIMEOUT                             \
+                 -c split_heuristic_preprocess_naive_interleaving \
+                 -c split_heuristic_repeat=3                     \
                  -c split_heuristic_factor=2                     \
-                 -c sw_pipelining.halving_heuristic              \
-                 -c sw_pipelining.allow_post                     \
-                 -c /sw_pipelining.minimize_overlapping          \
-                 -c sw_pipelining.unknown_iteration_count        \
+                 -c constraints.move_stalls_to_bottom            \
+                 -c constraints.stalls_precision=3               \
+                 -c objective_precision=0.1 \
+                 -c retry_timeout=60\
                  -c reserved_regs=[sp,x1,x3,x4,x5,x6,x9,x15,x16,x18]\
                  -o $OUTFILE                                        \
                  ${SLOTHY_FLAGS} ${DRY_RUN_FLAGS}
