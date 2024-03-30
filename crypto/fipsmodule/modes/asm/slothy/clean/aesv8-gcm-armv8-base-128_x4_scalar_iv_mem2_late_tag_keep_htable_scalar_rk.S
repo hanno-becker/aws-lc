@@ -71,7 +71,7 @@ constant_temp .req x25
 
 count           .req x1
 full_blocks     .req x7
-remainder       .req x9
+remainder       .req x16
 unroll          .req x10
 
 ctr_tmp   .req x14
@@ -105,37 +105,21 @@ ghash_mod_d .req d7
 modulo_tmp0 .req v0
 modulo_tmp1 .req v1
 
-Ht1q    .req q12
-Ht2q    .req q13
-Ht12q   .req q14
+Ht1q   .req q12
+Ht2q   .req q13
+Ht12q  .req q14
 
 Ht1    .req v12
 Ht2    .req v13
 Ht12   .req v14
 
-Ht3q    .req Ht1q
-Ht4q    .req Ht2q
-Ht34q   .req Ht12q
+Ht3q   .req q15
+Ht4q   .req q16
+Ht34q  .req q17
 
-Ht3    .req Ht1
-Ht4    .req Ht2
-Ht34   .req Ht12
-
-Ht5q    .req Ht1q
-Ht6q    .req Ht2q
-Ht56q   .req Ht12q
-
-Ht5    .req Ht1
-Ht6    .req Ht2
-Ht56   .req Ht12
-
-Ht7q    .req Ht1q
-Ht8q    .req Ht2q
-Ht78q   .req Ht12q
-
-Ht7    .req Ht1
-Ht8    .req Ht2
-Ht78   .req Ht12
+Ht3    .req v15
+Ht4    .req v16
+Ht34   .req v17
 
 rk0q   .req q18
 rk1q   .req q19
@@ -148,6 +132,9 @@ rk7q   .req q25
 rk8q   .req q26
 rk9q   .req q27
 rk10q  .req q28
+
+rk10_lo .req x20
+rk10_hi .req x21
 
 rk0    .req v18
 rk1    .req v19
@@ -164,22 +151,22 @@ rk10   .req v28
 plain   .req v29
 plain_q .req q29
 
-rctr_inc   .req v30
-rtmp_ctr   .req v31
-rtmp_ctr_q .req q31
+plain_lo .req x22
+plain_hi .req x23
 
-tag    .req v11
-tag_q  .req q11
+tag    .req v30
+tag_q  .req q30
 
 #define UNROLL 4
 
 #define STACK_SIZE_GPRS  (6*16)
 #define STACK_SIZE_VREGS (4*16)
-#define STACK_SIZE  (STACK_SIZE_GPRS + STACK_SIZE_VREGS + UNROLL*16)
+#define STACK_SIZE  (STACK_SIZE_GPRS + STACK_SIZE_VREGS + 2*UNROLL*16)
 
 #define STACK_BASE_GPRS  (0)
 #define STACK_BASE_VREGS (STACK_SIZE_GPRS)
 #define STACK_BASE_AES_ST (STACK_SIZE_GPRS + STACK_SIZE_VREGS)
+#define STACK_BASE_PLAIN  (STACK_SIZE_GPRS + STACK_SIZE_VREGS + UNROLL*16)
 
 /********************************************************************/
 /*                 Generic preamble/postamble macros                */
@@ -234,17 +221,21 @@ tag_q  .req q11
 
 .macro load_iv
         ldp        ivec_0_63, ivec_64_96, [ivec]
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 0*16)] // @slothy:writes=stack_0
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 1*16)] // @slothy:writes=stack_1
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 2*16)] // @slothy:writes=stack_2
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 3*16)] // @slothy:writes=stack_3
+
         lsr        ctr_x, ivec_64_96, #32
         rev        ctr, ctr
         orr        ivec_64_96_w, ivec_64_96_w, ivec_64_96_w // clear top 32 bit
 .endm
 
-.macro next_ctr_init_aes aes_st
-        rev        ctr_tmp_w, ctr
-        orr        ctr_tmp, ivec_64_96, ctr_tmp, lsl #32
-        fmov       \aes_st\()_d, ivec_0_63
-        fmov       \aes_st\().d[1], ctr_tmp
-        add        ctr, ctr, #1
+.macro next_ctr_init_aes aes_st, loc
+        add        ctr_tmp_w, ctr, #\loc
+        rev        ctr_tmp_w, ctr_tmp_w
+        str        ctr_tmp_w, [sp, #(STACK_BASE_AES_ST + \loc*16 + 12)] // @slothy:writes=stack_\loc
+        ldr        \aes_st\()_q, [sp, #(STACK_BASE_AES_ST + \loc*16)]  // @slothy:reads=stack_\loc
 .endm
 
 // A single AES round
@@ -282,19 +273,27 @@ tag_q  .req q11
         eor \out, \inA, \inC
 .endm
 
-.macro aesr_final aes_st, plain, out
+.macro aesr_final aes_st, plain, out, loc
         aese \aes_st\().16b, rk9.16b
-        eor3 \out\().16b, \plain\().16b, rk10.16b, \aes_st\().16b
+        eor \plain\()_lo, \plain\()_lo, rk10_lo
+        eor \plain\()_hi, \plain\()_hi, rk10_hi
+        stp \plain\()_lo, \plain\()_hi, [sp, #(STACK_BASE_PLAIN + \loc*16)] // @slothy:writes=stack_plain_\loc
+        ldr \plain\()_q, [sp, #(STACK_BASE_PLAIN + \loc*16)]       // @slothy:reads=stack_plain_\loc
+        eor \out\().16b, \plain\().16b, \aes_st\().16b
 .endm
 
-.macro aes_full_block aes_st, input, output
-        next_ctr_init_aes \aes_st
+.macro aes_full_block aes_st, input, output, loc
+        next_ctr_init_aes \aes_st, \loc
         aesr_0_8 \aes_st\(), rk
-        aesr_final \aes_st, \input, \output
+        aesr_final \aes_st, \input, \output, \loc
 .endm
 
 .macro load_round_key i
         ldr rk\i\()q, [key, #((\i)*16)]
+.endm
+
+.macro load_round_key_scalar i
+        ldp rk\i\()_lo, rk\i\()_hi, [key, #((\i)*16)]
 .endm
 
 .macro load_round_keys
@@ -308,7 +307,7 @@ tag_q  .req q11
         load_round_key 7
         load_round_key 8
         load_round_key 9
-        load_round_key 10
+        load_round_key_scalar 10
 .endm
 
 /********************************************************************/
@@ -405,9 +404,8 @@ tag_q  .req q11
 /*                    Macros for GHASH udpate                       */
 /********************************************************************/
 
-.macro ghash_init_0 input, Hk, Hk_mid, tag
+.macro ghash_init_0 input, Hk, Hk_mid
         rev64 \input\().16b, \input\().16b
-        eor   \input\().16b, \input\().16b, \tag\().16b
         // Low product
         pmull   ghash_lo.1q, \input\().1d, \Hk\().1d
         // High product
@@ -418,9 +416,8 @@ tag_q  .req q11
         pmull   ghash_mid.1q, ghash_tmp.1d, \Hk_mid\().1d
 .endm
 
-.macro ghash_init_1 input, Hk, Hk_mid, tag
+.macro ghash_init_1 input, Hk, Hk_mid
         rev64 \input\().16b, \input\().16b
-        eor   \input\().16b, \input\().16b, \tag\().16b
         // Low product
         pmull   ghash_lo.1q, \input\().1d, \Hk\().1d
         // High product
@@ -448,7 +445,64 @@ tag_q  .req q11
 
 .macro ghash_acc_1 input, Hk, Hk_mid
         rev64   \input\().16b, \input\().16b
+        // Low product
+        pmull   ghash_tmp.1q, \input\().1d, \Hk\().1d
+        eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
+        // High product
+        pmull2  ghash_tmp.1q, \input\().2d, \Hk\().2d
+        eor     ghash_hi.16b, ghash_hi.16b, ghash_tmp.16b
+        // Middle product
+        ext     ghash_tmp.16b, \input\().16b, \input\().16b, #8
+        eor     ghash_tmp.16b, ghash_tmp.16b, \input\().16b
+        pmull2  ghash_tmp.1q, ghash_tmp.2d, \Hk_mid\().2d
+        eor     ghash_mid.16b, ghash_mid.16b, ghash_tmp.16b
+.endm
 
+.macro ghash_init_with_tag_0 input, Hk, Hk_mid, tag
+        rev64 \input\().16b, \input\().16b
+        eor   \input\().16b, \input\().16b, \tag\().16b
+        // Low product
+        pmull   ghash_lo.1q, \input\().1d, \Hk\().1d
+        // High product
+        pmull2  ghash_hi.1q, \input\().2d, \Hk\().2d
+        // Middle product
+        mov     ghash_tmp_d, \input\().d[1]
+        eor     ghash_tmp.8b, ghash_tmp.8b, \input\().8b
+        pmull   ghash_mid.1q, ghash_tmp.1d, \Hk_mid\().1d
+.endm
+
+.macro ghash_init_with_tag_1 input, Hk, Hk_mid, tag
+        rev64 \input\().16b, \input\().16b
+        eor   \input\().16b, \input\().16b, \tag\().16b
+        // Low product
+        pmull   ghash_lo.1q, \input\().1d, \Hk\().1d
+        // High product
+        pmull2  ghash_hi.1q, \input\().2d, \Hk\().2d
+        // Middle product
+        ext     ghash_tmp.16b, \input\().16b, \input\().16b, #8
+        eor     ghash_tmp.16b, ghash_tmp.16b, \input\().16b
+        pmull2  ghash_mid.1q, ghash_tmp.2d, \Hk_mid\().2d
+.endm
+
+.macro ghash_acc_with_tag_0 input, Hk, Hk_mid, tag
+        rev64   \input\().16b, \input\().16b
+        eor   \input\().16b, \input\().16b, \tag\().16b
+        // Low product
+        pmull   ghash_tmp.1q, \input\().1d, \Hk\().1d
+        eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
+        // High product
+        pmull2  ghash_tmp.1q, \input\().2d, \Hk\().2d
+        eor     ghash_hi.16b, ghash_hi.16b, ghash_tmp.16b
+        // Middle product
+        mov     ghash_tmp_d, \input\().d[1]
+        eor     ghash_tmp.8b, ghash_tmp.8b, \input\().8b
+        pmull   ghash_tmp.1q, ghash_tmp.1d, \Hk_mid\().1d
+        eor     ghash_mid.16b, ghash_mid.16b, ghash_tmp.16b
+.endm
+
+.macro ghash_acc_with_tag_1 input, Hk, Hk_mid, tag
+        rev64   \input\().16b, \input\().16b
+        eor   \input\().16b, \input\().16b, \tag\().16b
         // Low product
         pmull   ghash_tmp.1q, \input\().1d, \Hk\().1d
         eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
@@ -517,55 +571,55 @@ Lenc_preamble_start:
         prepare_loop_counts
         prepare_ghash
 
+        load_htable_12
+        load_htable_34
+
 Lenc_preamble_end:
 
         cbz count, Lloop_unrolled_end
 Lloop_unrolled_start:
 
-        ldr plain_q, [input], #(4*16)
-        aes_full_block aes_st, plain, res
-        str res_q, [output], #(4*16)
+        ldp plain_lo, plain_hi, [input, #(3*16)]
+        aes_full_block aes_st, plain, res, 3
+        str res_q, [output, #(3*16)]
 
-        load_htable_34
-        ghash_init_1 res, Ht4, Ht34, tag
+        ghash_init_0 res, Ht1, Ht12
 
-        ldr plain_q, [input, #(-3*16)]
-        aes_full_block aes_st, plain, res
-        str res_q, [output, #(-3*16)]
+        ldp plain_lo, plain_hi, [input, #(2*16)]
+        aes_full_block aes_st, plain, res, 2
+        str res_q, [output, #(2*16)]
+
+        ghash_acc_1 res, Ht2, Ht12
+
+        ldp plain_lo, plain_hi, [input, #(1*16)]
+        aes_full_block aes_st, plain, res, 1
+        str res_q, [output, #(1*16)]
 
         ghash_acc_0 res, Ht3, Ht34
 
-        ldr plain_q, [input, #(-2*16)]
-        aes_full_block aes_st, plain, res
-        str res_q, [output, #(-2*16)]
+        ldp plain_lo, plain_hi, [input], #(4*16)
+        aes_full_block aes_st, plain, res, 0
+        str res_q, [output], #(4*16)
 
-        load_htable_12
-        ghash_acc_1 res, Ht2, Ht12
-
-        ldr plain_q, [input, #(-1*16)]
-        aes_full_block aes_st, plain, res
-        str res_q, [output, #(-1*16)]
-
-        ghash_acc_0 res, Ht1, Ht12
-
+        ghash_acc_with_tag_1 res, Ht4, Ht34, tag
         ghash_finalize tag
 
+        add ctr, ctr, #UNROLL
         sub count, count, #1
         cbnz count, Lloop_unrolled_start
 Lloop_unrolled_end:
 
-        load_htable_12
-
         cbz remainder, Lloop_1x_end
 Lloop_1x_start:
 
-        ldr plain_q, [input], #16
-        aes_full_block aes_st, plain, res
+        ldp plain_lo, plain_hi, [input], #16
+        aes_full_block aes_st, plain, res, 0
         str res_q, [output], #16
-        ghash_init_0 res, Ht1, Ht12, tag
+        ghash_init_with_tag_0 res, Ht1, Ht12, tag
 
         ghash_finalize tag
 
+        add ctr, ctr, #1
         sub remainder, remainder, #1
         cbnz remainder, Lloop_1x_start
 Lloop_1x_end:

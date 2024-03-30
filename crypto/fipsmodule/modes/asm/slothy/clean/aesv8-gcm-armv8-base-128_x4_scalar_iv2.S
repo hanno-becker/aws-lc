@@ -239,10 +239,15 @@ tag_q  .req q11
         orr        ivec_64_96_w, ivec_64_96_w, ivec_64_96_w // clear top 32 bit
 .endm
 
+// Increase AES counter
+.macro aes_ctr_inc
+        add    rtmp_ctr.4s, rtmp_ctr.4s, rctr_inc.4s
+.endm
+
 .macro next_ctr_init_aes aes_st
         rev        ctr_tmp_w, ctr
         orr        ctr_tmp, ivec_64_96, ctr_tmp, lsl #32
-        fmov       \aes_st\()_d, ivec_0_63
+        dup        \aes_st\().2d, ivec_0_63
         fmov       \aes_st\().d[1], ctr_tmp
         add        ctr, ctr, #1
 .endm

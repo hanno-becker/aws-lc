@@ -234,16 +234,25 @@ tag_q  .req q11
 
 .macro load_iv
         ldp        ivec_0_63, ivec_64_96, [ivec]
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 0*16)] // @slothy:writes=stack_0
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 1*16)] // @slothy:writes=stack_1
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 2*16)] // @slothy:writes=stack_2
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 3*16)] // @slothy:writes=stack_3
+
         lsr        ctr_x, ivec_64_96, #32
         rev        ctr, ctr
         orr        ivec_64_96_w, ivec_64_96_w, ivec_64_96_w // clear top 32 bit
 .endm
 
-.macro next_ctr_init_aes aes_st
+// Increase AES counter
+.macro aes_ctr_inc
+        add    rtmp_ctr.4s, rtmp_ctr.4s, rctr_inc.4s
+.endm
+
+.macro next_ctr_init_aes aes_st, loc
         rev        ctr_tmp_w, ctr
-        orr        ctr_tmp, ivec_64_96, ctr_tmp, lsl #32
-        fmov       \aes_st\()_d, ivec_0_63
-        fmov       \aes_st\().d[1], ctr_tmp
+        str        ctr_tmp_w, [sp, #(STACK_BASE_AES_ST + \loc*16 + 12)] // @slothy:writes=stack_\loc
+        ldr        \aes_st\()_q, [sp, #(STACK_BASE_AES_ST + \loc*16)]  // @slothy:reads=stack_\loc
         add        ctr, ctr, #1
 .endm
 
@@ -287,8 +296,8 @@ tag_q  .req q11
         eor3 \out\().16b, \plain\().16b, rk10.16b, \aes_st\().16b
 .endm
 
-.macro aes_full_block aes_st, input, output
-        next_ctr_init_aes \aes_st
+.macro aes_full_block aes_st, input, output, loc
+        next_ctr_init_aes \aes_st, \loc
         aesr_0_8 \aes_st\(), rk
         aesr_final \aes_st, \input, \output
 .endm
@@ -523,27 +532,27 @@ Lenc_preamble_end:
 Lloop_unrolled_start:
 
         ldr plain_q, [input], #(4*16)
-        aes_full_block aes_st, plain, res
+        aes_full_block aes_st, plain, res, 0
         str res_q, [output], #(4*16)
 
         load_htable_34
         ghash_init_1 res, Ht4, Ht34, tag
 
         ldr plain_q, [input, #(-3*16)]
-        aes_full_block aes_st, plain, res
+        aes_full_block aes_st, plain, res, 1
         str res_q, [output, #(-3*16)]
 
         ghash_acc_0 res, Ht3, Ht34
 
         ldr plain_q, [input, #(-2*16)]
-        aes_full_block aes_st, plain, res
+        aes_full_block aes_st, plain, res, 2
         str res_q, [output, #(-2*16)]
 
         load_htable_12
         ghash_acc_1 res, Ht2, Ht12
 
         ldr plain_q, [input, #(-1*16)]
-        aes_full_block aes_st, plain, res
+        aes_full_block aes_st, plain, res, 3
         str res_q, [output, #(-1*16)]
 
         ghash_acc_0 res, Ht1, Ht12
@@ -560,7 +569,7 @@ Lloop_unrolled_end:
 Lloop_1x_start:
 
         ldr plain_q, [input], #16
-        aes_full_block aes_st, plain, res
+        aes_full_block aes_st, plain, res, 0
         str res_q, [output], #16
         ghash_init_0 res, Ht1, Ht12, tag
 

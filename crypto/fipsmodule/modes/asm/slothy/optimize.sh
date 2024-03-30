@@ -113,6 +113,12 @@ else
     DRY_RUN_FLAGS=""
 fi
 
+if [ "$LLVM_MCA" = "1" ]; then
+    LLVM_MCA_FLAGS="-c with_llvm_mca -c llvm_mca_full"
+else
+    LLVM_MCA_FLAGS=""
+fi
+
 optimize_x4() {
             slothy-cli Arm_AArch64 $MODEL                      \
                   ${INFILE}                                    \
@@ -126,7 +132,7 @@ optimize_x4() {
                -c timeout=$TIMEOUT                             \
                -c visualize_expected_performance               \
                -c sw_pipelining.allow_post                     \
-               -c with_llvm_mca -c llvm_mca_full               \
+               ${LLVM_MCA_FLAGS}                               \
                -c /sw_pipelining.minimize_overlapping          \
                -c sw_pipelining.unknown_iteration_count        \
                -c reserved_regs=[sp,x1,x3,x4,x5,x6,x9,x15,x16,x18]\
@@ -181,21 +187,7 @@ optimize_variant() {
     TMP1=$TMP_DIR/${TMP_STEM}_$1_1.S
     TMP2=$TMP_DIR/${TMP_STEM}_$1_2.S
     case $1 in                            \
-        x4_basic                          \
-      | x4_late_tag                       \
-      | x4_ilp                            \
-      | x4_dual_acc                       \
-      | x4_dual_acc_keep_htable           \
-      | x4_keep_htable                    \
-      | x4_keep_htable_rotate             \
-      | x4_reload_round_keys_partial      \
-      | x4_reload_round_keys_full         \
-      | x4_scalar_iv                      \
-      | x4_scalar_iv_mem                  \
-      | x4_scalar_iv_mem_late_tag         \
-      | x4_scalar_iv_mem_late_tag_keep_htable \
-      | x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk \
-      | x4_scalar_iv_mem_late_tag_scalar_rk )
+        x4_*)
 
             optimize_x4
             ;;
