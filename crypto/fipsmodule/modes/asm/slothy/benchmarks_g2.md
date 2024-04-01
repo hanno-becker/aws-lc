@@ -5,6 +5,7 @@
 ### AWS-LC (5ede432e141172df7ac847b68c40837b7349f1f3)
 
 ```
+* Testing variant: aws-lc/128_x4_main
 Did 4767000 EVP-AES-128-GCM encrypt init operations in 1000042us (4766799.8 ops/sec)
 Did 7403000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000006us (7402955.6 ops/sec):   118.4 MB/s
 Did 4358000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000134us (4357416.1 ops/sec):  1115.5 MB/s
@@ -20,7 +21,7 @@ assembly files for the estimated optimal performance, and potentially re-run the
 larger time budget.
 
 ```
-* Testing variant: x4_basic
+* Testing variant: opt/128_x4_basic
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -31,7 +32,7 @@ Did 4694250 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000045us (4694038
 Did 1532000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000568us (1531130.3 ops/sec): 2067.0 MB/s
 Did 310000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001812us (309439.3 ops/sec): 2534.9 MB/s
 Did 158000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1002468us (157611.0 ops/sec): 2582.3 MB/s
-* Testing variant: x4_dual_acc
+* Testing variant: opt/128_x4_dual_acc
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -42,7 +43,7 @@ Did 4788250 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000004us (4788230
 Did 1600000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000239us (1599617.7 ops/sec): 2159.5 MB/s
 Did 331000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001022us (330662.1 ops/sec): 2708.8 MB/s
 Did 169000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1002832us (168522.7 ops/sec): 2761.1 MB/s
-* Testing variant: x4_dual_acc_keep_htable
+* Testing variant: opt/128_x4_dual_acc_keep_htable
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -53,7 +54,7 @@ Did 4868250 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000027us (4868118
 Did 1626750 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000112us (1626567.8 ops/sec): 2195.9 MB/s
 Did 338000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002362us (337203.5 ops/sec): 2762.4 MB/s
 Did 173000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1005519us (172050.5 ops/sec): 2818.9 MB/s
-* Testing variant: x4_ilp
+* Testing variant: opt/128_x4_ilp
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -64,7 +65,7 @@ Did 4720000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000044us (4719792
 Did 1571000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000534us (1570161.5 ops/sec): 2119.7 MB/s
 Did 324000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002998us (323031.6 ops/sec): 2646.3 MB/s
 Did 165000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001960us (164677.2 ops/sec): 2698.1 MB/s
-* Testing variant: x4_keep_htable
+* Testing variant: opt/128_x4_keep_htable
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -75,7 +76,7 @@ Did 4826000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000055us (4825734
 Did 1591000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000033us (1590947.5 ops/sec): 2147.8 MB/s
 Did 332000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000223us (331926.0 ops/sec): 2719.1 MB/s
 Did 170000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1004473us (169243.0 ops/sec): 2772.9 MB/s
-* Testing variant: x4_keep_htable_rotate
+* Testing variant: opt/128_x4_keep_htable_rotate
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -86,7 +87,7 @@ Did 4524000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000203us (4523081
 Did 1592000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000334us (1591468.4 ops/sec): 2148.5 MB/s
 Did 336000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002639us (335115.6 ops/sec): 2745.3 MB/s
 Did 172000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1004174us (171285.1 ops/sec): 2806.3 MB/s
-* Testing variant: x4_late_tag
+* Testing variant: opt/128_x4_late_tag
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -97,7 +98,7 @@ Did 4691000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000098us (4690540
 Did 1531000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000562us (1530140.1 ops/sec): 2065.7 MB/s
 Did 313000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002315us (312277.1 ops/sec): 2558.2 MB/s
 Did 159000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1000392us (158937.7 ops/sec): 2604.0 MB/s
-* Testing variant: x4_reload_round_keys_full
+* Testing variant: opt/128_x4_reload_round_keys_full
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -108,7 +109,7 @@ Did 4724000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000095us (4723551
 Did 1549500 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000157us (1549256.8 ops/sec): 2091.5 MB/s
 Did 317000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001082us (316657.4 ops/sec): 2594.1 MB/s
 Did 162000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1003834us (161381.3 ops/sec): 2644.1 MB/s
-* Testing variant: x4_reload_round_keys_partial
+* Testing variant: opt/128_x4_reload_round_keys_partial
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -119,7 +120,7 @@ Did 4721000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000016us (4720924
 Did 1501000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000076us (1500885.9 ops/sec): 2026.2 MB/s
 Did 311000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001319us (310590.3 ops/sec): 2544.4 MB/s
 Did 159000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1003465us (158451.0 ops/sec): 2596.1 MB/s
-* Testing variant: x4_scalar_iv
+* Testing variant: opt/128_x4_scalar_iv
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -130,7 +131,7 @@ Did 4711750 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000019us (4711660
 Did 1534000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000156us (1533760.7 ops/sec): 2070.6 MB/s
 Did 317000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002604us (316176.7 ops/sec): 2590.1 MB/s
 Did 162000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1004324us (161302.5 ops/sec): 2642.8 MB/s
-* Testing variant: x4_scalar_iv2
+* Testing variant: opt/128_x4_scalar_iv2
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -141,7 +142,7 @@ Did 4687000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000031us (4686854
 Did 1517000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000056us (1516915.1 ops/sec): 2047.8 MB/s
 Did 312000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001024us (311680.8 ops/sec): 2553.3 MB/s
 Did 159000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1000601us (158904.5 ops/sec): 2603.5 MB/s
-* Testing variant: x4_scalar_iv2_late_tag_keep_htable_scalar_rk
+* Testing variant: opt/128_x4_scalar_iv2_late_tag_keep_htable_scalar_rk
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -152,7 +153,7 @@ Did 4695250 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000023us (4695142
 Did 1545000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000492us (1544240.2 ops/sec): 2084.7 MB/s
 Did 317000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000172us (316945.5 ops/sec): 2596.4 MB/s
 Did 162000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1003190us (161484.9 ops/sec): 2645.8 MB/s
-* Testing variant: x4_scalar_iv2_late_tag_keep_htable_scalar_rk
+* Testing variant: opt/128_x4_scalar_iv2_late_tag_keep_htable_scalar_rk
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -163,7 +164,7 @@ Did 4699250 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000027us (4699123
 Did 1549000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000065us (1548899.3 ops/sec): 2091.0 MB/s
 Did 318000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002471us (317216.2 ops/sec): 2598.6 MB/s
 Did 162000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1003250us (161475.2 ops/sec): 2645.6 MB/s
-* Testing variant: x4_scalar_iv_mem
+* Testing variant: opt/128_x4_scalar_iv_mem
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -174,7 +175,7 @@ Did 4824750 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000016us (4824672
 Did 1625000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000082us (1624866.8 ops/sec): 2193.6 MB/s
 Did 342000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001658us (341433.9 ops/sec): 2797.0 MB/s
 Did 175000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1005598us (174025.8 ops/sec): 2851.2 MB/s
-* Testing variant: x4_scalar_iv_mem2
+* Testing variant: opt/128_x4_scalar_iv_mem2
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -185,7 +186,7 @@ Did 4528500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000039us (4528323
 Did 1604750 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000021us (1604716.3 ops/sec): 2166.4 MB/s
 Did 343000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000337us (342884.4 ops/sec): 2808.9 MB/s
 Did 176000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1000352us (175938.1 ops/sec): 2882.6 MB/s
-* Testing variant: x4_scalar_iv_mem2_late_tag_keep_htable_scalar_rk
+* Testing variant: opt/128_x4_scalar_iv_mem2_late_tag_keep_htable_scalar_rk
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -196,7 +197,7 @@ Did 4384000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000080us (4383649
 Did 1477000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000020us (1476970.5 ops/sec): 1993.9 MB/s
 Did 308000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000360us (307889.2 ops/sec): 2522.2 MB/s
 Did 158000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1005629us (157115.6 ops/sec): 2574.2 MB/s
-* Testing variant: x4_scalar_iv_mem_late_tag
+* Testing variant: opt/128_x4_scalar_iv_mem_late_tag
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -207,7 +208,7 @@ Did 4820500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000037us (4820321
 Did 1623000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000605us (1622018.7 ops/sec): 2189.7 MB/s
 Did 339000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001090us (338630.9 ops/sec): 2774.1 MB/s
 Did 173000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001056us (172817.5 ops/sec): 2831.4 MB/s
-* Testing variant: x4_scalar_iv_mem_late_tag_keep_htable
+* Testing variant: opt/128_x4_scalar_iv_mem_late_tag_keep_htable
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -218,7 +219,7 @@ Did 4882000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000090us (4881560
 Did 1647000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000260us (1646571.9 ops/sec): 2222.9 MB/s
 Did 347000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002344us (346188.5 ops/sec): 2836.0 MB/s
 Did 177000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001567us (176723.1 ops/sec): 2895.4 MB/s
-* Testing variant: x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk
+* Testing variant: opt/128_x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -229,7 +230,7 @@ Did 4808500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000008us (4808461
 Did 1607000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000205us (1606670.6 ops/sec): 2169.0 MB/s
 Did 333000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000417us (332861.2 ops/sec): 2726.8 MB/s
 Did 170000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001197us (169796.8 ops/sec): 2782.0 MB/s
-* Testing variant: x4_scalar_iv_mem_late_tag_scalar_rk
+* Testing variant: opt/128_x4_scalar_iv_mem_late_tag_scalar_rk
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -245,7 +246,7 @@ Did 177000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001877us (176668
 ### SLOTHY (clean)
 
 ```
-* Testing variant: x4_basic
+* Testing variant: clean/128_x4_basic
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -256,7 +257,7 @@ Did 4094000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000108us (4093557
 Did 1187000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000091us (1186892.0 ops/sec): 1602.3 MB/s
 Did 230000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001771us (229593.4 ops/sec): 1880.8 MB/s
 Did 117000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1002796us (116673.8 ops/sec): 1911.6 MB/s
-* Testing variant: x4_dual_acc
+* Testing variant: clean/128_x4_dual_acc
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -267,7 +268,7 @@ Did 4165500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000020us (4165416
 Did 1204000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000087us (1203895.3 ops/sec): 1625.3 MB/s
 Did 237000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1004016us (236052.0 ops/sec): 1933.7 MB/s
 Did 120000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1005981us (119286.5 ops/sec): 1954.4 MB/s
-* Testing variant: x4_dual_acc_keep_htable
+* Testing variant: clean/128_x4_dual_acc_keep_htable
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -278,7 +279,7 @@ Did 4125000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000215us (4124113
 Did 1197000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000545us (1196348.0 ops/sec): 1615.1 MB/s
 Did 232000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000410us (231904.9 ops/sec): 1899.8 MB/s
 Did 118000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1006572us (117229.6 ops/sec): 1920.7 MB/s
-* Testing variant: x4_ilp
+* Testing variant: clean/128_x4_ilp
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -289,7 +290,7 @@ Did 4325750 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000032us (4325611
 Did 1320000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000007us (1319990.8 ops/sec): 1782.0 MB/s
 Did 261000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001451us (260621.8 ops/sec): 2135.0 MB/s
 Did 132000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1007071us (131073.2 ops/sec): 2147.5 MB/s
-* Testing variant: x4_keep_htable
+* Testing variant: clean/128_x4_keep_htable
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -300,7 +301,7 @@ Did 4371000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000142us (4370379
 Did 1352000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000410us (1351445.9 ops/sec): 1824.5 MB/s
 Did 266000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000237us (265937.0 ops/sec): 2178.6 MB/s
 Did 135000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1000052us (134993.0 ops/sec): 2211.7 MB/s
-* Testing variant: x4_keep_htable_rotate
+* Testing variant: clean/128_x4_keep_htable_rotate
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -311,7 +312,7 @@ Did 4092000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000182us (4091255
 Did 1314000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000348us (1313542.9 ops/sec): 1773.3 MB/s
 Did 264000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002857us (263247.9 ops/sec): 2156.5 MB/s
 Did 134000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1000009us (133998.8 ops/sec): 2195.4 MB/s
-* Testing variant: x4_late_tag
+* Testing variant: clean/128_x4_late_tag
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -322,7 +323,7 @@ Did 4031000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000025us (4030899
 Did 1171000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000398us (1170534.1 ops/sec): 1580.2 MB/s
 Did 226000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002185us (225507.3 ops/sec): 1847.4 MB/s
 Did 115000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1006855us (114217.0 ops/sec): 1871.3 MB/s
-* Testing variant: x4_reload_round_keys_full
+* Testing variant: clean/128_x4_reload_round_keys_full
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -333,7 +334,7 @@ Did 4031250 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000025us (4031149
 Did 1163000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000638us (1162258.5 ops/sec): 1569.0 MB/s
 Did 223000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1003032us (222325.9 ops/sec): 1821.3 MB/s
 Did 113000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1003704us (112583.0 ops/sec): 1844.6 MB/s
-* Testing variant: x4_reload_round_keys_partial
+* Testing variant: clean/128_x4_reload_round_keys_partial
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -344,7 +345,7 @@ Did 4072500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000059us (4072259
 Did 1173000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000536us (1172371.6 ops/sec): 1582.7 MB/s
 Did 227000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1004213us (226047.7 ops/sec): 1851.8 MB/s
 Did 115000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1005911us (114324.2 ops/sec): 1873.1 MB/s
-* Testing variant: x4_scalar_iv
+* Testing variant: clean/128_x4_scalar_iv
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -355,7 +356,7 @@ Did 3896000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000145us (3895435
 Did 1092000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000776us (1091153.3 ops/sec): 1473.1 MB/s
 Did 212000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1003974us (211160.8 ops/sec): 1729.8 MB/s
 Did 107000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1002490us (106734.2 ops/sec): 1748.7 MB/s
-* Testing variant: x4_scalar_iv2
+* Testing variant: clean/128_x4_scalar_iv2
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -366,7 +367,7 @@ Did 3896750 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000064us (3896500
 Did 1094000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000781us (1093146.3 ops/sec): 1475.7 MB/s
 Did 212000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1003473us (211266.3 ops/sec): 1730.7 MB/s
 Did 107000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001199us (106871.9 ops/sec): 1751.0 MB/s
-* Testing variant: x4_scalar_iv2_late_tag_keep_htable_scalar_rk
+* Testing variant: clean/128_x4_scalar_iv2_late_tag_keep_htable_scalar_rk
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -377,7 +378,7 @@ Did 3851000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000034us (3850869
 Did 1084000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000374us (1083594.7 ops/sec): 1462.9 MB/s
 Did 209000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002928us (208389.8 ops/sec): 1707.1 MB/s
 Did 106000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1007893us (105169.9 ops/sec): 1723.1 MB/s
-* Testing variant: x4_scalar_iv2_late_tag_keep_htable_scalar_rk
+* Testing variant: clean/128_x4_scalar_iv2_late_tag_keep_htable_scalar_rk
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -388,7 +389,7 @@ Did 3856000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000030us (3855884
 Did 1082000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000626us (1081323.1 ops/sec): 1459.8 MB/s
 Did 209000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1003104us (208353.3 ops/sec): 1706.8 MB/s
 Did 106000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1006415us (105324.3 ops/sec): 1725.6 MB/s
-* Testing variant: x4_scalar_iv_mem
+* Testing variant: clean/128_x4_scalar_iv_mem
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -399,7 +400,7 @@ Did 3893000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000106us (3892587
 Did 1086000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000553us (1085399.8 ops/sec): 1465.3 MB/s
 Did 208000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1004058us (207159.3 ops/sec): 1697.0 MB/s
 Did 105000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1002900us (104696.4 ops/sec): 1715.3 MB/s
-* Testing variant: x4_scalar_iv_mem2
+* Testing variant: clean/128_x4_scalar_iv_mem2
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -410,7 +411,7 @@ Did 2943000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000076us (2942776
 Did 761000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000860us (760346.1 ops/sec): 1026.5 MB/s
 Did 142000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000986us (141860.1 ops/sec): 1162.1 MB/s
 Did 72000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1003065us (71780.0 ops/sec): 1176.0 MB/s
-* Testing variant: x4_scalar_iv_mem2_late_tag_keep_htable_scalar_rk
+* Testing variant: clean/128_x4_scalar_iv_mem2_late_tag_keep_htable_scalar_rk
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -421,7 +422,7 @@ Did 2887000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000243us (2886298
 Did 744000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1001310us (743026.6 ops/sec): 1003.1 MB/s
 Did 137000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000813us (136888.7 ops/sec): 1121.4 MB/s
 Did 70000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1014129us (69024.7 ops/sec): 1130.9 MB/s
-* Testing variant: x4_scalar_iv_mem_late_tag
+* Testing variant: clean/128_x4_scalar_iv_mem_late_tag
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -432,7 +433,7 @@ Did 3745500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000049us (3745316
 Did 1024000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000754us (1023228.5 ops/sec): 1381.4 MB/s
 Did 195000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1004482us (194129.9 ops/sec): 1590.3 MB/s
 Did 99000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1008834us (98133.1 ops/sec): 1607.8 MB/s
-* Testing variant: x4_scalar_iv_mem_late_tag_keep_htable
+* Testing variant: clean/128_x4_scalar_iv_mem_late_tag_keep_htable
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -443,7 +444,7 @@ Did 3763000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000013us (3762951
 Did 1034000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000425us (1033560.7 ops/sec): 1395.3 MB/s
 Did 197000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002139us (196579.5 ops/sec): 1610.4 MB/s
 Did 100000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1006244us (99379.5 ops/sec): 1628.2 MB/s
-* Testing variant: x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk
+* Testing variant: clean/128_x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk
  - Copy... OK!
  - Build... OK!
  - Test... OK!
@@ -454,7 +455,7 @@ Did 3802250 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000005us (3802231
 Did 1049000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000055us (1048942.3 ops/sec): 1416.1 MB/s
 Did 200000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001242us (199751.9 ops/sec): 1636.4 MB/s
 Did 102000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1009127us (101077.5 ops/sec): 1656.1 MB/s
-* Testing variant: x4_scalar_iv_mem_late_tag_scalar_rk
+* Testing variant: clean/128_x4_scalar_iv_mem_late_tag_scalar_rk
  - Copy... OK!
  - Build... OK!
  - Test... OK!

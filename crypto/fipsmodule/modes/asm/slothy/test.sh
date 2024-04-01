@@ -28,6 +28,12 @@ if [ "$OPT" = "" ]; then
     echo "Environment variable OPT not set. Defaulting to OPT=0 (testing clean variants)."
 fi
 
+if [ "$OPT" = "0" ]; then
+    OPT_STR="clean"
+else
+    OPT_STR="opt"
+fi
+
 if [ "$VERBOSE" = "" ]; then
     VERBOSE=0
     echo "Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode)."
@@ -78,7 +84,7 @@ bench_variant() {
 }
 
 do_variant() {
-    echo "* Testing variant: $1"
+    echo "* Testing variant: ${OPT_STR}/${SZ}_$1"
     printf " - Copy... "
     set_variant $1
     printf "OK!\n"
