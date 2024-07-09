@@ -1,6 +1,6 @@
 # Benchmarks: Graviton 2
 
-## AES-128-GCM
+## AES-128-GCM Encrypt
 
 ### AWS-LC (5ede432e141172df7ac847b68c40837b7349f1f3)
 
@@ -466,6 +466,151 @@ Did 3872500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000047us (3872318
 Did 1081000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000478us (1080483.5 ops/sec): 1458.7 MB/s
 Did 202000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000267us (201946.1 ops/sec): 1654.3 MB/s
 Did 105000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001476us (104845.2 ops/sec): 1717.8 MB/s
+```
+
+## AES-128-GCM Decrypt
+
+### AWS-LC (5ede432e141172df7ac847b68c40837b7349f1f3)
+
+```
+Did 4758250 EVP-AES-128-GCM decrypt init operations in 1000023us (4758140.6 ops/sec)
+Did 7069750 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000030us (7069537.9 ops/sec): 113.1 MB/s
+Did 4394000 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000123us (4393459.6 ops/sec): 1124.7 MB/s
+Did 1439000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000099us (1438857.6 ops/sec): 1942.5 MB/s
+Did 291000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1000594us (290827.2 ops/sec): 2382.5 MB/s
+Did 149000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1005229us (148224.9 ops/sec): 2428.5 MB/s
+```
+
+### SLOTHY (optimized)
+
+NOTE: The optimizations below were run with a low timeout of 30min per SLOTHY run. See the optimized
+assembly files for the estimated optimal performance, and potentially re-run the optimizer with a
+larger time budget.
+
+```
+* Testing variant: opt/dec/128_x4_basic
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4723500 EVP-AES-128-GCM decrypt init operations in 1000028us (4723367.7 ops/sec)
+Did 7859750 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000021us (7859584.9 ops/sec): 125.8 MB/s
+Did 4786250 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000009us (4786206.9 ops/sec): 1225.3 MB/s
+Did 1580500 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000029us (1580454.2 ops/sec): 2133.6 MB/s
+Did 328000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1001425us (327533.3 ops/sec): 2683.2 MB/s
+Did 167000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1004095us (166318.9 ops/sec): 2725.0 MB/s
+
+* Testing variant: opt/dec/128_x4_keep_htable
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4708750 EVP-AES-128-GCM decrypt init operations in 1000017us (4708670.0 ops/sec)
+Did 7368750 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000017us (7368624.7 ops/sec): 117.9 MB/s
+Did 4591000 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000175us (4590196.7 ops/sec): 1175.1 MB/s
+Did 1592000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000187us (1591702.4 ops/sec): 2148.8 MB/s
+Did 332000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1000610us (331797.6 ops/sec): 2718.1 MB/s
+Did 170000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1000170us (169971.1 ops/sec): 2784.8 MB/s
+
+* Testing variant: opt/dec/128_x4_scalar_iv_mem2
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4710250 EVP-AES-128-GCM decrypt init operations in 1000042us (4710052.2 ops/sec)
+Did 7329500 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000010us (7329426.7 ops/sec): 117.3 MB/s
+Did 4525000 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000023us (4524895.9 ops/sec): 1158.4 MB/s
+Did 1618000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000244us (1617605.3 ops/sec): 2183.8 MB/s
+Did 343000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1001341us (342540.7 ops/sec): 2806.1 MB/s
+Did 176000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1004341us (175239.3 ops/sec): 2871.1 MB/s
+
+* Testing variant: opt/dec/128_x4_scalar_iv_mem_late_tag
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4713750 EVP-AES-128-GCM decrypt init operations in 1000009us (4713707.6 ops/sec)
+Did 7739000 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000023us (7738822.0 ops/sec): 123.8 MB/s
+Did 4789000 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000007us (4788966.5 ops/sec): 1226.0 MB/s
+Did 1646250 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000048us (1646171.0 ops/sec): 2222.3 MB/s
+Did 345000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1002177us (344250.6 ops/sec): 2820.1 MB/s
+Did 176000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1000969us (175829.6 ops/sec): 2880.8 MB/s
+
+* Testing variant: opt/dec/128_x4_scalar_iv_mem_late_tag_keep_htable
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4718000 EVP-AES-128-GCM decrypt init operations in 1000164us (4717226.4 ops/sec)
+Did 7737750 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000008us (7737688.1 ops/sec): 123.8 MB/s
+Did 4753750 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000014us (4753683.4 ops/sec): 1216.9 MB/s
+Did 1597000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000120us (1596808.4 ops/sec): 2155.7 MB/s
+Did 330000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1000013us (329995.7 ops/sec): 2703.3 MB/s
+Did 169000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1004000us (168326.7 ops/sec): 2757.9 MB/s
+```
+
+### SLOTHY (clean)
+
+```
+* Testing variant: clean/dec/128_x4_basic
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4676000 EVP-AES-128-GCM decrypt init operations in 1000172us (4675195.9 ops/sec)
+Did 7819250 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000019us (7819101.4 ops/sec): 125.1 MB/s
+Did 4292000 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000110us (4291527.9 ops/sec): 1098.6 MB/s
+Did 1328000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000125us (1327834.0 ops/sec): 1792.6 MB/s
+Did 264000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1000953us (263748.6 ops/sec): 2160.6 MB/s
+Did 135000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1007009us (134060.4 ops/sec): 2196.4 MB/s
+
+* Testing variant: clean/dec/128_x4_keep_htable
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4717500 EVP-AES-128-GCM decrypt init operations in 1000038us (4717320.7 ops/sec)
+Did 7892000 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000023us (7891818.5 ops/sec): 126.3 MB/s
+Did 4254500 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000055us (4254266.0 ops/sec): 1089.1 MB/s
+Did 1311750 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000081us (1311643.8 ops/sec): 1770.7 MB/s
+Did 259000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1001770us (258542.4 ops/sec): 2118.0 MB/s
+Did 132000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1002755us (131637.3 ops/sec): 2156.7 MB/s
+
+* Testing variant: clean/dec/128_x4_scalar_iv_mem2
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4683000 EVP-AES-128-GCM decrypt init operations in 1000053us (4682751.8 ops/sec)
+Did 7331250 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000023us (7331081.4 ops/sec): 117.3 MB/s
+Did 2840250 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000043us (2840127.9 ops/sec): 727.1 MB/s
+Did 738000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000059us (737956.5 ops/sec): 996.2 MB/s
+Did 135000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1002031us (134726.4 ops/sec): 1103.7 MB/s
+Did 68000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1000915us (67937.8 ops/sec): 1113.1 MB/s
+
+* Testing variant: clean/dec/128_x4_scalar_iv_mem_late_tag
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4691000 EVP-AES-128-GCM decrypt init operations in 1000090us (4690577.8 ops/sec)
+Did 7742750 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000022us (7742579.7 ops/sec): 123.9 MB/s
+Did 4149750 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000011us (4149704.4 ops/sec): 1062.3 MB/s
+Did 1252000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000493us (1251383.1 ops/sec): 1689.4 MB/s
+Did 246000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1001144us (245718.9 ops/sec): 2012.9 MB/s
+Did 125000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1002461us (124693.1 ops/sec): 2043.0 MB/s
+
+* Testing variant: clean/dec/128_x4_scalar_iv_mem_late_tag_keep_htable
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4724000 EVP-AES-128-GCM decrypt init operations in 1000164us (4723225.4 ops/sec)
+Did 7816250 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000005us (7816210.9 ops/sec): 125.1 MB/s
+Did 4177500 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000024us (4177399.7 ops/sec): 1069.4 MB/s
+Did 1254000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000268us (1253664.0 ops/sec): 1692.4 MB/s
+Did 246000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1000221us (245945.6 ops/sec): 2014.8 MB/s
+Did 125000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1001957us (124755.9 ops/sec): 2044.0 MB/s
 ```
 
 ## AES-192-GCM
