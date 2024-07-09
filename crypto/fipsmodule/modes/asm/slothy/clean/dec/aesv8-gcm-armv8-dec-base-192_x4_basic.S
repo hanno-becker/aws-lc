@@ -9,7 +9,7 @@
 // MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
 // SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
 // WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
-// OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+// OF CONTRACT, NEGLIGDECE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 // CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. */
 
 // Author: Hanno Becker <hannobecker@posteo.de>
@@ -39,9 +39,9 @@
 #include <openssl/arm_arch.h>
 .arch   armv8-a+crypto
 .text
-.globl  aes_gcm_enc_kernel_slothy_base_192
-.hidden aes_gcm_enc_kernel_slothy_base_192
-.type   aes_gcm_enc_kernel_slothy_base_192,%function
+.globl  aes_gcm_dec_kernel_slothy_base_192
+.hidden aes_gcm_dec_kernel_slothy_base_192
+.type   aes_gcm_dec_kernel_slothy_base_192,%function
 #elif defined(__APPLE__)
 #if defined(BORINGSSL_PREFIX)
 #include <boringssl_prefix_symbols_asm.h>

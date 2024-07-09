@@ -613,7 +613,7 @@ Did 246000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1000221us (245945.
 Did 125000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1001957us (124755.9 ops/sec): 2044.0 MB/s
 ```
 
-## AES-192-GCM
+## AES-192-GCM Encrypt
 
 ### AWS-LC (5ede432e141172df7ac847b68c40837b7349f1f3)
 
@@ -686,7 +686,42 @@ SLOTHY expectation would correspond to:
 - 64/62 * 2.5ghz = 2.58gb/s
 ```
 
-## AES-256-GCM
+## AES-192-GCM Decrypt
+
+### AWS-LC (5ede432e141172df7ac847b68c40837b7349f1f3)
+
+```
+Did 4735000 EVP-AES-192-GCM decrypt init operations in 1000048us (4734772.7 ops/sec)
+Did 6831250 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000026us (6831072.4 ops/sec): 109.3 MB/s
+Did 4160250 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000067us (4159971.3 ops/sec): 1065.0 MB/s
+Did 1330000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1000596us (1329207.8 ops/sec): 1794.4 MB/s
+Did 267000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1001065us (266715.9 ops/sec): 2184.9 MB/s
+Did 136000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1001676us (135772.4 ops/sec): 2224.5 MB/s
+```
+
+### SLOTHY (optimized)
+
+```
+Did 4674750 EVP-AES-192-GCM decrypt init operations in 1000024us (4674637.8 ops/sec)
+Did 7724250 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000009us (7724180.5 ops/sec): 123.6 MB/s
+Did 4496250 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000036us (4496088.1 ops/sec): 1151.0 MB/s
+Did 1455000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1000063us (1454908.3 ops/sec): 1964.1 MB/s
+Did 296000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1000931us (295724.7 ops/sec): 2422.6 MB/s
+Did 151000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1002217us (150666.0 ops/sec): 2468.5 MB/s
+```
+
+### SLOTHY (clean)
+
+```
+Did 4727250 EVP-AES-192-GCM decrypt init operations in 1000022us (4727146.0 ops/sec)
+Did 7723000 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000002us (7722984.6 ops/sec): 123.6 MB/s
+Did 3958250 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000054us (3958036.3 ops/sec): 1013.3 MB/s
+Did 1177000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1000698us (1176179.0 ops/sec): 1587.8 MB/s
+Did 229000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1003169us (228276.6 ops/sec): 1870.0 MB/s
+Did 116000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1001918us (115777.9 ops/sec): 1896.9 MB/s
+```
+
+## AES-256-GCM Encrypt
 
 ### AWS-LC
 
@@ -782,4 +817,39 @@ SLOTHY expectations:
 SLOTHY expectations would correspond to:
 - 64/70 * 2.5ghz = 2.28gb/s
 
+```
+
+## AES-256-GCM Decrypt
+
+### AWS-LC (5ede432e141172df7ac847b68c40837b7349f1f3)
+
+```
+Did 4578250 EVP-AES-256-GCM decrypt init operations in 1000007us (4578218.0 ops/sec)
+Did 6597500 EVP-AES-256-GCM decrypt (16 bytes) operations in 1000010us (6597434.0 ops/sec): 105.6 MB/s
+Did 3917000 EVP-AES-256-GCM decrypt (256 bytes) operations in 1000040us (3916843.3 ops/sec): 1002.7 MB/s
+Did 1216000 EVP-AES-256-GCM decrypt (1350 bytes) operations in 1000043us (1215947.7 ops/sec): 1641.5 MB/s
+Did 241000 EVP-AES-256-GCM decrypt (8192 bytes) operations in 1002470us (240406.2 ops/sec): 1969.4 MB/s
+Did 123000 EVP-AES-256-GCM decrypt (16384 bytes) operations in 1006915us (122155.3 ops/sec): 2001.4 MB/s
+```
+
+### SLOTHY (optimized)
+
+```
+Did 4537250 EVP-AES-256-GCM decrypt init operations in 1000027us (4537127.5 ops/sec)
+Did 7463500 EVP-AES-256-GCM decrypt (16 bytes) operations in 1000012us (7463410.4 ops/sec): 119.4 MB/s
+Did 4181750 EVP-AES-256-GCM decrypt (256 bytes) operations in 1000029us (4181628.7 ops/sec): 1070.5 MB/s
+Did 1327000 EVP-AES-256-GCM decrypt (1350 bytes) operations in 1000064us (1326915.1 ops/sec): 1791.3 MB/s
+Did 268000 EVP-AES-256-GCM decrypt (8192 bytes) operations in 1001700us (267545.2 ops/sec): 2191.7 MB/s
+Did 137000 EVP-AES-256-GCM decrypt (16384 bytes) operations in 1005600us (136237.1 ops/sec): 2232.1 MB/s
+```
+
+### SLOTHY (clean)
+
+```
+Did 4543750 EVP-AES-256-GCM decrypt init operations in 1000004us (4543731.8 ops/sec)
+Did 7462500 EVP-AES-256-GCM decrypt (16 bytes) operations in 1000009us (7462432.8 ops/sec): 119.4 MB/s
+Did 3689500 EVP-AES-256-GCM decrypt (256 bytes) operations in 1000067us (3689252.8 ops/sec): 944.4 MB/s
+Did 1074000 EVP-AES-256-GCM decrypt (1350 bytes) operations in 1000204us (1073780.9 ops/sec): 1449.6 MB/s
+Did 206000 EVP-AES-256-GCM decrypt (8192 bytes) operations in 1000826us (205830.0 ops/sec): 1686.2 MB/s
+Did 104000 EVP-AES-256-GCM decrypt (16384 bytes) operations in 1000103us (103989.3 ops/sec): 1703.8 MB/s
 ```
