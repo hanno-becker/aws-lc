@@ -74,17 +74,11 @@ full_blocks     .req x7
 remainder       .req x9
 unroll          .req x10
 
-aes_st0    .req v0
-aes_st0_q  .req q0
+aes_st    .req v0
+aes_st_q  .req q0
 
-aes_st1    .req v2
-aes_st1_q  .req q2
-
-res0       .req v0
-res0_q     .req q0
-
-res1       .req v2
-res1_q     .req q2
+res       .req v0
+res_q     .req q0
 
 ghash_hi    .req v9
 ghash_lo    .req v8
@@ -116,22 +110,6 @@ Ht3    .req Ht1
 Ht4    .req Ht2
 Ht34   .req Ht12
 
-Ht5q    .req Ht1q
-Ht6q    .req Ht2q
-Ht56q   .req Ht12q
-
-Ht5    .req Ht1
-Ht6    .req Ht2
-Ht56   .req Ht12
-
-Ht7q    .req Ht1q
-Ht8q    .req Ht2q
-Ht78q   .req Ht12q
-
-Ht7    .req Ht1
-Ht8    .req Ht2
-Ht78   .req Ht12
-
 rk0q   .req q18
 rk1q   .req q19
 rk2q   .req q20
@@ -147,7 +125,7 @@ rk10q  .req q28
 rk11q  .req q15
 rk12q  .req q16
 rk13q  .req q17
-rk14q  .req q1
+rk14q  .req q2
 
 rk0    .req v18
 rk1    .req v19
@@ -164,7 +142,7 @@ rk10   .req v28
 rk11   .req v15
 rk12   .req v16
 rk13   .req v17
-rk14   .req v1
+rk14   .req v2
 
 plain   .req v29
 plain_q .req q29
@@ -221,10 +199,14 @@ tag_q  .req q11
         ldp x29, x30, [sp, #(STACK_BASE_GPRS + 16*5)]
 .endm
 
+// Derive number of iterations of unrolled loop and single-block loop
 .macro prepare_loop_counts
         mov  unroll, #UNROLL
+        // Number of AES Blocks (16b each)
         lsr  full_blocks, byte_len, #4
+        // Number of iterations of the unrolled loop
         udiv count, full_blocks, unroll
+        // Number of iterations for the tail loop handling 1 block each
         msub remainder, count, unroll, full_blocks
 .endm
 
@@ -235,17 +217,20 @@ tag_q  .req q11
 .macro load_iv
         ldr     rtmp_ctr_q, [ivec]
 
-	mov	constant_temp, #0x100000000   // set up counter increment
+        // set up counter increment
+	mov	constant_temp, #0x100000000
 	movi	rctr_inc.16b,  #0x0
 	fmov	rctr_inc.d[1], constant_temp
 
         rev32   rtmp_ctr.16b, rtmp_ctr.16b
 .endm
 
+// Increase AES counter
 .macro aes_ctr_inc
         add    rtmp_ctr.4s, rtmp_ctr.4s, rctr_inc.4s
 .endm
 
+// Increase AES counter and initialize new AES state
 .macro next_ctr_init_aes aes_st
         rev32  \aes_st\().16b, rtmp_ctr.16b
         aes_ctr_inc
@@ -295,7 +280,7 @@ tag_q  .req q11
         next_ctr_init_aes \aes_st
         aesr_0_8   \aes_st\(), rk
         aesr_9_10  \aes_st\(), rk
-        aesr_11_12  \aes_st\(), rk
+        aesr_11_12 \aes_st\(), rk
         aesr_final \aes_st, \input, \output
 .endm
 
@@ -343,22 +328,6 @@ tag_q  .req q11
         ldr \dst_q, [Htable, #80]
 .endm
 
-.macro load_h5 dst, dst_q
-        ldr \dst_q, [Htable, #96]
-.endm
-
-.macro load_h6 dst, dst_q
-        ldr \dst_q, [Htable, #128]
-.endm
-
-.macro load_h7 dst, dst_q
-        ldr \dst_q, [Htable, #144]
-.endm
-
-.macro load_h8 dst, dst_q
-        ldr \dst_q, [Htable, #176]
-.endm
-
 .macro load_h12 dst, dst_q
         ldr \dst_q, [Htable, #16]
 .endm
@@ -367,24 +336,13 @@ tag_q  .req q11
         ldr \dst_q, [Htable, #64]
 .endm
 
-.macro load_h56 dst, dst_q
-        ldr \dst_q, [Htable, #112]
-.endm
-
-.macro load_h78 dst, dst_q
-        ldr \dst_q, [Htable, #160]
-.endm
-
 .macro load_full_htable
         load_h1  Ht1,  Ht1q
         load_h2  Ht2,  Ht2q
         load_h3  Ht3,  Ht3q
         load_h4  Ht4,  Ht4q
-        load_h5  Ht5,  Ht5q
-        load_h6  Ht6,  Ht6q
         load_h12 Ht12, Ht12q
         load_h34 Ht34, Ht34q
-        load_h56 Ht56, Ht56q
 .endm
 
 .macro load_htable_12
@@ -399,67 +357,9 @@ tag_q  .req q11
         load_h34 Ht34, Ht34q
 .endm
 
-.macro load_htable_56
-        load_h5  Ht5,  Ht5q
-        load_h6  Ht6,  Ht6q
-        load_h56 Ht56, Ht56q
-.endm
-
-.macro load_htable_78
-        load_h7  Ht7,  Ht7q
-        load_h8  Ht8,  Ht8q
-        load_h78 Ht78, Ht78q
-.endm
-
 /********************************************************************/
 /*                    Macros for GHASH udpate                       */
 /********************************************************************/
-
-.macro ghash_init_pair inputa, inputb, Ha, Hb, Hk_mid
-        rev64 \inputa\().16b, \inputa\().16b
-        rev64 \inputb\().16b, \inputb\().16b
-        eor   \inputa\().16b, \inputa\().16b, tag.16b
-
-        // Low product
-        pmull   ghash_lo.1q,  \inputa\().1d, \Ha\().1d
-        pmull   ghash_tmp.1q, \inputb\().1d, \Hb\().1d
-        eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
-        // High product
-        pmull2  ghash_hi.1q, \inputa\().2d, \Ha\().2d
-        pmull2  ghash_tmp.1q, \inputb\().2d, \Hb\().2d
-        eor     ghash_hi.16b, ghash_hi.16b, ghash_tmp.16b
-        // Middle product
-        trn1    ghash_tmp.2d,  \inputb\().2d, \inputa\().2d
-        trn2    \inputb\().2d, \inputb\().2d, \inputa\().2d
-        eor     ghash_tmp.16b, ghash_tmp.16b, \inputb\().16b
-        pmull2  ghash_mid.1q, ghash_tmp.2d, \Hk_mid\().2d
-        pmull   ghash_tmp.1q, ghash_tmp.1d, \Hk_mid\().1d
-        eor     ghash_mid.16b, ghash_mid.16b, ghash_tmp.16b
-.endm
-
-.macro ghash_acc_pair inputa, inputb, Ha, Hb, Hk_mid
-        rev64 \inputa\().16b, \inputa\().16b
-        rev64 \inputb\().16b, \inputb\().16b
-
-        // Low product
-        pmull   ghash_tmp.1q, \inputa\().1d, \Ha\().1d
-        eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
-        pmull   ghash_tmp.1q, \inputb\().1d, \Hb\().1d
-        eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
-        // High product
-        pmull2  ghash_tmp.1q, \inputa\().2d, \Ha\().2d
-        eor     ghash_hi.16b, ghash_hi.16b, ghash_tmp.16b
-        pmull2  ghash_tmp.1q, \inputb\().2d, \Hb\().2d
-        eor     ghash_hi.16b, ghash_hi.16b, ghash_tmp.16b
-        // Middle product
-        trn1    ghash_tmp.2d,  \inputb\().2d, \inputa\().2d
-        trn2    \inputb\().2d, \inputb\().2d, \inputa\().2d
-        eor     ghash_tmp.16b, ghash_tmp.16b, \inputb\().16b
-        pmull2  \inputa\().1q, ghash_tmp.2d, \Hk_mid\().2d
-        eor     ghash_mid.16b, ghash_mid.16b, \inputa\().16b
-        pmull   ghash_tmp.1q, ghash_tmp.1d, \Hk_mid\().1d
-        eor     ghash_mid.16b, ghash_mid.16b, ghash_tmp.16b
-.endm
 
 .macro ghash_init_0 input, Hk, Hk_mid, tag
         rev64 \input\().16b, \input\().16b
@@ -557,7 +457,7 @@ aes_gcm_enc_kernel_slothy_base_256:
         strb  w10, [x9,#2] // kFlag_aes_gcm_enc_kernel
 #endif
 
-        AARCH64_SIGN_LINK_REGISTER
+        AARCH64_VALID_CALL_TARGET
         sub sp, sp, #STACK_SIZE
 
 Lenc_preamble_start:
@@ -578,29 +478,31 @@ Lenc_preamble_end:
         cbz count, Lloop_unrolled_end
 Lloop_unrolled_start:
 
-        load_round_key 14
-
         ldr plain_q, [input], #(4*16)
-        aes_full_block aes_st0, plain, res0
-        str res0_q, [output], #(4*16)
-
-        ldr plain_q, [input, #(-3*16)]
-        aes_full_block aes_st1, plain, res1
-        str res1_q, [output, #(-3*16)]
+        aes_full_block aes_st, plain, res
+        str res_q, [output], #(4*16)
 
         load_htable_34
-        ghash_init_pair res0, res1, Ht4, Ht3, Ht34
+        ghash_init_1 res, Ht4, Ht34, tag
+
+        ldr plain_q, [input, #(-3*16)]
+        aes_full_block aes_st, plain, res
+        str res_q, [output, #(-3*16)]
+
+        ghash_acc_0 res, Ht3, Ht34
 
         ldr plain_q, [input, #(-2*16)]
-        aes_full_block aes_st0, plain, res0
-        str res0_q, [output, #(-2*16)]
-
-        ldr plain_q, [input, #(-1*16)]
-        aes_full_block aes_st1, plain, res1
-        str res1_q, [output, #(-1*16)]
+        aes_full_block aes_st, plain, res
+        str res_q, [output, #(-2*16)]
 
         load_htable_12
-        ghash_acc_pair res0, res1, Ht2, Ht1, Ht12
+        ghash_acc_1 res, Ht2, Ht12
+
+        ldr plain_q, [input, #(-1*16)]
+        aes_full_block aes_st, plain, res
+        str res_q, [output, #(-1*16)]
+
+        ghash_acc_0 res, Ht1, Ht12
 
         ghash_finalize tag
 
@@ -613,12 +515,10 @@ Lloop_unrolled_end:
         cbz remainder, Lloop_1x_end
 Lloop_1x_start:
 
-        load_round_key 14
-
         ldr plain_q, [input], #16
-        aes_full_block aes_st0, plain, res0
-        str res0_q, [output], #16
-        ghash_init_0 res0, Ht1, Ht12, tag
+        aes_full_block aes_st, plain, res
+        str res_q, [output], #16
+        ghash_init_0 res, Ht1, Ht12, tag
 
         ghash_finalize tag
 
@@ -641,7 +541,6 @@ Lloop_1x_end:
 Lenc_postamble_end:
         add sp, sp, #STACK_SIZE
 
-        AARCH64_VALIDATE_LINK_REGISTER
         ret
 
 #endif

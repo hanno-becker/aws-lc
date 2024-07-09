@@ -3,7 +3,7 @@
 # Build and test AES-GCM variants
 #
 # Usage:
-# > [BENCH=0/1] [AWS_LC_BASE=PATH] [BUILD_DIR=DIRNAME] [VERBOSE=0/1] [OPT=0/1] test.sh [variant]
+# > [ENC=0/1] [BENCH=0/1] [AWS_LC_BASE=PATH] [BUILD_DIR=DIRNAME] [VERBOSE=0/1] [OPT=0/1] test.sh [variant]
 #
 # This script tests that the assembly files in clean/ or opt/ can be used as drop-in
 # replacements for the default aesv8-gcm-armv8-base-{128,192,256}
@@ -34,6 +34,17 @@ else
     OPT_STR="opt"
 fi
 
+if [ "$ENC" = "" ]; then
+    echo "Environment variable ENC not set. Defaulting to ENC=1 (encryption)."
+    ENC=1
+fi
+
+if [ "$ENC" = "1" ]; then
+    ENCDEC="enc"
+else
+    ENCDEC="dec"
+fi
+
 if [ "$VERBOSE" = "" ]; then
     VERBOSE=0
     echo "Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode)."
@@ -48,15 +59,16 @@ TIMEOUT=5 # Run tests for 5 seconds -- they often hang upon a bug
 KEEP_GOING=${KEEP_GOING:=0}
 
 ASM_DIR=../
-AES_SLOTHY_ASM=aesv8-gcm-armv8-slothy-${SZ}.S
 
 if [ "$OPT" = "0" ]; then
-    DIR=./clean
-    FILE_STEM=aesv8-gcm-armv8-base-${SZ}
+    DIR=./clean/${ENCDEC}
+    FILE_STEM=aesv8-gcm-armv8-${ENCDEC}-base-${SZ}
 else
-    DIR=./opt
-    FILE_STEM=aesv8-gcm-armv8-opt-${SZ}
+    DIR=./opt/${ENCDEC}
+    FILE_STEM=aesv8-gcm-armv8-${ENCDEC}-opt-${SZ}
 fi
+
+AES_SLOTHY_ASM=aesv8-gcm-armv8-${ENCDEC}-slothy-${SZ}.S
 
 set_variant() {
     cp $DIR/${FILE_STEM}_$1.S $ASM_DIR/$AES_SLOTHY_ASM
@@ -84,7 +96,7 @@ bench_variant() {
 }
 
 do_variant() {
-    echo "* Testing variant: ${OPT_STR}/${SZ}_$1"
+    echo "* Testing variant: ${OPT_STR}/${ENCDEC}/${SZ}_$1"
     printf " - Copy... "
     set_variant $1
     printf "OK!\n"
@@ -115,50 +127,26 @@ do_variant() {
     fi
 }
 
+list_variants() {
+    SZ=$1
+    UNROLL=$2
+    DIR=$3
+    VARIANTS=$( (ls -1 ./${DIR}/*${SZ}*${UNROLL}*.S | sed -n 's/.*'"${UNROLL}"'_\(.*\)\.S/\1/p' | tr '\n' ' ') 2>/dev/null || echo "")
+    echo $VARIANTS
+}
 
-if [ $SZ = "128" ]; then
-    VARIANTS="
-    x4_basic
-    x4_late_tag
-    x4_ilp
-    x4_dual_acc
-    x4_dual_acc_keep_htable
-    x4_keep_htable
-    x4_keep_htable_rotate
-    x4_reload_round_keys_partial
-    x4_reload_round_keys_full
-    x4_scalar_iv
-    x4_scalar_iv_mem
-    x4_scalar_iv_mem_late_tag
-    x4_scalar_iv_mem_late_tag_keep_htable
-    x6_basic
-    x8_basic
-    x6_ilp
-    x8_ilp
-    x8_ilp_dual_acc
-    x8_ilp_rotate
-    x8_ilp_rotate_dual_acc
-    x8_ilp_rotate_manual_eor3
-    x8_reload
-    x8_reload_ldp_stp
-    x8_reload_ldp_stp_dual_acc
-    x8_reload_ldp_stp_simpler
-    x8_reload_ldp_stp_simpler_manual_rotate
-    "
-elif [ $SZ = "192" ]; then
-    VARIANTS="
-    x4_basic
-    x4_reload_round_keys_partial
-    "
-else
-    VARIANTS="
-    x4_basic
-    x4_reload_round_keys_partial
-    "
-fi
+VARIANTS=""
+for UNROLL in x4 x6 x8
+do
+    for V in $(list_variants $SZ $UNROLL $DIR);
+    do
+    VARIANTS="$VARIANTS
+      ${UNROLL}_$V"
+    done
+done
 
 if [ "$1" = "--help" ]; then
-    echo "Usage: [VERBOSE=0/1] [OPT=0/1] test.sh [variant]"
+    echo "Usage: [ENC=0/1] [BENCH=0/1] [AWS_LC_BASE=PATH] [BUILD_DIR=DIRNAME] [VERBOSE=0/1] [OPT=0/1] test.sh [variant]"
     echo "Valid values for 'variant' are:"
     for var in $VARIANTS; do
         echo "* $var"

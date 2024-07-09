@@ -183,9 +183,12 @@ if(ARCH STREQUAL "aarch64")
     test/trampoline-armv8.${ASM_EXT}
     cipher_extra/chacha20_poly1305_armv8.${ASM_EXT}
 
-    fipsmodule/modes/asm/aesv8-gcm-armv8-slothy-128.S
-    fipsmodule/modes/asm/aesv8-gcm-armv8-slothy-192.S
-    fipsmodule/modes/asm/aesv8-gcm-armv8-slothy-256.S
+    fipsmodule/modes/asm/aesv8-gcm-armv8-enc-slothy-128.S
+    fipsmodule/modes/asm/aesv8-gcm-armv8-enc-slothy-192.S
+    fipsmodule/modes/asm/aesv8-gcm-armv8-enc-slothy-256.S
+    fipsmodule/modes/asm/aesv8-gcm-armv8-dec-slothy-128.S
+    fipsmodule/modes/asm/aesv8-gcm-armv8-dec-slothy-192.S
+    fipsmodule/modes/asm/aesv8-gcm-armv8-dec-slothy-256.S
   )
 endif()
 

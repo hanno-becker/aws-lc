@@ -24,6 +24,17 @@ if [ "$SZ" = "" ]; then
     echo "No keysize specified -- defaulting to 128 bit"
 fi
 
+if [ "$ENC" = "" ]; then
+    echo "Environment variable ENC not set. Defaulting to ENC=1 (encryption)."
+    ENC=1
+fi
+
+if [ "$ENC" = "1" ]; then
+    ENCDEC="enc"
+else
+    ENCDEC="dec"
+fi
+
 if [ "$AWS_LC_BASE" = "" ]; then
     # Oof... bit gross
     AWS_LC_BASE=$(dirname $(dirname $(dirname $(dirname $(dirname $(pwd))))))
@@ -32,9 +43,9 @@ fi
 
 BUILD_DIR=build_release
 
-CLEAN_STEM=aesv8-gcm-armv8-base-${SZ}
-OPT_STEM=aesv8-gcm-armv8-opt-${SZ}
-TMP_STEM=aesv8-gcm-armv8-tmp-${SZ}
+CLEAN_STEM=aesv8-gcm-armv8-${ENCDEC}-base-${SZ}
+OPT_STEM=aesv8-gcm-armv8-${ENCDEC}-opt-${SZ}
+TMP_STEM=aesv8-gcm-armv8-${ENCDEC}-tmp-${SZ}
 
 UARCH=${UARCH:=N1}
 if [ $UARCH = "N1" ]; then
@@ -46,46 +57,23 @@ else
     exit 1
 fi
 
-if [ $SZ = "128" ]; then
-    VARIANTS_ALL="
-    x4_basic
-    x4_late_tag
-    x4_ilp
-    x4_dual_acc
-    x4_dual_acc_keep_htable
-    x4_keep_htable
-    x4_keep_htable_rotate
-    x4_reload_round_keys_partial
-    x4_reload_round_keys_full
-    x4_scalar_iv
-    x4_scalar_iv_mem
-    x4_scalar_iv_mem_late_tag
-    x4_scalar_iv_mem_late_tag_keep_htable
-    x6_basic
-    x8_basic
-    x6_ilp
-    x8_ilp
-    x8_ilp_dual_acc
-    x8_ilp_rotate
-    x8_ilp_rotate_dual_acc
-    x8_ilp_rotate_manual_eor3
-    x8_reload
-    x8_reload_ldp_stp
-    x8_reload_ldp_stp_dual_acc
-    x8_reload_ldp_stp_simpler
-    x8_reload_ldp_stp_simpler_manual_rotate
-    "
-elif [ $SZ = "192" ]; then
-    VARIANTS_ALL="
-    x4_basic
-    x4_reload_round_keys_partial
-    "
-else
-    VARIANTS_ALL="
-    x4_basic
-    x4_reload_round_keys_partial
-    "
-fi
+list_variants() {
+    SZ=$1
+    UNROLL=$2
+    DIR=$3
+    VARIANTS=$( (ls -1 ./${DIR}/*${SZ}*${UNROLL}*.S | sed -n 's/.*'"${UNROLL}"'_\(.*\)\.S/\1/p' | tr '\n' ' ') 2>/dev/null || echo "")
+    echo $VARIANTS
+}
+
+VARIANTS_ALL=""
+for UNROLL in x4 x6 x8
+do
+    for V in $(list_variants $SZ $UNROLL "clean/${ENCDEC}");
+    do
+    VARIANTS_ALL="$VARIANTS_ALL
+      ${UNROLL}_$V"
+    done
+done
 
 VERBOSE=${VERBOSE:=0}
 TIMEOUT=${TIMEOUT:=1200} # 20min timeout by default
@@ -181,8 +169,8 @@ optimize_generic() {
 
 optimize_variant() {
     echo "Optimizing variant $1 ..."
-    INFILE=$CLEAN_DIR/${CLEAN_STEM}_$1.S
-    OUTFILE=$OPT_DIR/${OPT_STEM}_$1.S
+    INFILE=$CLEAN_DIR/${ENCDEC}/${CLEAN_STEM}_$1.S
+    OUTFILE=$OPT_DIR/${ENCDEC}/${OPT_STEM}_$1.S
     TMP0=$TMP_DIR/${TMP_STEM}_$1_0.S
     TMP1=$TMP_DIR/${TMP_STEM}_$1_1.S
     TMP2=$TMP_DIR/${TMP_STEM}_$1_2.S

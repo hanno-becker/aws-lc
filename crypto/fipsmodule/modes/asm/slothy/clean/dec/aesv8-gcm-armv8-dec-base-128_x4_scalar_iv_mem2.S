@@ -39,17 +39,17 @@
 #include <openssl/arm_arch.h>
 .arch   armv8-a+crypto
 .text
-.globl  aes_gcm_enc_kernel_slothy_base_192
-.hidden aes_gcm_enc_kernel_slothy_base_192
-.type   aes_gcm_enc_kernel_slothy_base_192,%function
+.globl  aes_gcm_dec_kernel_slothy_base_128
+.hidden aes_gcm_dec_kernel_slothy_base_128
+.type   aes_gcm_dec_kernel_slothy_base_128,%function
 #elif defined(__APPLE__)
 #if defined(BORINGSSL_PREFIX)
 #include <boringssl_prefix_symbols_asm.h>
 #endif
 #include <openssl/arm_arch.h>
 .text
-.globl	_aes_gcm_enc_kernel_slothy_base_192
-.private_extern	_aes_gcm_enc_kernel_slothy_base_192
+.globl	_aes_gcm_dec_kernel_slothy_base_128
+.private_extern	_aes_gcm_dec_kernel_slothy_base_128
 #else
 #error Unknown configuration
 #endif
@@ -74,17 +74,22 @@ full_blocks     .req x7
 remainder       .req x9
 unroll          .req x10
 
-aes_st0    .req v0
-aes_st0_q  .req q0
+ctr_tmp   .req x14
+ctr_tmp_w .req w14
 
-aes_st1    .req v2
-aes_st1_q  .req q2
+ivec_0_63    .req x11
+ivec_64_96   .req x12
+ivec_64_96_w .req w12
 
-res0       .req v0
-res0_q     .req q0
+ctr      .req w13
+ctr_x    .req x13
 
-res1       .req v2
-res1_q     .req q2
+aes_st    .req v0
+aes_st_q  .req q0
+aes_st_d  .req d0
+
+res       .req v0
+res_q     .req q0
 
 ghash_hi    .req v9
 ghash_lo    .req v8
@@ -144,9 +149,6 @@ rk8q   .req q26
 rk9q   .req q27
 rk10q  .req q28
 
-rk11q  .req q15
-rk12q  .req q16
-
 rk0    .req v18
 rk1    .req v19
 rk2    .req v20
@@ -159,15 +161,8 @@ rk8    .req v26
 rk9    .req v27
 rk10   .req v28
 
-rk11   .req v15
-rk12   .req v16
-
 plain   .req v29
 plain_q .req q29
-
-rctr_inc   .req v30
-rtmp_ctr   .req v31
-rtmp_ctr_q .req q31
 
 tag    .req v11
 tag_q  .req q11
@@ -176,10 +171,11 @@ tag_q  .req q11
 
 #define STACK_SIZE_GPRS  (6*16)
 #define STACK_SIZE_VREGS (4*16)
-#define STACK_SIZE  (STACK_SIZE_GPRS + STACK_SIZE_VREGS)
+#define STACK_SIZE  (STACK_SIZE_GPRS + STACK_SIZE_VREGS + UNROLL*16)
 
 #define STACK_BASE_GPRS  (0)
 #define STACK_BASE_VREGS (STACK_SIZE_GPRS)
+#define STACK_BASE_AES_ST (STACK_SIZE_GPRS + STACK_SIZE_VREGS)
 
 /********************************************************************/
 /*                 Generic preamble/postamble macros                */
@@ -217,10 +213,14 @@ tag_q  .req q11
         ldp x29, x30, [sp, #(STACK_BASE_GPRS + 16*5)]
 .endm
 
+// Derive number of iterations of unrolled loop and single-block loop
 .macro prepare_loop_counts
         mov  unroll, #UNROLL
+        // Number of AES Blocks (16b each)
         lsr  full_blocks, byte_len, #4
+        // Number of iterations of the unrolled loop
         udiv count, full_blocks, unroll
+        // Number of iterations for the tail loop handling 1 block each
         msub remainder, count, unroll, full_blocks
 .endm
 
@@ -229,22 +229,22 @@ tag_q  .req q11
 /********************************************************************/
 
 .macro load_iv
-        ldr     rtmp_ctr_q, [ivec]
+        ldp        ivec_0_63, ivec_64_96, [ivec]
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 0*16)] // @slothy:writes=stack_0
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 1*16)] // @slothy:writes=stack_1
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 2*16)] // @slothy:writes=stack_2
+        stp        ivec_0_63, ivec_64_96, [sp, #(STACK_BASE_AES_ST + 3*16)] // @slothy:writes=stack_3
 
-	mov	constant_temp, #0x100000000   // set up counter increment
-	movi	rctr_inc.16b,  #0x0
-	fmov	rctr_inc.d[1], constant_temp
-
-        rev32   rtmp_ctr.16b, rtmp_ctr.16b
+        lsr        ctr_x, ivec_64_96, #32
+        rev        ctr, ctr
+        orr        ivec_64_96_w, ivec_64_96_w, ivec_64_96_w // clear top 32 bit
 .endm
 
-.macro aes_ctr_inc
-        add    rtmp_ctr.4s, rtmp_ctr.4s, rctr_inc.4s
-.endm
-
-.macro next_ctr_init_aes aes_st
-        rev32  \aes_st\().16b, rtmp_ctr.16b
-        aes_ctr_inc
+.macro next_ctr_init_aes aes_st, loc
+        rev        ctr_tmp_w, ctr
+        str        ctr_tmp_w, [sp, #(STACK_BASE_AES_ST + \loc*16 + 12)] // @slothy:writes=stack_\loc
+        ldr        \aes_st\()_q, [sp, #(STACK_BASE_AES_ST + \loc*16)]  // @slothy:reads=stack_\loc
+        add        ctr, ctr, #1
 .endm
 
 // A single AES round
@@ -283,14 +283,13 @@ tag_q  .req q11
 .endm
 
 .macro aesr_final aes_st, plain, out
-        aese \aes_st\().16b, rk11.16b
-        eor3 \out\().16b, \plain\().16b, rk12.16b, \aes_st\().16b
+        aese \aes_st\().16b, rk9.16b
+        eor3 \out\().16b, \aes_st\().16b, rk10.16b, \plain\().16b
 .endm
 
-.macro aes_full_block aes_st, input, output
-        next_ctr_init_aes \aes_st
-        aesr_0_8   \aes_st\(), rk
-        aesr_9_10  \aes_st\(), rk
+.macro aes_full_block aes_st, input, output, loc
+        next_ctr_init_aes \aes_st, \loc
+        aesr_0_8 \aes_st\(), rk
         aesr_final \aes_st, \input, \output
 .endm
 
@@ -310,8 +309,6 @@ tag_q  .req q11
         load_round_key 8
         load_round_key 9
         load_round_key 10
-        load_round_key 11
-        load_round_key 12
 .endm
 
 /********************************************************************/
@@ -408,52 +405,6 @@ tag_q  .req q11
 /*                    Macros for GHASH udpate                       */
 /********************************************************************/
 
-.macro ghash_init_pair inputa, inputb, Ha, Hb, Hk_mid
-        rev64 \inputa\().16b, \inputa\().16b
-        rev64 \inputb\().16b, \inputb\().16b
-        eor   \inputa\().16b, \inputa\().16b, tag.16b
-
-        // Low product
-        pmull   ghash_lo.1q,  \inputa\().1d, \Ha\().1d
-        pmull   ghash_tmp.1q, \inputb\().1d, \Hb\().1d
-        eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
-        // High product
-        pmull2  ghash_hi.1q, \inputa\().2d, \Ha\().2d
-        pmull2  ghash_tmp.1q, \inputb\().2d, \Hb\().2d
-        eor     ghash_hi.16b, ghash_hi.16b, ghash_tmp.16b
-        // Middle product
-        trn1    ghash_tmp.2d,  \inputb\().2d, \inputa\().2d
-        trn2    \inputb\().2d, \inputb\().2d, \inputa\().2d
-        eor     ghash_tmp.16b, ghash_tmp.16b, \inputb\().16b
-        pmull2  ghash_mid.1q, ghash_tmp.2d, \Hk_mid\().2d
-        pmull   ghash_tmp.1q, ghash_tmp.1d, \Hk_mid\().1d
-        eor     ghash_mid.16b, ghash_mid.16b, ghash_tmp.16b
-.endm
-
-.macro ghash_acc_pair inputa, inputb, Ha, Hb, Hk_mid
-        rev64 \inputa\().16b, \inputa\().16b
-        rev64 \inputb\().16b, \inputb\().16b
-
-        // Low product
-        pmull   ghash_tmp.1q, \inputa\().1d, \Ha\().1d
-        eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
-        pmull   ghash_tmp.1q, \inputb\().1d, \Hb\().1d
-        eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
-        // High product
-        pmull2  ghash_tmp.1q, \inputa\().2d, \Ha\().2d
-        eor     ghash_hi.16b, ghash_hi.16b, ghash_tmp.16b
-        pmull2  ghash_tmp.1q, \inputb\().2d, \Hb\().2d
-        eor     ghash_hi.16b, ghash_hi.16b, ghash_tmp.16b
-        // Middle product
-        trn1    ghash_tmp.2d,  \inputb\().2d, \inputa\().2d
-        trn2    \inputb\().2d, \inputb\().2d, \inputa\().2d
-        eor     ghash_tmp.16b, ghash_tmp.16b, \inputb\().16b
-        pmull2  \inputa\().1q, ghash_tmp.2d, \Hk_mid\().2d
-        eor     ghash_mid.16b, ghash_mid.16b, \inputa\().16b
-        pmull   ghash_tmp.1q, ghash_tmp.1d, \Hk_mid\().1d
-        eor     ghash_mid.16b, ghash_mid.16b, ghash_tmp.16b
-.endm
-
 .macro ghash_init_0 input, Hk, Hk_mid, tag
         rev64 \input\().16b, \input\().16b
         eor   \input\().16b, \input\().16b, \tag\().16b
@@ -541,19 +492,19 @@ tag_q  .req q11
 /********************************************************************/
 
 .align        4
-_aes_gcm_enc_kernel_slothy_base_192:
-aes_gcm_enc_kernel_slothy_base_192:
+_aes_gcm_dec_kernel_slothy_base_128:
+aes_gcm_dec_kernel_slothy_base_128:
 #ifdef BORINGSSL_DISPATCH_TEST
         adrp  x9,_BORINGSSL_function_hit@PAGE
         add   x9, x9, _BORINGSSL_function_hit@PAGEOFF
         mov   w10, #1
-        strb  w10, [x9,#2] // kFlag_aes_gcm_enc_kernel
+        strb  w10, [x9,#2] // kFlag_aes_gcm_dec_kernel
 #endif
 
-        AARCH64_SIGN_LINK_REGISTER
+        AARCH64_VALID_CALL_TARGET
         sub sp, sp, #STACK_SIZE
 
-Lenc_preamble_start:
+Ldec_preamble_start:
         save_gprs
         save_vregs
 
@@ -566,32 +517,36 @@ Lenc_preamble_start:
         prepare_loop_counts
         prepare_ghash
 
-Lenc_preamble_end:
+Ldec_preamble_end:
 
         cbz count, Lloop_unrolled_end
 Lloop_unrolled_start:
 
         ldr plain_q, [input], #(4*16)
-        aes_full_block aes_st0, plain, res0
-        str res0_q, [output], #(4*16)
-
-        ldr plain_q, [input, #(-3*16)]
-        aes_full_block aes_st1, plain, res1
-        str res1_q, [output, #(-3*16)]
+        aes_full_block aes_st, plain, res, 0
+        str res_q, [output], #(4*16)
 
         load_htable_34
-        ghash_init_pair res0, res1, Ht4, Ht3, Ht34
+        ghash_init_1 plain, Ht4, Ht34, tag
+
+        ldr plain_q, [input, #(-3*16)]
+        aes_full_block aes_st, plain, res, 1
+        str res_q, [output, #(-3*16)]
+
+        ghash_acc_0 plain, Ht3, Ht34
 
         ldr plain_q, [input, #(-2*16)]
-        aes_full_block aes_st0, plain, res0
-        str res0_q, [output, #(-2*16)]
-
-        ldr plain_q, [input, #(-1*16)]
-        aes_full_block aes_st1, plain, res1
-        str res1_q, [output, #(-1*16)]
+        aes_full_block aes_st, plain, res, 2
+        str res_q, [output, #(-2*16)]
 
         load_htable_12
-        ghash_acc_pair res0, res1, Ht2, Ht1, Ht12
+        ghash_acc_1 plain, Ht2, Ht12
+
+        ldr plain_q, [input, #(-1*16)]
+        aes_full_block aes_st, plain, res, 3
+        str res_q, [output, #(-1*16)]
+
+        ghash_acc_0 plain, Ht1, Ht12
 
         ghash_finalize tag
 
@@ -605,10 +560,10 @@ Lloop_unrolled_end:
 Lloop_1x_start:
 
         ldr plain_q, [input], #16
-        aes_full_block aes_st0, plain, res0
-        str res0_q, [output], #16
-        ghash_init_0 res0, Ht1, Ht12, tag
+        aes_full_block aes_st, plain, res, 0
+        str res_q, [output], #16
 
+        ghash_init_0 plain, Ht1, Ht12, tag
         ghash_finalize tag
 
         sub remainder, remainder, #1
@@ -620,17 +575,19 @@ Lloop_1x_end:
         // Store new authentication tag
         rev64 tag.16b, tag.16b
         str tag_q, [tag_ptr]
+
         // Store updated counter
-        rev32 rtmp_ctr.16b, rtmp_ctr.16b
-        str rtmp_ctr_q, [ivec]
+        // rev32 rtmp_ctr.16b, rtmp_ctr.16b
+        // str rtmp_ctr_q, [ivec]
+        rev ctr_tmp_w, ctr
+        str ctr_tmp_w, [ivec, #12]
 
         restore_vregs
         restore_gprs
 
-Lenc_postamble_end:
+Ldec_postamble_end:
         add sp, sp, #STACK_SIZE
 
-        AARCH64_VALIDATE_LINK_REGISTER
         ret
 
 #endif

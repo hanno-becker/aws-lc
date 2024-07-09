@@ -161,9 +161,9 @@ static size_t hw_gcm_encrypt(const uint8_t *in, uint8_t *out, size_t len,
   // in the case of the EVP API.
   // In the case of the AEAD API, it can be used for all input lengths
   // but we are not identifying which API calls the code below.
-  #define USE_SLOTHY_AES_GCM_128 1
+  #define USE_SLOTHY_AES_GCM_ENC_128
 
-#if defined(USE_SLOTHY_AES_GCM_128)
+#if defined(USE_SLOTHY_AES_GCM_ENC_128)
   if (key->rounds == 10) {
       aes_gcm_enc_kernel_slothy_base_128(in, len_blocks * 8, out, Xi, ivec, key, Htable);
   }
@@ -212,6 +212,20 @@ static size_t hw_gcm_decrypt(const uint8_t *in, uint8_t *out, size_t len,
   // in the case of the EVP API.
   // In the case of the AEAD API, it can be used for all input lengths
   // but we are not identifying which API calls the code below.
+  #define USE_SLOTHY_AES_GCM_DEC_128
+
+#if defined(USE_SLOTHY_AES_GCM_DEC_128)
+  if (key->rounds == 10) {
+      aes_gcm_dec_kernel_slothy_base_128(in, len_blocks * 8, out, Xi, ivec, key, Htable);
+  }
+  else if (key->rounds == 12) {
+      aes_gcm_dec_kernel_slothy_base_192(in, len_blocks * 8, out, Xi, ivec, key, Htable);
+  }
+  else if (key->rounds == 14) {
+      aes_gcm_dec_kernel_slothy_base_256(in, len_blocks * 8, out, Xi, ivec, key, Htable);
+  }
+  else
+#endif
   if (CRYPTO_is_ARMv8_GCM_8x_capable() && len >= 256) {
     switch(key->rounds) {
     case 10:

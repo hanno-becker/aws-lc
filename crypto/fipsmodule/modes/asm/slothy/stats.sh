@@ -36,13 +36,25 @@ if [ "$UNROLL_ARG" = "" ]; then
     echo "No unrolling level specified UNROLL_ARG -- defaulting to ${UNROLL_ARG}"
 fi
 
+if [ "$ENC" = "" ]; then
+    echo "Environment variable ENC not set. Defaulting to ENC=1 (encryption)."
+    ENC=1
+fi
+
+if [ "$ENC" = "1" ]; then
+    ENCDEC="enc"
+else
+    ENCDEC="dec"
+fi
+
+
 LOOP_LABEL="Lloop_unrolled_start:"
 
 list_variants() {
     SZ=$1
     UNROLL=$2
     DIR=$3
-    VARIANTS=$(ls -1 ./${DIR}/*${SZ}*${UNROLL}*.S | sed -n 's/.*'"${UNROLL}"'_\(.*\)\.S/\1/p' | tr '\n' ' ' )
+    VARIANTS=$(ls -1 ./${DIR}/${ENCDEC}/*${SZ}*${UNROLL}*.S | sed -n 's/.*'"${UNROLL}"'_\(.*\)\.S/\1/p' | tr '\n' ' ' )
     echo $VARIANTS
 }
 
@@ -53,7 +65,7 @@ get_benchmark_for() {
     UNROLL=$2
     DIR=$3
     VARIANT=$4
-    ID="${DIR}/${SZ}_${UNROLL}_${VARIANT}"
+    ID="${DIR}/${ENCDEC}/${SZ}_${UNROLL}_${VARIANT}"
     cat $BENCHMARKS                                                                            \
         | grep "Testing variant: ${ID}" -A 10                                                  \
         | grep "MB/s"                                                                          \
@@ -78,8 +90,8 @@ get_slothy_stats_for() {
     else
         TY="base"
     fi
-    FILEBASE="aesv8-gcm-armv8"
-    FILE="${DIR}/${FILEBASE}-${TY}-${SZ}_${UNROLL}_${VARIANT}.S"
+    FILEBASE="aesv8-gcm-armv8-enc"
+    FILE="${DIR}/${ENCDEC}/${FILEBASE}-${TY}-${SZ}_${UNROLL}_${VARIANT}.S"
     cat $FILE                                        \
         | grep "${LOOP_LABEL}" -A 10                 \
         | sed -n 's/[^0-9]*\([0-9][0-9.]*\).*/\1/p'  \
@@ -91,7 +103,7 @@ get_stats_for() {
     UNROLL=$2
     DIR=$3
     VARIANT=$4
-    ID="${DIR}/${SZ}_${UNROLL}_${VARIANT}"
+    ID="${DIR}/${ENCDEC}/${SZ}_${UNROLL}_${VARIANT}"
     BENCH=$(get_benchmark_for $1 $2 $3 $4)
     if [ "$DIR" = "opt" ]; then
         SLOTHY=$(get_slothy_stats_for $1 $2 $3 $4)

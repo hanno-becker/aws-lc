@@ -39,17 +39,17 @@
 #include <openssl/arm_arch.h>
 .arch   armv8-a+crypto
 .text
-.globl  aes_gcm_enc_kernel_slothy_base_128
-.hidden aes_gcm_enc_kernel_slothy_base_128
-.type   aes_gcm_enc_kernel_slothy_base_128,%function
+.globl  aes_gcm_dec_kernel_slothy_base_128
+.hidden aes_gcm_dec_kernel_slothy_base_128
+.type   aes_gcm_dec_kernel_slothy_base_128,%function
 #elif defined(__APPLE__)
 #if defined(BORINGSSL_PREFIX)
 #include <boringssl_prefix_symbols_asm.h>
 #endif
 #include <openssl/arm_arch.h>
 .text
-.globl	_aes_gcm_enc_kernel_slothy_base_128
-.private_extern	_aes_gcm_enc_kernel_slothy_base_128
+.globl	_aes_gcm_dec_kernel_slothy_base_128
+.private_extern	_aes_gcm_dec_kernel_slothy_base_128
 #else
 #error Unknown configuration
 #endif
@@ -74,17 +74,23 @@ full_blocks     .req x7
 remainder       .req x9
 unroll          .req x10
 
-aes_st0    .req v0
-aes_st0_q  .req q0
+aes_st0   .req v0
+aes_st0_q .req q0
+aes_st1   .req v1
+aes_st1_q .req q1
+aes_st2   .req v2
+aes_st2_q .req q2
+aes_st3   .req v3
+aes_st3_q .req q3
 
-aes_st1    .req v2
-aes_st1_q  .req q2
-
-res0       .req v0
-res0_q     .req q0
-
-res1       .req v2
-res1_q     .req q2
+res0      .req v0
+res0_q    .req q0
+res1      .req v1
+res1_q    .req q1
+res2      .req v2
+res2_q    .req q2
+res3      .req v3
+res3_q    .req q3
 
 ghash_hi    .req v9
 ghash_lo    .req v8
@@ -104,17 +110,25 @@ Ht1q    .req q12
 Ht2q    .req q13
 Ht12q   .req q14
 
-Ht1    .req v12
-Ht2    .req v13
-Ht12   .req v14
-
 Ht3q    .req q15
 Ht4q    .req q16
 Ht34q   .req q17
 
+Ht1    .req v12
+Ht2    .req v13
+Ht12   .req v14
+
 Ht3    .req v15
 Ht4    .req v16
 Ht34   .req v17
+
+Ht5q    .req Ht3q
+Ht6q    .req Ht4q
+Ht56q   .req Ht34q
+
+Ht5    .req Ht3
+Ht6    .req Ht4
+Ht56   .req Ht34
 
 rk0q   .req q18
 rk1q   .req q19
@@ -195,13 +209,6 @@ tag_q  .req q11
         ldp x29, x30, [sp, #(STACK_BASE_GPRS + 16*5)]
 .endm
 
-.macro prepare_loop_counts
-        mov  unroll, #UNROLL
-        lsr  full_blocks, byte_len, #4
-        udiv count, full_blocks, unroll
-        msub remainder, count, unroll, full_blocks
-.endm
-
 /********************************************************************/
 /*                       AES related macros                         */
 /********************************************************************/
@@ -220,16 +227,23 @@ tag_q  .req q11
         add    rtmp_ctr.4s, rtmp_ctr.4s, rctr_inc.4s
 .endm
 
-.macro next_ctr_init_aes aes_st
+.macro next_ctr_init_aes_st aes_st
         rev32  \aes_st\().16b, rtmp_ctr.16b
         aes_ctr_inc
 .endm
 
 // A single AES round
 // Prevent SLOTHY from unfolding because uArchs tend to fuse AESMC+AESE
-.macro aesr data, key // @slothy:no-unfold=true
+.macro aesr data, key // @slothy:no-unfold
         aese  \data, \key
         aesmc \data, \data
+.endm
+
+.macro aesr_x4 data0, data1, data2, data3, key
+        aesr \data0\(), \key\()
+        aesr \data1\(), \key\()
+        aesr \data2\(), \key\()
+        aesr \data3\(), \key\()
 .endm
 
 .macro aesr_0_8 data, key
@@ -242,6 +256,18 @@ tag_q  .req q11
         aesr \data\().16b, \key\()6.16b
         aesr \data\().16b, \key\()7.16b
         aesr \data\().16b, \key\()8.16b
+.endm
+
+.macro aesr_0_8_x4 data0, data1, data2, data3, key
+        aesr_x4 \data0\().16b, \data1\().16b, \data2\().16b, \data3\().16b, \key\()0.16b
+        aesr_x4 \data0\().16b, \data1\().16b, \data2\().16b, \data3\().16b, \key\()1.16b
+        aesr_x4 \data0\().16b, \data1\().16b, \data2\().16b, \data3\().16b, \key\()2.16b
+        aesr_x4 \data0\().16b, \data1\().16b, \data2\().16b, \data3\().16b, \key\()3.16b
+        aesr_x4 \data0\().16b, \data1\().16b, \data2\().16b, \data3\().16b, \key\()4.16b
+        aesr_x4 \data0\().16b, \data1\().16b, \data2\().16b, \data3\().16b, \key\()5.16b
+        aesr_x4 \data0\().16b, \data1\().16b, \data2\().16b, \data3\().16b, \key\()6.16b
+        aesr_x4 \data0\().16b, \data1\().16b, \data2\().16b, \data3\().16b, \key\()7.16b
+        aesr_x4 \data0\().16b, \data1\().16b, \data2\().16b, \data3\().16b, \key\()8.16b
 .endm
 
 .macro aesr_9_10 data, key
@@ -262,13 +288,7 @@ tag_q  .req q11
 
 .macro aesr_final aes_st, plain, out
         aese \aes_st\().16b, rk9.16b
-        eor3 \out\().16b, \plain\().16b, rk10.16b, \aes_st\().16b
-.endm
-
-.macro aes_full_block aes_st, input, output
-        next_ctr_init_aes \aes_st
-        aesr_0_8 \aes_st\(), rk
-        aesr_final \aes_st, \input, \output
+        eor3 \out\().16b, \aes_st\().16b, rk10.16b, \plain\().16b
 .endm
 
 .macro load_round_key i
@@ -311,21 +331,28 @@ tag_q  .req q11
         ldr \dst_q, [Htable, #80]
 .endm
 
+.macro load_h5 dst, dst_q
+        ldr \dst_q, [Htable, #96]
+.endm
+
+.macro load_h6 dst, dst_q
+        ldr \dst_q, [Htable, #128]
+.endm
+
+.macro load_h7 dst, dst_q
+        ldr \dst_q, [Htable, #144]
+.endm
+
+.macro load_h8 dst, dst_q
+        ldr \dst_q, [Htable, #176]
+.endm
+
 .macro load_h12 dst, dst_q
         ldr \dst_q, [Htable, #16]
 .endm
 
 .macro load_h34 dst, dst_q
         ldr \dst_q, [Htable, #64]
-.endm
-
-.macro load_full_htable
-        load_h1  Ht1,  Ht1q
-        load_h2  Ht2,  Ht2q
-        load_h3  Ht3,  Ht3q
-        load_h4  Ht4,  Ht4q
-        load_h12 Ht12, Ht12q
-        load_h34 Ht34, Ht34q
 .endm
 
 .macro load_htable_12
@@ -340,55 +367,15 @@ tag_q  .req q11
         load_h34 Ht34, Ht34q
 .endm
 
+.macro load_htable_56
+        load_h5  Ht5,  Ht5q
+        load_h6  Ht6,  Ht6q
+        load_h56 Ht56, Ht56q
+.endm
+
 /********************************************************************/
 /*                    Macros for GHASH udpate                       */
 /********************************************************************/
-
-.macro ghash_init_pair inputa, inputb, Ha, Hb, Hk_mid
-        rev64 \inputa\().16b, \inputa\().16b
-        rev64 \inputb\().16b, \inputb\().16b
-        eor   \inputa\().16b, \inputa\().16b, tag.16b
-
-        // Low product
-        pmull   ghash_lo.1q,  \inputa\().1d, \Ha\().1d
-        pmull   ghash_tmp.1q, \inputb\().1d, \Hb\().1d
-        eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
-        // High product
-        pmull2  ghash_hi.1q, \inputa\().2d, \Ha\().2d
-        pmull2  ghash_tmp.1q, \inputb\().2d, \Hb\().2d
-        eor     ghash_hi.16b, ghash_hi.16b, ghash_tmp.16b
-        // Middle product
-        trn1    ghash_tmp.2d,  \inputb\().2d, \inputa\().2d
-        trn2    \inputb\().2d, \inputb\().2d, \inputa\().2d
-        eor     ghash_tmp.16b, ghash_tmp.16b, \inputb\().16b
-        pmull2  ghash_mid.1q, ghash_tmp.2d, \Hk_mid\().2d
-        pmull   ghash_tmp.1q, ghash_tmp.1d, \Hk_mid\().1d
-        eor     ghash_mid.16b, ghash_mid.16b, ghash_tmp.16b
-.endm
-
-.macro ghash_acc_pair inputa, inputb, Ha, Hb, Hk_mid
-        rev64 \inputa\().16b, \inputa\().16b
-        rev64 \inputb\().16b, \inputb\().16b
-
-        // Low product
-        pmull   ghash_tmp.1q, \inputa\().1d, \Ha\().1d
-        eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
-        pmull   ghash_tmp.1q, \inputb\().1d, \Hb\().1d
-        eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
-        // High product
-        pmull2  ghash_tmp.1q, \inputa\().2d, \Ha\().2d
-        eor     ghash_hi.16b, ghash_hi.16b, ghash_tmp.16b
-        pmull2  ghash_tmp.1q, \inputb\().2d, \Hb\().2d
-        eor     ghash_hi.16b, ghash_hi.16b, ghash_tmp.16b
-        // Middle product
-        trn1    ghash_tmp.2d,  \inputb\().2d, \inputa\().2d
-        trn2    \inputb\().2d, \inputb\().2d, \inputa\().2d
-        eor     ghash_tmp.16b, ghash_tmp.16b, \inputb\().16b
-        pmull2  \inputa\().1q, ghash_tmp.2d, \Hk_mid\().2d
-        eor     ghash_mid.16b, ghash_mid.16b, \inputa\().16b
-        pmull   ghash_tmp.1q, ghash_tmp.1d, \Hk_mid\().1d
-        eor     ghash_mid.16b, ghash_mid.16b, ghash_tmp.16b
-.endm
 
 .macro ghash_init_0 input, Hk, Hk_mid, tag
         rev64 \input\().16b, \input\().16b
@@ -418,6 +405,7 @@ tag_q  .req q11
 
 .macro ghash_acc_0 input, Hk, Hk_mid
         rev64   \input\().16b, \input\().16b
+
         // Low product
         pmull   ghash_tmp.1q, \input\().1d, \Hk\().1d
         eor     ghash_lo.16b, ghash_lo.16b, ghash_tmp.16b
@@ -461,6 +449,13 @@ tag_q  .req q11
         ext        \tag\().16b, \tag\().16b, \tag\().16b, #8
 .endm
 
+.macro prepare_loop_counts
+        mov  unroll, #UNROLL
+        lsr  full_blocks, byte_len, #4
+        udiv count, full_blocks, unroll
+        msub remainder, count, unroll, full_blocks
+.endm
+
 .macro load_tag
         ldr      tag_q, [tag_ptr]
         rev64    tag.16b, tag.16b
@@ -477,19 +472,19 @@ tag_q  .req q11
 /********************************************************************/
 
 .align        4
-_aes_gcm_enc_kernel_slothy_base_128:
-aes_gcm_enc_kernel_slothy_base_128:
+_aes_gcm_dec_kernel_slothy_base_128:
+aes_gcm_dec_kernel_slothy_base_128:
 #ifdef BORINGSSL_DISPATCH_TEST
         adrp  x9,_BORINGSSL_function_hit@PAGE
         add   x9, x9, _BORINGSSL_function_hit@PAGEOFF
         mov   w10, #1
-        strb  w10, [x9,#2] // kFlag_aes_gcm_enc_kernel
+        strb  w10, [x9,#2] // kFlag_aes_gcm_dec_kernel
 #endif
 
         AARCH64_SIGN_LINK_REGISTER
         sub sp, sp, #STACK_SIZE
 
-Lenc_preamble_start:
+Ldec_preamble_start:
         save_gprs
         save_vregs
 
@@ -499,37 +494,50 @@ Lenc_preamble_start:
         load_tag
         load_iv
 
-        load_htable_34
-        load_htable_12
-
         prepare_loop_counts
         prepare_ghash
 
-Lenc_preamble_end:
+        load_htable_34
+        load_htable_12
+
+Ldec_preamble_end:
 
         cbz count, Lloop_unrolled_end
 Lloop_unrolled_start:
 
+        next_ctr_init_aes_st aes_st0
+        next_ctr_init_aes_st aes_st1
+        next_ctr_init_aes_st aes_st2
+        next_ctr_init_aes_st aes_st3
+
+        aesr_0_8 aes_st0, rk
+        aesr_0_8 aes_st1, rk
+        aesr_0_8 aes_st2, rk
+        aesr_0_8 aes_st3, rk
+
         ldr plain_q, [input], #(4*16)
-        aes_full_block aes_st0, plain, res0
+        aesr_final aes_st0, plain, res0
         str res0_q, [output], #(4*16)
 
+        ghash_init_1 plain, Ht4, Ht34, tag
+
         ldr plain_q, [input, #(-3*16)]
-        aes_full_block aes_st1, plain, res1
+        aesr_final aes_st1, plain, res1
         str res1_q, [output, #(-3*16)]
 
-        ghash_init_pair res0, res1, Ht4, Ht3, Ht34
+        ghash_acc_0 plain, Ht3, Ht34
 
         ldr plain_q, [input, #(-2*16)]
-        aes_full_block aes_st0, plain, res0
-        str res0_q, [output, #(-2*16)]
+        aesr_final aes_st2, plain, res2
+        str res2_q, [output, #(-2*16)]
+
+        ghash_acc_1 plain, Ht2, Ht12
 
         ldr plain_q, [input, #(-1*16)]
-        aes_full_block aes_st1, plain, res1
-        str res1_q, [output, #(-1*16)]
+        aesr_final aes_st3, plain, res3
+        str res3_q, [output, #(-1*16)]
 
-        ghash_acc_pair res0, res1, Ht2, Ht1, Ht12
-
+        ghash_acc_0 plain, Ht1, Ht12
         ghash_finalize tag
 
         sub count, count, #1
@@ -539,11 +547,14 @@ Lloop_unrolled_end:
         cbz remainder, Lloop_1x_end
 Lloop_1x_start:
 
-        ldr plain_q, [input], #16
-        aes_full_block aes_st0, plain, res0
-        str res0_q, [output], #16
-        ghash_init_0 res0, Ht1, Ht12, tag
+        next_ctr_init_aes_st aes_st0
+        aesr_0_8 aes_st0, rk
 
+        ldr plain_q, [input], #16
+        aesr_final aes_st0, plain, res0
+        str res0_q, [output], #16
+
+        ghash_init_0 plain, Ht1, Ht12, tag
         ghash_finalize tag
 
         sub remainder, remainder, #1
@@ -562,7 +573,7 @@ Lloop_1x_end:
         restore_vregs
         restore_gprs
 
-Lenc_postamble_end:
+Ldec_postamble_end:
         add sp, sp, #STACK_SIZE
 
         AARCH64_VALIDATE_LINK_REGISTER
