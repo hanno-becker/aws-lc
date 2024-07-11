@@ -702,23 +702,57 @@ Did 136000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1001676us (135772
 ### SLOTHY (optimized)
 
 ```
-Did 4674750 EVP-AES-192-GCM decrypt init operations in 1000024us (4674637.8 ops/sec)
-Did 7724250 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000009us (7724180.5 ops/sec): 123.6 MB/s
-Did 4496250 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000036us (4496088.1 ops/sec): 1151.0 MB/s
-Did 1455000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1000063us (1454908.3 ops/sec): 1964.1 MB/s
-Did 296000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1000931us (295724.7 ops/sec): 2422.6 MB/s
-Did 151000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1002217us (150666.0 ops/sec): 2468.5 MB/s
+* Testing variant: opt/dec/192_x4_basic
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4731000 EVP-AES-192-GCM decrypt init operations in 1000016us (4730924.3 ops/sec)
+Did 7724000 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000060us (7723536.6 ops/sec): 123.6 MB/s
+Did 4515000 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000217us (4514020.5 ops/sec): 1155.6 MB/s
+Did 1460000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1000327us (1459522.7 ops/sec): 1970.4 MB/s
+Did 296000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1000505us (295850.6 ops/sec): 2423.6 MB/s
+Did 152000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1005236us (151208.3 ops/sec): 2477.4 MB/s
+
+* Testing variant: opt/dec/192_x4_scalar_iv_mem2_late_tag
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4665000 EVP-AES-192-GCM decrypt init operations in 1000004us (4664981.3 ops/sec)
+Did 7198500 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000022us (7198341.6 ops/sec): 115.2 MB/s
+Did 4231250 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000050us (4231038.4 ops/sec): 1083.1 MB/s
+Did 1444000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1000206us (1443702.6 ops/sec): 1949.0 MB/s
+Did 299000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1000522us (298844.0 ops/sec): 2448.1 MB/s
+Did 153000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1003000us (152542.4 ops/sec): 2499.3 MB/s
 ```
 
 ### SLOTHY (clean)
 
 ```
-Did 4727250 EVP-AES-192-GCM decrypt init operations in 1000022us (4727146.0 ops/sec)
-Did 7723000 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000002us (7722984.6 ops/sec): 123.6 MB/s
-Did 3958250 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000054us (3958036.3 ops/sec): 1013.3 MB/s
-Did 1177000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1000698us (1176179.0 ops/sec): 1587.8 MB/s
-Did 229000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1003169us (228276.6 ops/sec): 1870.0 MB/s
-Did 116000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1001918us (115777.9 ops/sec): 1896.9 MB/s
+ Testing variant: clean/dec/192_x4_basic
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4666750 EVP-AES-192-GCM decrypt init operations in 1000022us (4666647.3 ops/sec)
+Did 7676250 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000030us (7676019.7 ops/sec): 122.8 MB/s
+Did 3957500 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000038us (3957349.6 ops/sec): 1013.1 MB/s
+Did 1177000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1000699us (1176177.9 ops/sec): 1587.8 MB/s
+Did 229000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1003455us (228211.5 ops/sec): 1869.5 MB/s
+Did 116000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1002142us (115752.1 ops/sec): 1896.5 MB/s
+
+* Testing variant: clean/dec/192_x4_scalar_iv_mem2_late_tag
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4721250 EVP-AES-192-GCM decrypt init operations in 1000012us (4721193.3 ops/sec)
+Did 7255750 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000014us (7255648.4 ops/sec): 116.1 MB/s
+Did 2636000 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000050us (2635868.2 ops/sec): 674.8 MB/s
+Did 667000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1001004us (666331.0 ops/sec): 899.5 MB/s
+Did 120000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1000746us (119910.5 ops/sec): 982.3 MB/s
+Did 61000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1010052us (60392.9 ops/sec): 989.5 MB/s
 ```
 
 ## AES-256-GCM Encrypt
