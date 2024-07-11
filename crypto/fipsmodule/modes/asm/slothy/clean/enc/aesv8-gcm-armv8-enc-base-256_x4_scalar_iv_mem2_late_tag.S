@@ -39,17 +39,17 @@
 #include <openssl/arm_arch.h>
 .arch   armv8-a+crypto
 .text
-.globl  aes_gcm_enc_kernel_slothy_base_128
-.hidden aes_gcm_enc_kernel_slothy_base_128
-.type   aes_gcm_enc_kernel_slothy_base_128,%function
+.globl  aes_gcm_enc_kernel_slothy_base_256
+.hidden aes_gcm_enc_kernel_slothy_base_256
+.type   aes_gcm_enc_kernel_slothy_base_256,%function
 #elif defined(__APPLE__)
 #if defined(BORINGSSL_PREFIX)
 #include <boringssl_prefix_symbols_asm.h>
 #endif
 #include <openssl/arm_arch.h>
 .text
-.globl	_aes_gcm_enc_kernel_slothy_base_128
-.private_extern	_aes_gcm_enc_kernel_slothy_base_128
+.globl	_aes_gcm_enc_kernel_slothy_base_256
+.private_extern	_aes_gcm_enc_kernel_slothy_base_256
 #else
 #error Unknown configuration
 #endif
@@ -149,6 +149,11 @@ rk8q   .req q26
 rk9q   .req q27
 rk10q  .req q28
 
+rk11q  .req q15
+rk12q  .req q16
+rk13q  .req q17
+rk14q  .req q2
+
 rk0    .req v18
 rk1    .req v19
 rk2    .req v20
@@ -160,6 +165,11 @@ rk7    .req v25
 rk8    .req v26
 rk9    .req v27
 rk10   .req v28
+
+rk11   .req v15
+rk12   .req v16
+rk13   .req v17
+rk14   .req v2
 
 plain   .req v29
 plain_q .req q29
@@ -283,13 +293,15 @@ tag_q  .req q30
 .endm
 
 .macro aesr_final aes_st, plain, out
-        aese \aes_st\().16b, rk9.16b
-        eor3 \out\().16b, \plain\().16b, rk10.16b, \aes_st\().16b
+        aese \aes_st\().16b, rk13.16b
+        eor3 \out\().16b, \plain\().16b, rk14.16b, \aes_st\().16b
 .endm
 
 .macro aes_full_block aes_st, input, output, loc
         next_ctr_init_aes \aes_st, \loc
         aesr_0_8 \aes_st\(), rk
+        aesr_9_10 \aes_st\(), rk
+        aesr_11_12 \aes_st\(), rk
         aesr_final \aes_st, \input, \output
 .endm
 
@@ -309,6 +321,10 @@ tag_q  .req q30
         load_round_key 8
         load_round_key 9
         load_round_key 10
+        load_round_key 11
+        load_round_key 12
+        load_round_key 13
+        load_round_key 14
 .endm
 
 /********************************************************************/
@@ -547,8 +563,8 @@ tag_q  .req q30
 /********************************************************************/
 
 .align        4
-_aes_gcm_enc_kernel_slothy_base_128:
-aes_gcm_enc_kernel_slothy_base_128:
+_aes_gcm_enc_kernel_slothy_base_256:
+aes_gcm_enc_kernel_slothy_base_256:
 #ifdef BORINGSSL_DISPATCH_TEST
         adrp  x9,_BORINGSSL_function_hit@PAGE
         add   x9, x9, _BORINGSSL_function_hit@PAGEOFF

@@ -39,17 +39,17 @@
 #include <openssl/arm_arch.h>
 .arch   armv8-a+crypto
 .text
-.globl  aes_gcm_enc_kernel_slothy_base_128
-.hidden aes_gcm_enc_kernel_slothy_base_128
-.type   aes_gcm_enc_kernel_slothy_base_128,%function
+.globl  aes_gcm_dec_kernel_slothy_base_192
+.hidden aes_gcm_dec_kernel_slothy_base_192
+.type   aes_gcm_dec_kernel_slothy_base_192,%function
 #elif defined(__APPLE__)
 #if defined(BORINGSSL_PREFIX)
 #include <boringssl_prefix_symbols_asm.h>
 #endif
 #include <openssl/arm_arch.h>
 .text
-.globl	_aes_gcm_enc_kernel_slothy_base_128
-.private_extern	_aes_gcm_enc_kernel_slothy_base_128
+.globl	_aes_gcm_dec_kernel_slothy_base_192
+.private_extern	_aes_gcm_dec_kernel_slothy_base_192
 #else
 #error Unknown configuration
 #endif
@@ -149,6 +149,9 @@ rk8q   .req q26
 rk9q   .req q27
 rk10q  .req q28
 
+rk11q  .req q15
+rk12q  .req q16
+
 rk0    .req v18
 rk1    .req v19
 rk2    .req v20
@@ -160,6 +163,9 @@ rk7    .req v25
 rk8    .req v26
 rk9    .req v27
 rk10   .req v28
+
+rk11   .req v15
+rk12   .req v16
 
 plain   .req v29
 plain_q .req q29
@@ -283,13 +289,14 @@ tag_q  .req q30
 .endm
 
 .macro aesr_final aes_st, plain, out
-        aese \aes_st\().16b, rk9.16b
-        eor3 \out\().16b, \plain\().16b, rk10.16b, \aes_st\().16b
+        aese \aes_st\().16b, rk11.16b
+        eor3 \out\().16b, \aes_st\().16b, rk12.16b, \plain\().16b
 .endm
 
 .macro aes_full_block aes_st, input, output, loc
         next_ctr_init_aes \aes_st, \loc
         aesr_0_8 \aes_st\(), rk
+        aesr_9_10 \aes_st\(), rk
         aesr_final \aes_st, \input, \output
 .endm
 
@@ -309,6 +316,8 @@ tag_q  .req q30
         load_round_key 8
         load_round_key 9
         load_round_key 10
+        load_round_key 11
+        load_round_key 12
 .endm
 
 /********************************************************************/
@@ -547,19 +556,19 @@ tag_q  .req q30
 /********************************************************************/
 
 .align        4
-_aes_gcm_enc_kernel_slothy_base_128:
-aes_gcm_enc_kernel_slothy_base_128:
+_aes_gcm_dec_kernel_slothy_base_192:
+aes_gcm_dec_kernel_slothy_base_192:
 #ifdef BORINGSSL_DISPATCH_TEST
         adrp  x9,_BORINGSSL_function_hit@PAGE
         add   x9, x9, _BORINGSSL_function_hit@PAGEOFF
         mov   w10, #1
-        strb  w10, [x9,#2] // kFlag_aes_gcm_enc_kernel
+        strb  w10, [x9,#2] // kFlag_aes_gcm_dec_kernel
 #endif
 
         AARCH64_VALID_CALL_TARGET
         sub sp, sp, #STACK_SIZE
 
-Lenc_preamble_start:
+Ldec_preamble_start:
         save_gprs
         save_vregs
 
@@ -572,7 +581,7 @@ Lenc_preamble_start:
         prepare_loop_counts
         prepare_ghash
 
-Lenc_preamble_end:
+Ldec_preamble_end:
 
         cbz count, Lloop_unrolled_end
 Lloop_unrolled_start:
@@ -583,13 +592,13 @@ Lloop_unrolled_start:
         aes_full_block aes_st, plain, res, 3
         str res_q, [output, #(3*16)]
 
-        ghash_init_0 res, Ht1, Ht12
+        ghash_init_0 plain, Ht1, Ht12
 
         ldr plain_q, [input, #(2*16)]
         aes_full_block aes_st, plain, res, 2
         str res_q, [output, #(2*16)]
 
-        ghash_acc_1 res, Ht2, Ht12
+        ghash_acc_1 plain, Ht2, Ht12
 
         load_htable_34
 
@@ -597,14 +606,13 @@ Lloop_unrolled_start:
         aes_full_block aes_st, plain, res, 1
         str res_q, [output, #(1*16)]
 
-        ghash_acc_0 res, Ht3, Ht34
+        ghash_acc_0 plain, Ht3, Ht34
 
         ldr plain_q, [input], #(4*16)
         aes_full_block aes_st, plain, res, 0
         str res_q, [output], #(4*16)
 
-        ghash_acc_with_tag_1 res, Ht4, Ht34, tag
-
+        ghash_acc_with_tag_1 plain, Ht4, Ht34, tag
         ghash_finalize tag
 
         add ctr, ctr, #UNROLL
@@ -620,8 +628,8 @@ Lloop_1x_start:
         ldr plain_q, [input], #16
         aes_full_block aes_st, plain, res, 0
         str res_q, [output], #16
-        ghash_init_with_tag_0 res, Ht1, Ht12, tag
 
+        ghash_init_with_tag_0 plain, Ht1, Ht12, tag
         ghash_finalize tag
 
         add ctr, ctr, #1
@@ -644,7 +652,7 @@ Lloop_1x_end:
         restore_vregs
         restore_gprs
 
-Lenc_postamble_end:
+Ldec_postamble_end:
         add sp, sp, #STACK_SIZE
 
         ret
