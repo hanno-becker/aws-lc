@@ -534,7 +534,7 @@ Lremainder_3_start:
         aes_full_block aes_st, plain, res
         str res_q, [output, #(0*16)]
 
-        load_htable_34
+        load_htable_3
         ghash_init_0 res, Ht3, Ht34, tag
 
         ldr plain_q, [input, #(1*16)]

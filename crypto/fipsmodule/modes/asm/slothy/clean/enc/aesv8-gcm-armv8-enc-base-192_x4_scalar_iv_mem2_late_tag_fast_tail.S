@@ -643,7 +643,7 @@ Lremainder_3_start:
         str res_q, [output, #(1*16)]
 
         ghash_acc_1 res, Ht2, Ht12
-        load_htable_34
+        load_htable_3
 
         ldr plain_q, [input, #(0*16)]
         aes_full_block aes_st, plain, res, 0
@@ -675,7 +675,7 @@ Lremainder_2_end:
         b Lend
 
 Lremainder_1_start:
-        load_htable_12
+        load_htable_1
 
         ldr plain_q, [input, #(0*16)]
         aes_full_block aes_st, plain, res, 0
