@@ -392,22 +392,20 @@ tag_q  .req q30
         load_h12 Ht12, Ht12q
 .endm
 
+.macro load_htable_1
+        load_h1  Ht1,  Ht1q
+        load_h12 Ht12, Ht12q
+.endm
+
 .macro load_htable_34
         load_h3  Ht3,  Ht3q
         load_h4  Ht4,  Ht4q
         load_h34 Ht34, Ht34q
 .endm
 
-.macro load_htable_56
-        load_h5  Ht5,  Ht5q
-        load_h6  Ht6,  Ht6q
-        load_h56 Ht56, Ht56q
-.endm
-
-.macro load_htable_78
-        load_h7  Ht7,  Ht7q
-        load_h8  Ht8,  Ht8q
-        load_h78 Ht78, Ht78q
+.macro load_htable_3
+        load_h3  Ht3,  Ht3q
+        load_h34 Ht34, Ht34q
 .endm
 
 /********************************************************************/
@@ -643,7 +641,7 @@ Lremainder_3_start:
         str res_q, [output, #(1*16)]
 
         ghash_acc_1 plain, Ht2, Ht12
-        load_htable_34
+        load_htable_3
 
         ldr plain_q, [input, #(0*16)]
         aes_full_block aes_st, plain, res, 0
@@ -675,7 +673,7 @@ Lremainder_2_end:
         b Lend
 
 Lremainder_1_start:
-        load_htable_12
+        load_htable_1
 
         ldr plain_q, [input, #(0*16)]
         aes_full_block aes_st, plain, res, 0
