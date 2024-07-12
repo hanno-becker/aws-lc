@@ -392,22 +392,20 @@ tag_q  .req q30
         load_h12 Ht12, Ht12q
 .endm
 
+.macro load_htable_1
+        load_h1  Ht1,  Ht1q
+        load_h12 Ht12, Ht12q
+.endm
+
 .macro load_htable_34
         load_h3  Ht3,  Ht3q
         load_h4  Ht4,  Ht4q
         load_h34 Ht34, Ht34q
 .endm
 
-.macro load_htable_56
-        load_h5  Ht5,  Ht5q
-        load_h6  Ht6,  Ht6q
-        load_h56 Ht56, Ht56q
-.endm
-
-.macro load_htable_78
-        load_h7  Ht7,  Ht7q
-        load_h8  Ht8,  Ht8q
-        load_h78 Ht78, Ht78q
+.macro load_htable_3
+        load_h3  Ht3,  Ht3q
+        load_h34 Ht34, Ht34q
 .endm
 
 /********************************************************************/
