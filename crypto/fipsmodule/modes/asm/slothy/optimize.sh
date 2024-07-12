@@ -107,7 +107,13 @@ else
     LLVM_MCA_FLAGS=""
 fi
 
+if [ "$SKIP_EXISTING" = "" ]; then
+    SKIP_EXISTING=0
+fi
+
 optimize_x4() {
+    if [ ${SKIP_EXISTING} = "0" ] || [ ! -f $OUTFILE ]; then
+            echo "starting"
             slothy-cli Arm_AArch64 $MODEL                      \
                   ${INFILE}                                    \
                -l Lloop_unrolled_start                         \
@@ -124,8 +130,53 @@ optimize_x4() {
                -c /sw_pipelining.minimize_overlapping          \
                -c sw_pipelining.unknown_iteration_count        \
                -c reserved_regs=[sp,x1,x3,x4,x5,x6,x9,x15,x16,x18]\
+               -o ${OUTFILE}                                   \
+               ${SLOTHY_FLAGS} ${DRY_RUN_FLAGS}
+
+            if grep "loop_1x_start" >/dev/null <$INFILE; then
+                slothy-cli Arm_AArch64 $MODEL                  \
+                  ${OUTFILE}                                   \
+               -l "Lloop_1x_start"                             \
+               -c compiler_binary=clang                        \
+               -c compiler_include_paths="${AWS_LC_BASE}/include"\
+               -c inputs_are_outputs                           \
+               -c variable_size                                \
+               -c constraints.stalls_first_attempt=48          \
+               -c sw_pipelining.enabled                        \
+               -c timeout=$TIMEOUT                             \
+               -c visualize_expected_performance               \
+               -c sw_pipelining.allow_post                     \
+               ${LLVM_MCA_FLAGS}                               \
+               -c /sw_pipelining.minimize_overlapping          \
+               -c sw_pipelining.unknown_iteration_count        \
+               -c reserved_regs=[sp,x1,x3,x4,x5,x6,x9,x15,x16,x18]\
                -o $OUTFILE                                     \
                ${SLOTHY_FLAGS} ${DRY_RUN_FLAGS}
+            fi
+
+            # Detect special handling of low iteration count
+            special=$(grep "Lremainder.*start.*:" <$INFILE  | sed 's/^.*Lremainder_\([123]\)_.*/\1/')
+            for i in $special
+            do
+                slothy-cli Arm_AArch64 $MODEL                  \
+                  ${OUTFILE}                                   \
+               -s "Lremainder_${i}_start"                      \
+               -e "Lremainder_${i}_end"                        \
+               -c compiler_binary=clang                        \
+               -c compiler_include_paths="${AWS_LC_BASE}/include"\
+               -c inputs_are_outputs                           \
+               -c variable_size                                \
+               -c constraints.stalls_first_attempt=48          \
+               -c timeout=$TIMEOUT                             \
+               -c visualize_expected_performance               \
+               ${LLVM_MCA_FLAGS}                               \
+               -c reserved_regs=[sp,x1,x3,x4,x5,x6,x9,x15,x16,x18]\
+               -o $OUTFILE                                     \
+               ${SLOTHY_FLAGS} ${DRY_RUN_FLAGS}
+            done
+    else
+        echo "skipped"
+    fi
 }
 
 optimize_x8() {
@@ -168,7 +219,7 @@ optimize_generic() {
 }
 
 optimize_variant() {
-    echo "Optimizing variant $1 ..."
+    printf "Optimizing variant $1 ... "
     INFILE=$CLEAN_DIR/${ENCDEC}/${CLEAN_STEM}_$1.S
     OUTFILE=$OPT_DIR/${ENCDEC}/${OPT_STEM}_$1.S
     TMP0=$TMP_DIR/${TMP_STEM}_$1_0.S
