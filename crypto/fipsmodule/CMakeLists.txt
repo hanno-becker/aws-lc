@@ -341,6 +341,67 @@ if(S2N_BIGNUM_ASM_SOURCES)
   endforeach()
 endif()
 
+# Set the source directory for s2n-bignum assembly files
+set(MLKEM_NATIVE_DIR ${PROJECT_SOURCE_DIR}/crypto/fipsmodule/ml_kem/mlkem)
+set(MLKEM_NATIVE_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/crypto/fipsmodule/ml_kem/mlkem)
+
+if((ARCH STREQUAL "aarch64") AND UNIX)
+  set(
+    MLKEM_NATIVE_ASM_SOURCES
+
+    # Arithmetic backend
+    native/aarch64/src/intt_opt.S
+    native/aarch64/src/ntt_opt.S
+    native/aarch64/src/poly_mulcache_compute_asm_opt.S
+    native/aarch64/src/poly_reduce_asm_opt.S
+    native/aarch64/src/poly_tobytes_asm_opt.S
+    native/aarch64/src/poly_tomont_asm_opt.S
+    native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k2_opt.S
+    native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k3_opt.S
+    native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k4_opt.S
+    native/aarch64/src/rej_uniform_asm_clean.S
+
+    # FIPS-202
+    fips202/native/aarch64/src/keccak_f1600_x1_scalar_asm_opt.S
+    fips202/native/aarch64/src/keccak_f1600_x1_v84a_asm_clean.S
+    fips202/native/aarch64/src/keccak_f1600_x2_v84a_asm_clean.S
+    fips202/native/aarch64/src/keccak_f1600_x2_v8a_v84a_asm_hybrid.S
+    fips202/native/aarch64/src/keccak_f1600_x4_scalar_v84a_asm_hybrid_opt.S
+    fips202/native/aarch64/src/keccak_f1600_x4_v8a_scalar_hybrid_asm_opt.S
+    fips202/native/aarch64/src/keccak_f1600_x4_v8a_v84a_scalar_hybrid_asm_opt.S
+  )
+endif()
+
+function(mlkem_native_asm_cpreprocess dest src)
+  get_filename_component(dir ${dest} DIRECTORY)
+  if (dir STREQUAL "")
+    set(dir ".")
+  endif()
+
+  set(TARGET "")
+  if(CMAKE_ASM_COMPILER_TARGET)
+    set(TARGET "--target=${CMAKE_ASM_COMPILER_TARGET}")
+  endif()
+
+  string(REGEX REPLACE "[ ]+" ";" CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS}")
+  set(MLKEM_NATIVE_CONFIG_FILE "\\\"../mlkem_native_config.h\\\"")
+  add_custom_command(
+	  OUTPUT ${dest}
+          COMMAND ${CMAKE_COMMAND} -E make_directory ${dir}
+          COMMAND "${CMAKE_ASM_COMPILER}" ${TARGET} ${CMAKE_ASM_FLAGS} -E "${MLKEM_NATIVE_DIR}/${src}" "-I${MLKEM_NATIVE_INCLUDE_DIR}" -DMLKEM_NATIVE_CONFIG_FILE=${MLKEM_NATIVE_CONFIG_FILE} | tr \"\;\" \"\\n\" > ${dest}
+          DEPENDS
+          ${MLKEM_NATIVE_DIR}/${src}
+          WORKING_DIRECTORY .
+  )
+endfunction()
+
+if(MLKEM_NATIVE_ASM_SOURCES)
+  foreach(asm ${MLKEM_NATIVE_ASM_SOURCES})
+    mlkem_native_asm_cpreprocess(${asm}.S ${asm})
+    list(APPEND BCM_ASM_SOURCES "${asm}.S")
+  endforeach()
+endif()
+
 if(FIPS_DELOCATE)
   if(FIPS_SHARED)
     message(FATAL_ERROR "Can't set both delocate and shared mode for FIPS build")
