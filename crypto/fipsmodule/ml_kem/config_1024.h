@@ -69,7 +69,7 @@
  *              This can also be set using CFLAGS.
  *
  *****************************************************************************/
-/* #define MLKEM_USE_NATIVE */
+#define MLKEM_USE_NATIVE
 
 /******************************************************************************
  * Name:        MLKEM_NATIVE_ARITH_BACKEND

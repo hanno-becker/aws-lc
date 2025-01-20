@@ -341,6 +341,69 @@ if(S2N_BIGNUM_ASM_SOURCES)
   endforeach()
 endif()
 
+if((ARCH STREQUAL "aarch64") AND UNIX)
+
+  # Set the source directory for s2n-bignum assembly files
+  set(MLKEM_NATIVE_DIR ${PROJECT_SOURCE_DIR}/crypto/fipsmodule/ml_kem/mlkem)
+  set(MLKEM_NATIVE_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/crypto/fipsmodule/ml_kem/mlkem)
+
+  # We add s2n-bignum files to a separate list because they need
+  # to go through C preprocessor in case of the static build.
+  set(
+    MLKEM_NATIVE_ASM_SOURCES
+
+    native/aarch64/src/intt_clean.S
+    native/aarch64/src/intt_opt.S
+    native/aarch64/src/ntt_clean.S
+    native/aarch64/src/ntt_opt.S
+    native/aarch64/src/poly_mulcache_compute_asm_clean.S
+    native/aarch64/src/poly_mulcache_compute_asm_opt.S
+    native/aarch64/src/poly_reduce_asm_clean.S
+    native/aarch64/src/poly_reduce_asm_opt.S
+    native/aarch64/src/poly_tobytes_asm_clean.S
+    native/aarch64/src/poly_tobytes_asm_opt.S
+    native/aarch64/src/poly_tomont_asm_clean.S
+    native/aarch64/src/poly_tomont_asm_opt.S
+    native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k2_clean.S
+    native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k2_opt.S
+    native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k3_clean.S
+    native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k3_opt.S
+    native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k4_clean.S
+    native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k4_opt.S
+    native/aarch64/src/rej_uniform_asm_clean.S
+  )
+endif()
+
+function(mlkem_native_asm_cpreprocess dest src)
+  get_filename_component(dir ${dest} DIRECTORY)
+  if (dir STREQUAL "")
+    set(dir ".")
+  endif()
+
+  set(TARGET "")
+  if(CMAKE_ASM_COMPILER_TARGET)
+    set(TARGET "--target=${CMAKE_ASM_COMPILER_TARGET}")
+  endif()
+
+  string(REGEX REPLACE "[ ]+" ";" CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS}")
+
+  add_custom_command(
+          OUTPUT ${dest}
+          COMMAND ${CMAKE_COMMAND} -E make_directory ${dir}
+          COMMAND ${CMAKE_ASM_COMPILER} ${TARGET} -DMLKEM_NATIVE_ARITH_BACKEND_AARCH64_OPT ${CMAKE_ASM_FLAGS} -E ${MLKEM_NATIVE_DIR}/${src} -I${MLKEM_NATIVE_INCLUDE_DIR} | tr \"\;\" \"\\n\" > ${dest}
+          DEPENDS
+          ${MLKEM_NATIVE_DIR}/${src}
+          WORKING_DIRECTORY .
+  )
+endfunction()
+
+if(MLKEM_NATIVE_ASM_SOURCES)
+  foreach(asm ${MLKEM_NATIVE_ASM_SOURCES})
+    mlkem_native_asm_cpreprocess(${asm}.S ${asm})
+    list(APPEND BCM_ASM_SOURCES "${asm}.S")
+  endforeach()
+endif()
+
 if(FIPS_DELOCATE)
   if(FIPS_SHARED)
     message(FATAL_ERROR "Can't set both delocate and shared mode for FIPS build")
