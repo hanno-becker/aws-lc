@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   mingw:
-    if: github.repository_owner == 'aws'
+
     runs-on: windows-latest
     steps:
       - name: Install NASM
@@ -45,7 +45,7 @@ jobs:
       - name: Run tests
         run: cmake --build "path has spaces/build" --target run_tests
   clang:
-    if: github.repository_owner == 'aws'
+
     runs-on: windows-latest
     steps:
       - name: Install NASM
@@ -73,7 +73,7 @@ jobs:
       - name: Run tests
         run: cmake --build ./build --target run_tests
   clang-cl-msbuild:
-    if: github.repository_owner == 'aws'
+
     strategy:
       fail-fast: false
       matrix:
@@ -114,7 +114,7 @@ jobs:
         name: Run tests
         run: cmake --build ./build --target run_tests
   clang-cl-ninja:
-    if: github.repository_owner == 'aws'
+
     strategy:
       fail-fast: false
       matrix:
@@ -162,7 +162,7 @@ jobs:
         name: Run tests
         run: cmake --build ./build --target run_tests
   cross-mingw:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-22.04
     steps:
       - name: Install Tools

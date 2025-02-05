@@ -11,7 +11,6 @@ env:
   CC: gcc
 jobs:
   libssh2:
-    if: github.repository_owner == 'aws'
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -23,7 +22,6 @@ jobs:
         run: |
           ./tests/ci/integration/run_libssh2_integration.sh
   libevent:
-    if: github.repository_owner == 'aws'
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -36,7 +34,6 @@ jobs:
         run: |
           ./tests/ci/integration/run_libevent_integration.sh
   librdkafka:
-    if: github.repository_owner == 'aws'
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -49,7 +46,6 @@ jobs:
         run: |
           ./tests/ci/integration/run_librdkafka_integration.sh
   rust-openssl:
-    if: github.repository_owner == 'aws'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout aws-lc
