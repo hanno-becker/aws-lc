@@ -11,7 +11,7 @@ env:
   CC: gcc
 jobs:
   tpm2-tss:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -22,7 +22,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_tpm2_tss_integration.sh
   grpc:
-    if: github.repository_owner == 'aws'
+
     env:
       DEBIAN_FRONTEND: noninteractive
       TZ: Etc/UTC
@@ -40,7 +40,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_grpc_integration.sh
   tcpdump:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -52,7 +52,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_tcpdump_integration.sh
   socat:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -63,7 +63,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_socat_integration.sh
   nmap:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -75,7 +75,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_nmap_integration.sh
   python-main:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     name: Python main
     steps:
@@ -88,7 +88,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_python_integration.sh main
   python-releases:
-    if: github.repository_owner == 'aws'
+
     strategy:
       fail-fast: false
       matrix:
@@ -113,7 +113,7 @@ jobs:
           FIPS: ${{ matrix.fips }}
           AWS_CRT_BUILD_USE_SYSTEM_LIBCRYPTO: ${{ matrix.openssl_in_crt }}
   openldap:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     name: OpenLDAP
     steps:
@@ -126,7 +126,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_openldap_integration.sh master OPENLDAP_REL_ENG_2_5
   cyrus-sasl:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     name: Cyrus-SASL
     steps:
@@ -139,7 +139,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_cyrus_sasl_integration.sh
   bind9:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -151,7 +151,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_bind9_integration.sh
   strongswan:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -165,7 +165,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_strongswan_integration.sh
   openvpn2-6:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -180,7 +180,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_openvpn_integration.sh release/2.6
   openvpnMaster:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -195,7 +195,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_openvpn_integration.sh master
   libevent:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -208,7 +208,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_libevent_integration.sh
   amazon-corretto-crypto-provider:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-latest
     steps:
       - name: Install OS Dependencies
@@ -222,7 +222,7 @@ jobs:
         run: |
           ./tests/ci/integration/run_accp_integration.sh
   ruby-releases:
-    if: github.repository_owner == 'aws'
+
     strategy:
       fail-fast: false
       matrix:

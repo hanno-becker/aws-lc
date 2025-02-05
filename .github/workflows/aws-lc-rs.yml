@@ -14,7 +14,7 @@ env:
   RUST_SCRIPT_NIGHTLY_TOOLCHAIN: nightly
 jobs:
   aws-lc-rs-bindgen:
-    if: github.repository_owner == 'aws'
+
     runs-on: ${{ matrix.os }}
     name: aws-lc-rs bindgen on ${{ matrix.os }}
     strategy:
@@ -72,7 +72,7 @@ jobs:
         working-directory: ./aws-lc-rs
         run: ./scripts/build/collect_build_src.sh
   windows-aws-lc-rs-bindgen:
-    if: github.repository_owner == 'aws'
+
     runs-on: ${{ matrix.os }}
     name: aws-lc-rs bindgen on ${{ matrix.os }}
     strategy:
