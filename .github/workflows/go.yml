@@ -12,7 +12,7 @@ env:
   GOPROXY: https://proxy.golang.org,direct
 jobs:
   go-version-1_17_13:
-    if: github.repository_owner == 'aws'
+
     env:
       GOROOT: "/usr/local/go"
       GO_ARCHIVE: "go1.17.13.linux-amd64.tar.gz"
