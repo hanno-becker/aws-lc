@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   ppc64-build-test:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-24.04
     steps:
       - name: Install qemu
@@ -20,7 +20,7 @@ jobs:
       - name: PPC64 Build/Test
         run: tests/ci/run_cross_tests.sh ppc64 powerpc64-unknown-linux-gnu "-DCMAKE_BUILD_TYPE=Release" "-DCMAKE_BUILD_TYPE=Release -DFIPS=1 -DBUILD_SHARED_LIBS=1"
   ppc32-non-fips-build-test:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-24.04
     steps:
       - name: Install qemu
@@ -31,7 +31,7 @@ jobs:
       - name: PPC32 Build/Test
         run: tests/ci/run_cross_tests.sh ppc powerpc-unknown-linux-gnu "-DCMAKE_BUILD_TYPE=Release"
   ppc32-fips-build-test:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-24.04
     steps:
       - name: Install qemu
@@ -42,7 +42,7 @@ jobs:
       - name: PPC32 Build/Test
         run: tests/ci/run_cross_tests.sh ppc powerpc-unknown-linux-gnu "-DCMAKE_BUILD_TYPE=Release -DFIPS=1 -DBUILD_SHARED_LIBS=1"
   ppc64le-build-test:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-24.04
     steps:
       - name: Install qemu
@@ -53,7 +53,7 @@ jobs:
       - name: PPC64LE Build/Test
         run: tests/ci/run_cross_tests.sh ppc64le powerpc64le-unknown-linux-gnu "-DCMAKE_BUILD_TYPE=Release" "-DCMAKE_BUILD_TYPE=Release -DFIPS=1 -DBUILD_SHARED_LIBS=1"
   riscv64-non-fips-build-test:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-24.04
     steps:
       - name: Install qemu
@@ -71,7 +71,7 @@ jobs:
           CFLAGS: "-Wno-string-compare"
         run: tests/ci/run_cross_tests.sh riscv riscv64-unknown-linux-gnu "-DCMAKE_BUILD_TYPE=Release"
   armv6-non-fips-build-test:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-24.04
     steps:
       - name: Install qemu
@@ -92,7 +92,7 @@ jobs:
       - name: loongarch64 Build/Test
         run: tests/ci/run_cross_tests.sh loongarch64 loongarch64-unknown-linux-gnu "-DCMAKE_BUILD_TYPE=Release"
   s390x-non-fips-build-test:
-    if: github.repository_owner == 'aws'
+
     runs-on: ubuntu-24.04
     steps:
       - name: Install qemu
@@ -109,4 +109,3 @@ jobs:
         env:
           CFLAGS: "-Wno-string-compare"
         run: tests/ci/run_cross_tests.sh s390x s390x-ibm-linux-gnu "-DCMAKE_BUILD_TYPE=Release"
-

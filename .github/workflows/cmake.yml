@@ -12,7 +12,7 @@ env:
   GOPROXY: https://proxy.golang.org,direct
 jobs:
   cmake:
-    if: github.repository_owner == 'aws'
+
     name: CMake ${{ matrix.cmake.version}} build with ${{ matrix.generator}} FIPS=${{ matrix.fips }}
     strategy:
       fail-fast: false
