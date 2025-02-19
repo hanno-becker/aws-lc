@@ -293,6 +293,26 @@
  *****************************************************************************/
 /* #define MLK_KEYGEN_PCT */
 
+/******************************************************************************
+ * Name:        MLK_KEYGEN_PCT_BREAKAGE_TEST
+ *
+ * Description: If this option is set, the user must provide a runtime
+ *              function `static inline int mlk_break_pct() { ... }` to
+ *              indicate whether the PCT should be made fail.
+ *
+ *              This option only has an effect if MLK_KEYGEN_PCT is set.
+ *
+ *****************************************************************************/
+/* #define MLK_KEYGEN_PCT_BREAKAGE_TEST
+   #if !defined(__ASSEMBLER__)
+   #include "sys.h"
+   static MLK_INLINE int mlk_break_pct(void)
+   {
+       ... return 0/1 depending on whether PCT should be broken ...
+   }
+   #endif
+*/
+
 /*************************  Config internals  ********************************/
 
 /* Default namespace

@@ -1,5 +1,5 @@
 name: mlkem-native
 source: pq-code-package/mlkem-native.git
-branch: main
-commit: 8b27230b8d866c43e1ff4b07ce6014cf955ed237
-imported-at: 2025-02-18T04:31:56+0000
+branch: pct_breakage_logic
+commit: e4eb6e07cd177468ae7e7088f48fb84fabf02609
+imported-at: 2025-02-19T07:02:57+0000

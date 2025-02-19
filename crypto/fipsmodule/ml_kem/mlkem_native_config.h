@@ -24,6 +24,15 @@
 #define MLK_KEYGEN_PCT
 #endif /* AWSLC_FIPS */
 
+#define MLK_KEYGEN_PCT_BREAKAGE_TEST
+#if !defined(__ASSEMBLER__) && !defined(MLK_MULTILEVEL_BUILD_NO_SHARED)
+#include "mlkem/sys.h"
+static MLK_INLINE int mlk_break_pct(void)
+{
+  return boringssl_fips_break_test("MLKEM_PWCT");
+}
+#endif /* !__ASSEMBLER__ */
+
 /* Enable valgrind-based assertions in mlkem-native through macro
  * from AWS-LC/BoringSSL. */
 #if defined(BORINGSSL_CONSTANT_TIME_VALIDATION)
