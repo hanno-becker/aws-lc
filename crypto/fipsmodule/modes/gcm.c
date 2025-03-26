@@ -49,6 +49,7 @@
 #include <openssl/base.h>
 
 #include <assert.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <openssl/mem.h>
@@ -61,6 +62,12 @@
 // bits of a |size_t|.
 static const size_t kSizeTWithoutLower4Bits = (size_t) -16;
 
+// Helper to check if slothy implementations should be used.
+// Set AWSLC_USE_SLOTHY=1 to enable slothy instead of default implementations.
+static bool use_slothy_gcm(void) {
+  const char *env = getenv("AWSLC_USE_SLOTHY");
+  return (env != NULL && strcmp(env, "1") == 0);
+}
 
 #define GCM_MUL(ctx, Xi) gcm_gmult_nohw((ctx)->Xi, (ctx)->gcm_key.Htable)
 #define GHASH(ctx, in, len) \
@@ -161,7 +168,20 @@ static size_t hw_gcm_encrypt(const uint8_t *in, uint8_t *out, size_t len,
   // in the case of the EVP API.
   // In the case of the AEAD API, it can be used for all input lengths
   // but we are not identifying which API calls the code below.
-  if (CRYPTO_is_ARMv8_GCM_8x_capable() && len >= 256) {
+  if (use_slothy_gcm()) {
+    switch(key->rounds) {
+    case 10:
+      aes_gcm_enc_kernel_slothy_base_128(in, len_blocks * 8, out, Xi, ivec, key, Htable);
+      return len_blocks;
+    case 12:
+      aes_gcm_enc_kernel_slothy_base_192(in, len_blocks * 8, out, Xi, ivec, key, Htable);
+      return len_blocks;
+    case 14:
+      aes_gcm_enc_kernel_slothy_base_256(in, len_blocks * 8, out, Xi, ivec, key, Htable);
+      return len_blocks;
+    }
+  }
+  else if (CRYPTO_is_ARMv8_GCM_8x_capable() && len >= 256) {
     switch(key->rounds) {
     case 10:
       aesv8_gcm_8x_enc_128(in, len_blocks * 8, out, Xi, ivec, key, Htable);
@@ -198,7 +218,20 @@ static size_t hw_gcm_decrypt(const uint8_t *in, uint8_t *out, size_t len,
   // in the case of the EVP API.
   // In the case of the AEAD API, it can be used for all input lengths
   // but we are not identifying which API calls the code below.
-  if (CRYPTO_is_ARMv8_GCM_8x_capable() && len >= 256) {
+  if (use_slothy_gcm()) {
+    switch(key->rounds) {
+    case 10:
+      aes_gcm_dec_kernel_slothy_base_128(in, len_blocks * 8, out, Xi, ivec, key, Htable);
+      break;
+    case 12:
+      aes_gcm_dec_kernel_slothy_base_192(in, len_blocks * 8, out, Xi, ivec, key, Htable);
+      break;
+    case 14:
+      aes_gcm_dec_kernel_slothy_base_256(in, len_blocks * 8, out, Xi, ivec, key, Htable);
+      break;
+    }
+  }
+  else if (CRYPTO_is_ARMv8_GCM_8x_capable() && len >= 256) {
     switch(key->rounds) {
     case 10:
       aesv8_gcm_8x_dec_128(in, len_blocks * 8, out, Xi, ivec, key, Htable);

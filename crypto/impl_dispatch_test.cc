@@ -16,6 +16,7 @@
 
 #if defined(BORINGSSL_DISPATCH_TEST) && !defined(BORINGSSL_SHARED_LIBRARY)
 
+#include <cstdlib>
 #include <functional>
 #include <utility>
 #include <vector>
@@ -34,6 +35,11 @@
 #include "fipsmodule/sha/internal.h"
 
 #include "test/file_test.h"
+
+static bool use_slothy_gcm(void) {
+  const char *env = getenv("AWSLC_USE_SLOTHY");
+  return (strcmp(env, "1") == 0);
+}
 
 class ImplDispatchTest : public ::testing::Test {
  public:
@@ -84,6 +90,7 @@ class ImplDispatchTest : public ::testing::Test {
     aes_vpaes_ = CRYPTO_is_NEON_capable();
     aes_gcm_pmull_ = CRYPTO_is_ARMv8_PMULL_capable();
     aes_gcm_8x_ = CRYPTO_is_ARMv8_GCM_8x_capable();
+    aes_gcm_slothy_ = use_slothy_gcm();
     sha_ext_ = OPENSSL_armcap_P & ARMV8_SHA256;
     sha_512_ext_ = OPENSSL_armcap_P & ARMV8_SHA512;
     sha3_ext_ = CRYPTO_is_ARMv8_SHA3_capable();
@@ -143,6 +150,7 @@ class ImplDispatchTest : public ::testing::Test {
 #else // AARCH64
   bool aes_gcm_pmull_ = false;
   bool aes_gcm_8x_ = false;
+  bool aes_gcm_slothy_ = false;
   bool sha_512_ext_ = false;
   bool sha3_ext_ = false;
   bool neoverse_n1_ = false;
@@ -170,6 +178,7 @@ constexpr size_t kFlag_RSAZ_mod_exp_avx512_x2 = 8;
 #else // AARCH64
 constexpr size_t kFlag_aes_gcm_enc_kernel = 2;
 constexpr size_t kFlag_aesv8_gcm_8x_enc_128 = 7;
+constexpr size_t kFlag_aes_gcm_slothy = 15;
 constexpr size_t kFlag_sha512_hw = 8;
 constexpr size_t kFlag_KeccakF1600_hw = 9;
 constexpr size_t kFlag_sha3_keccak_f1600 = 10;
@@ -200,9 +209,10 @@ TEST_F(ImplDispatchTest, AEAD_AES_GCM) {
           {kFlag_aes_hw_ctr32_encrypt_blocks, aes_hw_ &&
            !aes_gcm_pmull_ && !aes_gcm_8x_},
           {kFlag_aes_gcm_enc_kernel, aes_hw_ &&
-           aes_gcm_pmull_ && !aes_gcm_8x_},
+           aes_gcm_pmull_ && !aes_gcm_8x_ && !aes_gcm_slothy_},
+          {kFlag_aes_gcm_slothy, aes_hw_ && aes_gcm_slothy_},
           {kFlag_aesv8_gcm_8x_enc_128, aes_hw_ &&
-           aes_gcm_pmull_ && aes_gcm_8x_}
+           aes_gcm_pmull_ && aes_gcm_8x_ && !aes_gcm_slothy_}
 #endif
       },
       [] {
