@@ -4,23 +4,23 @@
 // mlkem-native source code
 
 // Include level-independent code
-#define MLK_CONFIG_FILE "../mlkem_native_config.h"
+#define MLK_CONFIG_FILE "../../mlkem_native_config.h"
 #define MLK_CONFIG_MONOBUILD_KEEP_SHARED_HEADERS
 
 // MLKEM-512
 #define MLK_CONFIG_PARAMETER_SET 512
 #define MLK_CONFIG_MULTILEVEL_WITH_SHARED // Include level-independent code
-#include "mlkem/mlkem_native_bcm.c"
+#include "mlkem/mlkem_native.c"
 // MLKEM-768
 #undef MLK_CONFIG_PARAMETER_SET
 #define MLK_CONFIG_PARAMETER_SET 768
 #define MLK_CONFIG_MULTILEVEL_NO_SHARED // Exclude level-inpendent code
-#include "mlkem/mlkem_native_bcm.c"
+#include "mlkem/mlkem_native.c"
 // MLKEM-1024
 #undef MLK_CONFIG_MONOBUILD_KEEP_SHARED_HEADERS
 #undef MLK_CONFIG_PARAMETER_SET
 #define MLK_CONFIG_PARAMETER_SET 1024
-#include "mlkem/mlkem_native_bcm.c"
+#include "mlkem/mlkem_native.c"
 
 // End of mlkem-native source code
 

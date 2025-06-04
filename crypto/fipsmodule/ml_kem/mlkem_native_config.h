@@ -4,17 +4,20 @@
 #ifndef MLK_CONFIG_H
 #define MLK_CONFIG_H
 
+#if !defined(__ASSEMBLER__)
 #include "../../internal.h"
+#endif
 
 // Namespacing: All symbols are of the form mlkem*. Level-specific
 // symbols are further prefixed with their security level, e.g.
 // mlkem512*, mlkem768*, mlkem1024*.
 #define MLK_CONFIG_NAMESPACE_PREFIX mlkem
 
-// Replace mlkem-native's FIPS 202 headers with glue code to
-// AWS-LC's own FIPS 202 implementation.
-#define MLK_CONFIG_FIPS202_CUSTOM_HEADER "../fips202_glue.h"
-#define MLK_CONFIG_FIPS202X4_CUSTOM_HEADER "../fips202x4_glue.h"
+#define MLK_CONFIG_USE_NATIVE_BACKEND_ARITH
+#define MLK_CONFIG_ARITH_BACKEND_FILE "native/meta.h"
+
+#define MLK_CONFIG_USE_NATIVE_BACKEND_FIPS202
+#define MLK_CONFIG_FIPS202_BACKEND_FILE "fips202/native/auto.h"
 
 // Everything is built in a single CU, so both internal and external
 // mlkem-native API can have internal linkage.
@@ -29,7 +32,7 @@
 #if defined(BORINGSSL_FIPS_BREAK_TESTS)
 #define MLK_CONFIG_KEYGEN_PCT_BREAKAGE_TEST
 #if !defined(__ASSEMBLER__) && !defined(MLK_CONFIG_MULTILEVEL_NO_SHARED)
-#include "mlkem/sys.h"
+#include "mlkem/src/sys.h"
 static MLK_INLINE int mlk_break_pct(void) {
   return boringssl_fips_break_test("MLKEM_PWCT");
 }
@@ -46,7 +49,7 @@ static MLK_INLINE int mlk_break_pct(void) {
 #define MLK_CONFIG_CUSTOM_ZEROIZE
 #if !defined(__ASSEMBLER__) && !defined(MLK_CONFIG_MULTILEVEL_NO_SHARED)
 #include <stdint.h>
-#include "mlkem/sys.h"
+#include "mlkem/src/sys.h"
 #include <openssl/base.h>
 static MLK_INLINE void mlk_zeroize(void *ptr, size_t len) {
     OPENSSL_cleanse(ptr, len);
@@ -57,7 +60,7 @@ static MLK_INLINE void mlk_zeroize(void *ptr, size_t len) {
 #define MLK_CONFIG_CUSTOM_RANDOMBYTES
 #if !defined(__ASSEMBLER__) && !defined(MLK_CONFIG_MULTILEVEL_NO_SHARED)
 #include <stdint.h>
-#include "mlkem/sys.h"
+#include "mlkem/src/sys.h"
 #include <openssl/rand.h>
 static MLK_INLINE void mlk_randombytes(void *ptr, size_t len) {
     RAND_bytes(ptr, len);

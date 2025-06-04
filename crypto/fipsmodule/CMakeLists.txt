@@ -303,6 +303,35 @@ if((((ARCH STREQUAL "x86_64") AND NOT MY_ASSEMBLER_IS_TOO_OLD_FOR_512AVX) OR
   endif()
 endif()
 
+
+# s2n-bignum files can be compiled on Unix platforms for x86_64 and arm64 only.
+if((ARCH STREQUAL "aarch64") AND UNIX)
+
+  # Set the source directory for s2n-bignum assembly files
+  set(MLKEM_NATIVE_DIR "${AWSLC_SOURCE_DIR}/crypto/fipsmodule/ml_kem")
+
+  list(APPEND BCM_ASM_SOURCES
+
+    ${MLKEM_NATIVE_DIR}/mlkem/src/native/aarch64/src/intt.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/native/aarch64/src/ntt.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/native/aarch64/src/poly_mulcache_compute_asm.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/native/aarch64/src/poly_reduce_asm.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/native/aarch64/src/poly_tobytes_asm.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/native/aarch64/src/poly_tomont_asm.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k2.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k3.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/native/aarch64/src/polyvec_basemul_acc_montgomery_cached_asm_k4.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/native/aarch64/src/rej_uniform_asm.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/fips202/native/aarch64/src/keccak_f1600_x1_scalar_asm.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/fips202/native/aarch64/src/keccak_f1600_x1_v84a_asm.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/fips202/native/aarch64/src/keccak_f1600_x2_v84a_asm.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/fips202/native/aarch64/src/keccak_f1600_x4_v8a_scalar_hybrid_asm.S
+    ${MLKEM_NATIVE_DIR}/mlkem/src/fips202/native/aarch64/src/keccak_f1600_x4_v8a_v84a_scalar_hybrid_asm.S
+  )
+
+endif()
+
+
 if(FIPS_DELOCATE)
   if(FIPS_SHARED)
     message(FATAL_ERROR "Can't set both delocate and shared mode for FIPS build")
@@ -352,7 +381,7 @@ if(FIPS_DELOCATE)
     -a $<TARGET_FILE:bcm_c_generated_asm>
     -o bcm-delocated.S
     -cc ${CMAKE_ASM_COMPILER}
-    -cc-flags "${TARGET} ${CMAKE_ASM_FLAGS} -DS2N_BN_HIDE_SYMBOLS"
+    -cc-flags "${TARGET} ${CMAKE_ASM_FLAGS} -DS2N_BN_HIDE_SYMBOLS -DMLK_CONFIG_FILE=\"../../mlkem_native_config.h\""
     -s2n-bignum-include "${S2N_BIGNUM_INCLUDE_DIR}"
     ${DELOCATE_EXTRA_ARGS}
     ${AWSLC_SOURCE_DIR}/include/openssl/arm_arch.h

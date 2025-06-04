@@ -72,25 +72,14 @@ popd
 
 echo "Pull source code from remote repository..."
 
-# Copy mlkem-native source tree -- C-only, no FIPS-202
-mkdir $SRC
-cp $TMP/mlkem/src/* $SRC
+# Copy full mlkem-native source tree, incl. backends and FIPS202
+cp -r $TMP/mlkem $SRC
 
 # We use the custom `mlkem_native_config.h`, so can remove the default one
-rm $SRC/config.h
+rm $SRC/src/config.h
 
 # Copy formatting file
 cp $TMP/.clang-format $SRC
-
-# Copy and statically simplify BCM file
-# The static simplification is not necessary, but improves readability
-# by removing directives related to native backends that are irrelevant
-# for the C-only import.
-unifdef -DMLK_CONFIG_FIPS202_CUSTOM_HEADER                             \
-        -UMLK_CONFIG_USE_NATIVE_BACKEND_ARITH                          \
-        -UMLK_CONFIG_USE_NATIVE_BACKEND_FIPS202                        \
-        $TMP/mlkem/mlkem_native.c                                      \
-        > $SRC/mlkem_native_bcm.c
 
 # Copy mlkem-native header
 # This is only needed for access to the various macros defining key sizes.
@@ -107,8 +96,6 @@ if [[ "$(uname)" == "Darwin" ]]; then
 else
   SED_I=(-i)
 fi
-echo "Fixup include paths"
-sed "${SED_I[@]}" 's/#include "src\/\([^"]*\)"/#include "\1"/' $SRC/mlkem_native_bcm.c
 
 echo "Remove temporary artifacts ..."
 rm -rf $TMP
