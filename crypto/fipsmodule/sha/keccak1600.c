@@ -239,10 +239,14 @@ void KeccakF1600(uint64_t A[KECCAK1600_ROWS][KECCAK1600_ROWS]);
 static void KeccakF1600_XORBytes(uint64_t A[KECCAK1600_ROWS][KECCAK1600_ROWS], const uint8_t *inp, size_t len) {
     assert(len <= SHA3_MAX_BLOCKSIZE);
     assert((len % 8) == 0);
-
+#if !defined(OPENSSL_BIG_ENDIAN)
+    uint8_t *A_u8 = (uint8_t*) A;
+    for (size_t i=0; i < len; i++) {
+	A_u8[i] ^= inp[i];
+    }
+#else
     uint64_t *A_flat = (uint64_t *)A;
     size_t w = len / 8;
-
     for (size_t i = 0; i < w; i++) {
         uint64_t Ai = (uint64_t)inp[0]       | (uint64_t)inp[1] << 8  |
                       (uint64_t)inp[2] << 16 | (uint64_t)inp[3] << 24 |
@@ -251,6 +255,7 @@ static void KeccakF1600_XORBytes(uint64_t A[KECCAK1600_ROWS][KECCAK1600_ROWS], c
         inp += 8;
         A_flat[i] ^= Ai;
     }
+#endif
 }
 
 size_t Keccak1600_Absorb(uint64_t A[KECCAK1600_ROWS][KECCAK1600_ROWS], const uint8_t *inp, size_t len,
@@ -271,6 +276,12 @@ size_t Keccak1600_Absorb(uint64_t A[KECCAK1600_ROWS][KECCAK1600_ROWS], const uin
 // This function operates on up to block_size bytes (a single block). For extracting
 // more data, the state must be processed again through KeccakF1600 (see Keccak1600_Squeeze).
 static void KeccakF1600_ExtractBytes(uint64_t A[KECCAK1600_ROWS][KECCAK1600_ROWS], uint8_t *out, size_t len) {
+#if !defined(OPENSSL_BIG_ENDIAN)
+    uint8_t *A_u8 = (uint8_t*) A;
+    for (size_t i=0; i < len; i++) {
+	out[i] = A_u8[i];
+    }
+#else  /* MLK_SYS_LITTLE_ENDIAN */
     uint64_t *A_flat = (uint64_t *)A;
     assert(len <= SHA3_MAX_BLOCKSIZE);
     size_t i = 0;
@@ -298,6 +309,7 @@ static void KeccakF1600_ExtractBytes(uint64_t A[KECCAK1600_ROWS][KECCAK1600_ROWS
         len -= 8;
         i++;
     }
+#endif
 }
 
 void Keccak1600_Squeeze(uint64_t A[KECCAK1600_ROWS][KECCAK1600_ROWS], uint8_t *out, size_t len, size_t r, int padded) {
