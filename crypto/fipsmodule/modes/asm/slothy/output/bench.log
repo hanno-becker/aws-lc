@@ -1,0 +1,1416 @@
+Starting AES GCM benchmark tests at Wed Jan  7 17:22:49 UTC 2026
+========================================
+
+Getting variants for ENC=1, SZ=128
+Available variants: awslc
+x4_basic
+x4_dual_acc
+x4_dual_acc_keep_htable
+x4_fast_tail
+x4_ilp
+x4_keep_htable
+x4_keep_htable_rotate
+x4_late_tag
+x4_reload_round_keys_full
+x4_reload_round_keys_partial
+x4_scalar_iv
+x4_scalar_iv2
+x4_scalar_iv2_late_tag_keep_htable_scalar_rk
+x4_scalar_iv2_mem_late_tag_keep_htable_scalar_rk
+x4_scalar_iv_mem
+x4_scalar_iv_mem2
+x4_scalar_iv_mem2_late_tag
+x4_scalar_iv_mem2_late_tag_keep_htable_scalar_rk
+x4_scalar_iv_mem_late_tag
+x4_scalar_iv_mem_late_tag_keep_htable
+x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk
+x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk_v1
+x4_scalar_iv_mem_late_tag_scalar_rk
+----------------------------------------
+
+Benchmarking: ENC=1, SZ=128, VARIANT=awslc
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: awslc (default)
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4548000 EVP-AES-128-GCM encrypt init operations in 1000213us (4547031.5 ops/sec)
+Did 6677250 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000032us (6677036.3 ops/sec): 106.8 MB/s
+Did 5344000 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000047us (5343748.8 ops/sec): 684.0 MB/s
+Did 4113000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000171us (4112296.8 ops/sec): 1052.7 MB/s
+Did 2806750 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000007us (2806730.4 ops/sec): 1437.0 MB/s
+Did 1335000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000165us (1334779.8 ops/sec): 1802.0 MB/s
+Did 968000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000415us (967598.4 ops/sec): 1981.6 MB/s
+Did 518000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1001318us (517318.2 ops/sec): 2118.9 MB/s
+Did 268000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000074us (267980.2 ops/sec): 2195.3 MB/s
+Did 137000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1004509us (136385.0 ops/sec): 2234.5 MB/s
+Did 69000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1002357us (68837.7 ops/sec): 2255.7 MB/s
+Did 35000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1012949us (34552.6 ops/sec): 2264.4 MB/s
+Did 18000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1038037us (17340.4 ops/sec): 2272.8 MB/s
+Did 9482 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1092465us (8679.5 ops/sec): 2275.3 MB/s
+Did 4360 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1005497us (4336.2 ops/sec): 2273.4 MB/s
+Did 2190 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1008835us (2170.8 ops/sec): 2276.3 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_basic
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_basic
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4636000 EVP-AES-128-GCM encrypt init operations in 1000191us (4635114.7 ops/sec)
+Did 7123000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000033us (7122764.9 ops/sec): 114.0 MB/s
+Did 5632250 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000040us (5632024.7 ops/sec): 720.9 MB/s
+Did 4430000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000097us (4429570.3 ops/sec): 1134.0 MB/s
+Did 3098000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000039us (3097879.2 ops/sec): 1586.1 MB/s
+Did 1501000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000433us (1500350.3 ops/sec): 2025.5 MB/s
+Did 1105000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000466us (1104485.3 ops/sec): 2262.0 MB/s
+Did 595000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000158us (594906.0 ops/sec): 2436.7 MB/s
+Did 310000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001761us (309455.0 ops/sec): 2535.1 MB/s
+Did 158000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1000690us (157891.1 ops/sec): 2586.9 MB/s
+Did 80000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1003267us (79739.5 ops/sec): 2612.9 MB/s
+Did 40000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1004165us (39834.1 ops/sec): 2610.6 MB/s
+Did 20000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1001650us (19967.1 ops/sec): 2617.1 MB/s
+Did 10738 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1074394us (9994.5 ops/sec): 2620.0 MB/s
+Did 5070 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1013732us (5001.3 ops/sec): 2622.1 MB/s
+Did 2510 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1006811us (2493.0 ops/sec): 2614.1 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_dual_acc
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_dual_acc
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4547000 EVP-AES-128-GCM encrypt init operations in 1000018us (4546918.2 ops/sec)
+Did 7133000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000020us (7132857.3 ops/sec): 114.1 MB/s
+Did 5606250 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000040us (5606025.8 ops/sec): 717.6 MB/s
+Did 4492250 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000015us (4492182.6 ops/sec): 1150.0 MB/s
+Did 3189250 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000043us (3189112.9 ops/sec): 1632.8 MB/s
+Did 1568000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000141us (1567778.9 ops/sec): 2116.5 MB/s
+Did 1165000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000761us (1164114.1 ops/sec): 2384.1 MB/s
+Did 631000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000741us (630532.8 ops/sec): 2582.7 MB/s
+Did 329000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000450us (328852.0 ops/sec): 2694.0 MB/s
+Did 169000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1005459us (168082.4 ops/sec): 2753.9 MB/s
+Did 85000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1000505us (84957.1 ops/sec): 2783.9 MB/s
+Did 43000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1005085us (42782.5 ops/sec): 2803.8 MB/s
+Did 22000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1025140us (21460.5 ops/sec): 2812.9 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1024250us (10739.6 ops/sec): 2815.3 MB/s
+Did 5400 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1010527us (5343.7 ops/sec): 2801.7 MB/s
+Did 2827 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1052609us (2685.7 ops/sec): 2816.2 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_dual_acc_keep_htable
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_dual_acc_keep_htable
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4635000 EVP-AES-128-GCM encrypt init operations in 1000068us (4634684.8 ops/sec)
+Did 7143750 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000013us (7143657.1 ops/sec): 114.3 MB/s
+Did 5683000 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000016us (5682909.1 ops/sec): 727.4 MB/s
+Did 4543500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000018us (4543418.2 ops/sec): 1163.1 MB/s
+Did 3238250 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000002us (3238243.5 ops/sec): 1658.0 MB/s
+Did 1593000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000435us (1592307.3 ops/sec): 2149.6 MB/s
+Did 1185000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000345us (1184591.3 ops/sec): 2426.0 MB/s
+Did 642000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000086us (641944.8 ops/sec): 2629.4 MB/s
+Did 336000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002816us (335056.5 ops/sec): 2744.8 MB/s
+Did 172000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1004106us (171296.7 ops/sec): 2806.5 MB/s
+Did 87000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1005490us (86525.0 ops/sec): 2835.3 MB/s
+Did 44000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1012555us (43454.4 ops/sec): 2847.8 MB/s
+Did 22000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1008675us (21810.8 ops/sec): 2858.8 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1006691us (10926.9 ops/sec): 2864.4 MB/s
+Did 5490 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1004548us (5465.1 ops/sec): 2865.3 MB/s
+Did 2740 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1002916us (2732.0 ops/sec): 2864.7 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_fast_tail
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_fast_tail
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4547000 EVP-AES-128-GCM encrypt init operations in 1000207us (4546059.0 ops/sec)
+Did 7113500 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000014us (7113400.4 ops/sec): 113.8 MB/s
+Did 5598000 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000004us (5597977.6 ops/sec): 716.5 MB/s
+Did 4499500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000044us (4499302.0 ops/sec): 1151.8 MB/s
+Did 3197000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000024us (3196923.3 ops/sec): 1636.8 MB/s
+Did 1573000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000138us (1572783.0 ops/sec): 2123.3 MB/s
+Did 1168000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000498us (1167418.6 ops/sec): 2390.9 MB/s
+Did 633000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000367us (632767.8 ops/sec): 2591.8 MB/s
+Did 330000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002190us (329278.9 ops/sec): 2697.5 MB/s
+Did 169000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001276us (168784.6 ops/sec): 2765.4 MB/s
+Did 86000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1008131us (85306.4 ops/sec): 2795.3 MB/s
+Did 43000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1010604us (42548.8 ops/sec): 2788.5 MB/s
+Did 22000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1030769us (21343.3 ops/sec): 2797.5 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1027606us (10704.5 ops/sec): 2806.1 MB/s
+Did 5841 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1096323us (5327.8 ops/sec): 2793.3 MB/s
+Did 2937 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1096163us (2679.3 ops/sec): 2809.5 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_ilp
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_ilp
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4636000 EVP-AES-128-GCM encrypt init operations in 1000039us (4635819.2 ops/sec)
+Did 7047750 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000001us (7047743.0 ops/sec): 112.8 MB/s
+Did 5545250 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000001us (5545244.5 ops/sec): 709.8 MB/s
+Did 4432000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000020us (4431911.4 ops/sec): 1134.6 MB/s
+Did 3137000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000232us (3136272.4 ops/sec): 1605.8 MB/s
+Did 1536500 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000132us (1536297.2 ops/sec): 2074.0 MB/s
+Did 1139000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000860us (1138021.3 ops/sec): 2330.7 MB/s
+Did 616000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000441us (615728.5 ops/sec): 2522.0 MB/s
+Did 321000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000189us (320939.3 ops/sec): 2629.1 MB/s
+Did 165000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1005943us (164025.2 ops/sec): 2687.4 MB/s
+Did 83000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1001743us (82855.6 ops/sec): 2715.0 MB/s
+Did 42000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1010328us (41570.7 ops/sec): 2724.4 MB/s
+Did 21000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1006126us (20872.1 ops/sec): 2735.8 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1051961us (10456.7 ops/sec): 2741.2 MB/s
+Did 5230 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1000296us (5228.5 ops/sec): 2741.2 MB/s
+Did 2827 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1081653us (2613.6 ops/sec): 2740.6 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_keep_htable
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_keep_htable
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4621000 EVP-AES-128-GCM encrypt init operations in 1000166us (4620233.0 ops/sec)
+Did 7160250 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000008us (7160192.7 ops/sec): 114.6 MB/s
+Did 5630250 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000011us (5630188.1 ops/sec): 720.7 MB/s
+Did 4484500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000004us (4484482.1 ops/sec): 1148.0 MB/s
+Did 3186750 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000008us (3186724.5 ops/sec): 1631.6 MB/s
+Did 1565000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000037us (1564942.1 ops/sec): 2112.7 MB/s
+Did 1164000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000030us (1163965.1 ops/sec): 2383.8 MB/s
+Did 631000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000037us (630976.7 ops/sec): 2584.5 MB/s
+Did 330000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002304us (329241.4 ops/sec): 2697.1 MB/s
+Did 169000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1003878us (168347.1 ops/sec): 2758.2 MB/s
+Did 86000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1010792us (85081.8 ops/sec): 2788.0 MB/s
+Did 43000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1001393us (42940.2 ops/sec): 2814.1 MB/s
+Did 22000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1021284us (21541.5 ops/sec): 2823.5 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1020345us (10780.7 ops/sec): 2826.1 MB/s
+Did 5430 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1006632us (5394.2 ops/sec): 2828.1 MB/s
+Did 2893 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1075850us (2689.0 ops/sec): 2819.7 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_keep_htable_rotate
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_keep_htable_rotate
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4634000 EVP-AES-128-GCM encrypt init operations in 1000191us (4633115.1 ops/sec)
+Did 6642000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000123us (6641183.1 ops/sec): 106.3 MB/s
+Did 5204000 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000050us (5203739.8 ops/sec): 666.1 MB/s
+Did 4241000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000185us (4240215.6 ops/sec): 1085.5 MB/s
+Did 3078000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000068us (3077790.7 ops/sec): 1575.8 MB/s
+Did 1563000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000614us (1562040.9 ops/sec): 2108.8 MB/s
+Did 1165000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000307us (1164642.5 ops/sec): 2385.2 MB/s
+Did 638000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1001437us (637084.5 ops/sec): 2609.5 MB/s
+Did 335000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002152us (334280.6 ops/sec): 2738.4 MB/s
+Did 172000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1003747us (171357.9 ops/sec): 2807.5 MB/s
+Did 87000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1002667us (86768.6 ops/sec): 2843.2 MB/s
+Did 44000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1016759us (43274.8 ops/sec): 2836.1 MB/s
+Did 22000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1012620us (21725.8 ops/sec): 2847.6 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1010664us (10883.9 ops/sec): 2853.2 MB/s
+Did 5460 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1003004us (5443.6 ops/sec): 2854.0 MB/s
+Did 2992 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1098136us (2724.6 ops/sec): 2857.0 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_late_tag
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_late_tag
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4547000 EVP-AES-128-GCM encrypt init operations in 1000178us (4546190.8 ops/sec)
+Did 7128750 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000021us (7128600.3 ops/sec): 114.1 MB/s
+Did 5620000 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000176us (5619011.1 ops/sec): 719.2 MB/s
+Did 4414250 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000015us (4414183.8 ops/sec): 1130.0 MB/s
+Did 3094000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000068us (3093789.6 ops/sec): 1584.0 MB/s
+Did 1498000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000410us (1497386.1 ops/sec): 2021.5 MB/s
+Did 1105000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000362us (1104600.1 ops/sec): 2262.2 MB/s
+Did 596000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1001640us (595024.2 ops/sec): 2437.2 MB/s
+Did 310000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001760us (309455.4 ops/sec): 2535.1 MB/s
+Did 158000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1000576us (157909.0 ops/sec): 2587.2 MB/s
+Did 80000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1005083us (79595.4 ops/sec): 2608.2 MB/s
+Did 41000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1021824us (40124.3 ops/sec): 2629.6 MB/s
+Did 21000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1042979us (20134.6 ops/sec): 2639.1 MB/s
+Did 10344 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1026644us (10075.5 ops/sec): 2641.2 MB/s
+Did 5070 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1011914us (5010.3 ops/sec): 2626.8 MB/s
+Did 2706 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1077739us (2510.8 ops/sec): 2632.8 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_reload_round_keys_full
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_reload_round_keys_full
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4638000 EVP-AES-128-GCM encrypt init operations in 1000110us (4637489.9 ops/sec)
+Did 7242000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000076us (7241449.6 ops/sec): 115.9 MB/s
+Did 5624750 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000032us (5624570.0 ops/sec): 719.9 MB/s
+Did 4456000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000043us (4455808.4 ops/sec): 1140.7 MB/s
+Did 3130250 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000009us (3130221.8 ops/sec): 1602.7 MB/s
+Did 1518500 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000106us (1518339.1 ops/sec): 2049.8 MB/s
+Did 1121000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000330us (1120630.2 ops/sec): 2295.1 MB/s
+Did 605000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000821us (604503.7 ops/sec): 2476.0 MB/s
+Did 315000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000773us (314756.7 ops/sec): 2578.5 MB/s
+Did 161000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1002182us (160649.5 ops/sec): 2632.1 MB/s
+Did 82000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1010485us (81149.2 ops/sec): 2659.1 MB/s
+Did 41000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1006304us (40743.2 ops/sec): 2670.1 MB/s
+Did 21000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1027351us (20440.9 ops/sec): 2679.2 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1070744us (10273.2 ops/sec): 2693.1 MB/s
+Did 5120 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1000501us (5117.4 ops/sec): 2683.0 MB/s
+Did 2570 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1002911us (2562.5 ops/sec): 2687.0 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_reload_round_keys_partial
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_reload_round_keys_partial
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4548000 EVP-AES-128-GCM encrypt init operations in 1000044us (4547799.9 ops/sec)
+Did 7253000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000018us (7252869.4 ops/sec): 116.0 MB/s
+Did 5661250 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000037us (5661040.5 ops/sec): 724.6 MB/s
+Did 4434000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000023us (4433898.0 ops/sec): 1135.1 MB/s
+Did 3081000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000067us (3080793.6 ops/sec): 1577.4 MB/s
+Did 1477000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000283us (1476582.1 ops/sec): 1993.4 MB/s
+Did 1084000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000070us (1083924.1 ops/sec): 2219.9 MB/s
+Did 583000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000079us (582953.9 ops/sec): 2387.8 MB/s
+Did 303000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001708us (302483.4 ops/sec): 2477.9 MB/s
+Did 155000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1004375us (154324.8 ops/sec): 2528.5 MB/s
+Did 78000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1001375us (77892.9 ops/sec): 2552.4 MB/s
+Did 40000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1000436us (39982.6 ops/sec): 2620.3 MB/s
+Did 20000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1002229us (19955.5 ops/sec): 2615.6 MB/s
+Did 10890 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1088524us (10004.4 ops/sec): 2622.6 MB/s
+Did 5020 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1004870us (4995.7 ops/sec): 2619.2 MB/s
+Did 2530 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1011435us (2501.4 ops/sec): 2622.9 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4637000 EVP-AES-128-GCM encrypt init operations in 1000067us (4636689.3 ops/sec)
+Did 7157000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000021us (7156849.7 ops/sec): 114.5 MB/s
+Did 5561000 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000017us (5560905.5 ops/sec): 711.8 MB/s
+Did 4409250 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000019us (4409166.2 ops/sec): 1128.7 MB/s
+Did 3108000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000062us (3107807.3 ops/sec): 1591.2 MB/s
+Did 1501000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000271us (1500593.3 ops/sec): 2025.8 MB/s
+Did 1118000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000402us (1117550.7 ops/sec): 2288.7 MB/s
+Did 605000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1001329us (604197.0 ops/sec): 2474.8 MB/s
+Did 315000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1000848us (314733.1 ops/sec): 2578.3 MB/s
+Did 161000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001410us (160773.3 ops/sec): 2634.1 MB/s
+Did 82000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1009239us (81249.3 ops/sec): 2662.4 MB/s
+Did 41000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1008001us (40674.6 ops/sec): 2665.6 MB/s
+Did 21000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1028948us (20409.2 ops/sec): 2675.1 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1075776us (10225.2 ops/sec): 2680.5 MB/s
+Did 5150 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1009788us (5100.1 ops/sec): 2673.9 MB/s
+Did 2560 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1004945us (2547.4 ops/sec): 2671.1 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv2
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv2
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4627000 EVP-AES-128-GCM encrypt init operations in 1000198us (4626084.0 ops/sec)
+Did 7164750 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000014us (7164649.7 ops/sec): 114.6 MB/s
+Did 5571000 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000172us (5570042.0 ops/sec): 713.0 MB/s
+Did 4382000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000037us (4381837.9 ops/sec): 1121.8 MB/s
+Did 3077000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000061us (3076812.3 ops/sec): 1575.3 MB/s
+Did 1483000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000205us (1482696.0 ops/sec): 2001.6 MB/s
+Did 1101000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000343us (1100622.5 ops/sec): 2254.1 MB/s
+Did 594000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000256us (593848.0 ops/sec): 2432.4 MB/s
+Did 310000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002627us (309187.8 ops/sec): 2532.9 MB/s
+Did 158000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001120us (157823.2 ops/sec): 2585.8 MB/s
+Did 80000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1004298us (79657.6 ops/sec): 2610.2 MB/s
+Did 41000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1021707us (40128.9 ops/sec): 2629.9 MB/s
+Did 21000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1043632us (20122.0 ops/sec): 2637.4 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1091774us (10075.3 ops/sec): 2641.2 MB/s
+Did 5070 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1009732us (5021.1 ops/sec): 2632.5 MB/s
+Did 2520 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1001084us (2517.3 ops/sec): 2639.6 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv2_late_tag_keep_htable_scalar_rk
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv2_late_tag_keep_htable_scalar_rk
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4635000 EVP-AES-128-GCM encrypt init operations in 1000052us (4634759.0 ops/sec)
+Did 7123000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000003us (7122978.6 ops/sec): 114.0 MB/s
+Did 5588500 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000041us (5588270.9 ops/sec): 715.3 MB/s
+Did 4422500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000018us (4422420.4 ops/sec): 1132.1 MB/s
+Did 3121000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000206us (3120357.2 ops/sec): 1597.6 MB/s
+Did 1511000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000024us (1510963.7 ops/sec): 2039.8 MB/s
+Did 1126000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000684us (1125230.3 ops/sec): 2304.5 MB/s
+Did 608000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000327us (607801.2 ops/sec): 2489.6 MB/s
+Did 317000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001233us (316609.6 ops/sec): 2593.7 MB/s
+Did 162000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001942us (161686.0 ops/sec): 2649.1 MB/s
+Did 82000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1008270us (81327.4 ops/sec): 2664.9 MB/s
+Did 41000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1003708us (40848.5 ops/sec): 2677.0 MB/s
+Did 21000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1025537us (20477.1 ops/sec): 2684.0 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1072198us (10259.3 ops/sec): 2689.4 MB/s
+Did 5120 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1006989us (5084.5 ops/sec): 2665.7 MB/s
+Did 2772 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1088822us (2545.9 ops/sec): 2669.5 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv2_mem_late_tag_keep_htable_scalar_rk
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv2_mem_late_tag_keep_htable_scalar_rk
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4638000 EVP-AES-128-GCM encrypt init operations in 1000205us (4637049.4 ops/sec)
+Did 6967000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000115us (6966198.9 ops/sec): 111.5 MB/s
+Did 5503250 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000022us (5503128.9 ops/sec): 704.4 MB/s
+Did 4409000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000055us (4408757.5 ops/sec): 1128.6 MB/s
+Did 3161250 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000018us (3161193.1 ops/sec): 1618.5 MB/s
+Did 1560000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000510us (1559204.8 ops/sec): 2104.9 MB/s
+Did 1173000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000266us (1172688.1 ops/sec): 2401.7 MB/s
+Did 638000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000629us (637599.0 ops/sec): 2611.6 MB/s
+Did 334000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001801us (333399.5 ops/sec): 2731.2 MB/s
+Did 171000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1002381us (170593.8 ops/sec): 2795.0 MB/s
+Did 87000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1009961us (86141.9 ops/sec): 2822.7 MB/s
+Did 44000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1015213us (43340.7 ops/sec): 2840.4 MB/s
+Did 22000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1011797us (21743.5 ops/sec): 2850.0 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1012238us (10867.0 ops/sec): 2848.7 MB/s
+Did 5490 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1012542us (5422.0 ops/sec): 2842.7 MB/s
+Did 2948 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1091379us (2701.2 ops/sec): 2832.4 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv_mem
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv_mem
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4638000 EVP-AES-128-GCM encrypt init operations in 1000035us (4637837.7 ops/sec)
+Did 7095500 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000011us (7095422.0 ops/sec): 113.5 MB/s
+Did 5417750 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000041us (5417527.9 ops/sec): 693.4 MB/s
+Did 4463000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000089us (4462602.8 ops/sec): 1142.4 MB/s
+Did 3203000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000289us (3202074.6 ops/sec): 1639.5 MB/s
+Did 1587750 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000013us (1587729.4 ops/sec): 2143.4 MB/s
+Did 1190000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000073us (1189913.1 ops/sec): 2436.9 MB/s
+Did 648000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000127us (647917.7 ops/sec): 2653.9 MB/s
+Did 340000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002803us (339049.6 ops/sec): 2777.5 MB/s
+Did 174000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1002350us (173592.1 ops/sec): 2844.1 MB/s
+Did 88000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1006347us (87445.0 ops/sec): 2865.4 MB/s
+Did 45000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1021904us (44035.4 ops/sec): 2885.9 MB/s
+Did 23000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1040820us (22098.0 ops/sec): 2896.4 MB/s
+Did 12000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1086560us (11044.0 ops/sec): 2895.1 MB/s
+Did 5520 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1004401us (5495.8 ops/sec): 2881.4 MB/s
+Did 3014 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1095201us (2752.0 ops/sec): 2885.7 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv_mem2
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv_mem2
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4635000 EVP-AES-128-GCM encrypt init operations in 1000026us (4634879.5 ops/sec)
+Did 6756250 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000029us (6756054.1 ops/sec): 108.1 MB/s
+Did 5226500 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000046us (5226259.6 ops/sec): 669.0 MB/s
+Did 4268500 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000044us (4268312.2 ops/sec): 1092.7 MB/s
+Did 3111000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000078us (3110757.4 ops/sec): 1592.7 MB/s
+Did 1565000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000022us (1564965.6 ops/sec): 2112.7 MB/s
+Did 1185000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000584us (1184308.4 ops/sec): 2425.5 MB/s
+Did 650000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1001012us (649342.9 ops/sec): 2659.7 MB/s
+Did 341000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001108us (340622.6 ops/sec): 2790.4 MB/s
+Did 175000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1002594us (174547.2 ops/sec): 2859.8 MB/s
+Did 89000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1009362us (88174.5 ops/sec): 2889.3 MB/s
+Did 45000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1011716us (44478.9 ops/sec): 2915.0 MB/s
+Did 23000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1032459us (22276.9 ops/sec): 2919.9 MB/s
+Did 11424 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1022170us (11176.2 ops/sec): 2929.8 MB/s
+Did 5940 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1088587us (5456.6 ops/sec): 2860.8 MB/s
+Did 2820 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1010069us (2791.9 ops/sec): 2927.5 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv_mem2_late_tag
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv_mem2_late_tag
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4636000 EVP-AES-128-GCM encrypt init operations in 1000107us (4635504.0 ops/sec)
+Did 7133750 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000034us (7133507.5 ops/sec): 114.1 MB/s
+Did 5589250 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000035us (5589054.4 ops/sec): 715.4 MB/s
+Did 4473000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000014us (4472937.4 ops/sec): 1145.1 MB/s
+Did 3172000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000052us (3171835.1 ops/sec): 1624.0 MB/s
+Did 1548750 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000095us (1548602.9 ops/sec): 2090.6 MB/s
+Did 1155500 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000120us (1155361.4 ops/sec): 2366.2 MB/s
+Did 626000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000406us (625745.9 ops/sec): 2563.1 MB/s
+Did 327000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001764us (326424.2 ops/sec): 2674.1 MB/s
+Did 167000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001142us (166809.5 ops/sec): 2733.0 MB/s
+Did 85000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1010108us (84149.4 ops/sec): 2757.4 MB/s
+Did 43000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1015332us (42350.7 ops/sec): 2775.5 MB/s
+Did 22000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1035775us (21240.1 ops/sec): 2784.0 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1038963us (10587.5 ops/sec): 2775.4 MB/s
+Did 5796 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1090697us (5314.0 ops/sec): 2786.1 MB/s
+Did 2670 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1004265us (2658.7 ops/sec): 2787.8 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv_mem2_late_tag_keep_htable_scalar_rk
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv_mem2_late_tag_keep_htable_scalar_rk
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4635000 EVP-AES-128-GCM encrypt init operations in 1000062us (4634712.6 ops/sec)
+Did 6963500 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000003us (6963479.1 ops/sec): 111.4 MB/s
+Did 5375500 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000010us (5375446.2 ops/sec): 688.1 MB/s
+Did 4281000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000210us (4280101.2 ops/sec): 1095.7 MB/s
+Did 3018500 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000013us (3018460.8 ops/sec): 1545.5 MB/s
+Did 1463000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000535us (1462217.7 ops/sec): 1974.0 MB/s
+Did 1092000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000540us (1091410.6 ops/sec): 2235.2 MB/s
+Did 590000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000627us (589630.3 ops/sec): 2415.1 MB/s
+Did 308000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002803us (307139.1 ops/sec): 2516.1 MB/s
+Did 157000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1000830us (156869.8 ops/sec): 2570.2 MB/s
+Did 79000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1002736us (78784.4 ops/sec): 2581.6 MB/s
+Did 40000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1016613us (39346.3 ops/sec): 2578.6 MB/s
+Did 21000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1047412us (20049.4 ops/sec): 2627.9 MB/s
+Did 10000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1005418us (9946.1 ops/sec): 2607.3 MB/s
+Did 5445 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1099323us (4953.0 ops/sec): 2596.8 MB/s
+Did 2480 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1000246us (2479.4 ops/sec): 2599.8 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv_mem_late_tag
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv_mem_late_tag
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4634000 EVP-AES-128-GCM encrypt init operations in 1000035us (4633837.8 ops/sec)
+Did 7154000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000076us (7153456.3 ops/sec): 114.5 MB/s
+Did 5570000 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000006us (5569966.6 ops/sec): 713.0 MB/s
+Did 4480750 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000038us (4480579.7 ops/sec): 1147.0 MB/s
+Did 3208000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000022us (3207929.4 ops/sec): 1642.5 MB/s
+Did 1578000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000030us (1577952.7 ops/sec): 2130.2 MB/s
+Did 1185000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000653us (1184226.7 ops/sec): 2425.3 MB/s
+Did 644000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1001276us (643179.3 ops/sec): 2634.5 MB/s
+Did 337000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002526us (336150.9 ops/sec): 2753.7 MB/s
+Did 172000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1000146us (171974.9 ops/sec): 2817.6 MB/s
+Did 87000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1002542us (86779.4 ops/sec): 2843.6 MB/s
+Did 44000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1007474us (43673.6 ops/sec): 2862.2 MB/s
+Did 22000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1004081us (21910.6 ops/sec): 2871.9 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1002325us (10974.5 ops/sec): 2876.9 MB/s
+Did 5520 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1008838us (5471.6 ops/sec): 2868.7 MB/s
+Did 2948 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1076585us (2738.3 ops/sec): 2871.3 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv_mem_late_tag_keep_htable
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv_mem_late_tag_keep_htable
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4635000 EVP-AES-128-GCM encrypt init operations in 1000063us (4634708.0 ops/sec)
+Did 7142250 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000026us (7142064.3 ops/sec): 114.3 MB/s
+Did 5603250 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000034us (5603059.5 ops/sec): 717.2 MB/s
+Did 4533000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000197us (4532107.2 ops/sec): 1160.2 MB/s
+Did 3249000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000045us (3248853.8 ops/sec): 1663.4 MB/s
+Did 1609000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000092us (1608852.0 ops/sec): 2172.0 MB/s
+Did 1207000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000220us (1206734.5 ops/sec): 2471.4 MB/s
+Did 657000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000800us (656474.8 ops/sec): 2688.9 MB/s
+Did 344000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001653us (343432.3 ops/sec): 2813.4 MB/s
+Did 176000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001115us (175804.0 ops/sec): 2880.4 MB/s
+Did 89000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1004164us (88630.9 ops/sec): 2904.3 MB/s
+Did 45000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1007319us (44673.0 ops/sec): 2927.7 MB/s
+Did 23000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1026164us (22413.6 ops/sec): 2937.8 MB/s
+Did 12000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1078426us (11127.3 ops/sec): 2917.0 MB/s
+Did 5610 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1000650us (5606.4 ops/sec): 2939.3 MB/s
+Did 2810 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1001537us (2805.7 ops/sec): 2942.0 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4635000 EVP-AES-128-GCM encrypt init operations in 1000150us (4634304.9 ops/sec)
+Did 7133000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000016us (7132885.9 ops/sec): 114.1 MB/s
+Did 5616000 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000019us (5615893.3 ops/sec): 718.8 MB/s
+Did 4500750 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000010us (4500705.0 ops/sec): 1152.2 MB/s
+Did 3200250 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000037us (3200131.6 ops/sec): 1638.5 MB/s
+Did 1565000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000166us (1564740.3 ops/sec): 2112.4 MB/s
+Did 1170750 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000035us (1170709.0 ops/sec): 2397.6 MB/s
+Did 635000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000495us (634685.8 ops/sec): 2599.7 MB/s
+Did 332000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002382us (331211.1 ops/sec): 2713.3 MB/s
+Did 170000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1003933us (169334.0 ops/sec): 2774.4 MB/s
+Did 86000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1007518us (85358.3 ops/sec): 2797.0 MB/s
+Did 43000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1002259us (42903.1 ops/sec): 2811.7 MB/s
+Did 22000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1022268us (21520.8 ops/sec): 2820.8 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1021655us (10766.8 ops/sec): 2822.5 MB/s
+Did 5370 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1002250us (5357.9 ops/sec): 2809.1 MB/s
+Did 2882 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1074631us (2681.9 ops/sec): 2812.1 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk_v1
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk_v1
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4632000 EVP-AES-128-GCM encrypt init operations in 1000055us (4631745.3 ops/sec)
+Did 7133000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000001us (7132992.9 ops/sec): 114.1 MB/s
+Did 5499250 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000030us (5499085.0 ops/sec): 703.9 MB/s
+Did 4415000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000177us (4414218.7 ops/sec): 1130.0 MB/s
+Did 3141750 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000079us (3141501.8 ops/sec): 1608.4 MB/s
+Did 1540000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000480us (1539261.2 ops/sec): 2078.0 MB/s
+Did 1153000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000860us (1152009.3 ops/sec): 2359.3 MB/s
+Did 625000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000512us (624680.2 ops/sec): 2558.7 MB/s
+Did 327000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1002781us (326093.1 ops/sec): 2671.4 MB/s
+Did 167000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001425us (166762.4 ops/sec): 2732.2 MB/s
+Did 85000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1008348us (84296.3 ops/sec): 2762.2 MB/s
+Did 43000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1016088us (42319.2 ops/sec): 2773.4 MB/s
+Did 22000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1035888us (21237.8 ops/sec): 2783.7 MB/s
+Did 11000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1033955us (10638.8 ops/sec): 2788.9 MB/s
+Did 5340 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1003586us (5320.9 ops/sec): 2789.7 MB/s
+Did 2670 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1004245us (2658.7 ops/sec): 2787.9 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=128, VARIANT=x4_scalar_iv_mem_late_tag_scalar_rk
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/128_x4_scalar_iv_mem_late_tag_scalar_rk
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4548000 EVP-AES-128-GCM encrypt init operations in 1000206us (4547063.3 ops/sec)
+Did 7133000 EVP-AES-128-GCM encrypt (16 bytes) operations in 1000031us (7132778.9 ops/sec): 114.1 MB/s
+Did 5552500 EVP-AES-128-GCM encrypt (128 bytes) operations in 1000042us (5552266.8 ops/sec): 710.7 MB/s
+Did 4502000 EVP-AES-128-GCM encrypt (256 bytes) operations in 1000120us (4501459.8 ops/sec): 1152.4 MB/s
+Did 3236000 EVP-AES-128-GCM encrypt (512 bytes) operations in 1000267us (3235136.2 ops/sec): 1656.4 MB/s
+Did 1604000 EVP-AES-128-GCM encrypt (1350 bytes) operations in 1000505us (1603190.4 ops/sec): 2164.3 MB/s
+Did 1205000 EVP-AES-128-GCM encrypt (2048 bytes) operations in 1000668us (1204195.6 ops/sec): 2466.2 MB/s
+Did 656000 EVP-AES-128-GCM encrypt (4096 bytes) operations in 1000044us (655971.1 ops/sec): 2686.9 MB/s
+Did 344000 EVP-AES-128-GCM encrypt (8192 bytes) operations in 1001852us (343364.1 ops/sec): 2812.8 MB/s
+Did 176000 EVP-AES-128-GCM encrypt (16384 bytes) operations in 1001356us (175761.7 ops/sec): 2879.7 MB/s
+Did 89000 EVP-AES-128-GCM encrypt (32768 bytes) operations in 1002409us (88786.1 ops/sec): 2909.3 MB/s
+Did 45000 EVP-AES-128-GCM encrypt (65536 bytes) operations in 1007782us (44652.5 ops/sec): 2926.3 MB/s
+Did 23000 EVP-AES-128-GCM encrypt (131072 bytes) operations in 1032195us (22282.6 ops/sec): 2920.6 MB/s
+Did 12000 EVP-AES-128-GCM encrypt (262144 bytes) operations in 1069198us (11223.4 ops/sec): 2942.1 MB/s
+Did 5874 EVP-AES-128-GCM encrypt (524288 bytes) operations in 1051429us (5586.7 ops/sec): 2929.0 MB/s
+Did 3069 EVP-AES-128-GCM encrypt (1048576 bytes) operations in 1095390us (2801.7 ops/sec): 2937.8 MB/s
+Exit code: 0
+
+Getting variants for ENC=0, SZ=128
+Available variants: awslc
+x4_basic
+x4_keep_htable
+x4_scalar_iv_mem2
+x4_scalar_iv_mem_late_tag
+x4_scalar_iv_mem_late_tag_keep_htable
+----------------------------------------
+
+Benchmarking: ENC=0, SZ=128, VARIANT=awslc
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: awslc (default)
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4548000 EVP-AES-128-GCM decrypt init operations in 1000116us (4547472.5 ops/sec)
+Did 6406000 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000018us (6405884.7 ops/sec): 102.5 MB/s
+Did 5310000 EVP-AES-128-GCM decrypt (128 bytes) operations in 1000027us (5309856.6 ops/sec): 679.7 MB/s
+Did 4163500 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000056us (4163266.9 ops/sec): 1065.8 MB/s
+Did 2908500 EVP-AES-128-GCM decrypt (512 bytes) operations in 1000026us (2908424.4 ops/sec): 1489.1 MB/s
+Did 1410000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000387us (1409454.5 ops/sec): 1902.8 MB/s
+Did 1032000 EVP-AES-128-GCM decrypt (2048 bytes) operations in 1000460us (1031525.5 ops/sec): 2112.6 MB/s
+Did 556000 EVP-AES-128-GCM decrypt (4096 bytes) operations in 1000139us (555922.7 ops/sec): 2277.1 MB/s
+Did 290000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1002578us (289254.3 ops/sec): 2369.6 MB/s
+Did 148000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1002530us (147626.5 ops/sec): 2418.7 MB/s
+Did 75000 EVP-AES-128-GCM decrypt (32768 bytes) operations in 1005540us (74586.8 ops/sec): 2444.1 MB/s
+Did 38000 EVP-AES-128-GCM decrypt (65536 bytes) operations in 1014144us (37470.0 ops/sec): 2455.6 MB/s
+Did 19000 EVP-AES-128-GCM decrypt (131072 bytes) operations in 1010008us (18811.7 ops/sec): 2465.7 MB/s
+Did 9724 EVP-AES-128-GCM decrypt (262144 bytes) operations in 1032281us (9419.9 ops/sec): 2469.4 MB/s
+Did 4710 EVP-AES-128-GCM decrypt (524288 bytes) operations in 1002515us (4698.2 ops/sec): 2463.2 MB/s
+Did 2380 EVP-AES-128-GCM decrypt (1048576 bytes) operations in 1009773us (2357.0 ops/sec): 2471.5 MB/s
+Exit code: 0
+
+Benchmarking: ENC=0, SZ=128, VARIANT=x4_basic
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/dec/128_x4_basic
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4638750 EVP-AES-128-GCM decrypt init operations in 1000037us (4638578.4 ops/sec)
+Did 7072500 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000016us (7072386.8 ops/sec): 113.2 MB/s
+Did 5538500 EVP-AES-128-GCM decrypt (128 bytes) operations in 1000038us (5538289.5 ops/sec): 708.9 MB/s
+Did 4414000 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000036us (4413841.1 ops/sec): 1129.9 MB/s
+Did 3137000 EVP-AES-128-GCM decrypt (512 bytes) operations in 1000060us (3136811.8 ops/sec): 1606.0 MB/s
+Did 1548500 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000013us (1548479.9 ops/sec): 2090.4 MB/s
+Did 1145000 EVP-AES-128-GCM decrypt (2048 bytes) operations in 1000088us (1144899.2 ops/sec): 2344.8 MB/s
+Did 621000 EVP-AES-128-GCM decrypt (4096 bytes) operations in 1000762us (620527.2 ops/sec): 2541.7 MB/s
+Did 324000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1000537us (323826.1 ops/sec): 2652.8 MB/s
+Did 166000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1002532us (165580.7 ops/sec): 2712.9 MB/s
+Did 84000 EVP-AES-128-GCM decrypt (32768 bytes) operations in 1003171us (83734.5 ops/sec): 2743.8 MB/s
+Did 43000 EVP-AES-128-GCM decrypt (65536 bytes) operations in 1021602us (42090.8 ops/sec): 2758.5 MB/s
+Did 22000 EVP-AES-128-GCM decrypt (131072 bytes) operations in 1040104us (21151.7 ops/sec): 2772.4 MB/s
+Did 11000 EVP-AES-128-GCM decrypt (262144 bytes) operations in 1038883us (10588.3 ops/sec): 2775.7 MB/s
+Did 5753 EVP-AES-128-GCM decrypt (524288 bytes) operations in 1098399us (5237.6 ops/sec): 2746.0 MB/s
+Did 2882 EVP-AES-128-GCM decrypt (1048576 bytes) operations in 1086868us (2651.7 ops/sec): 2780.5 MB/s
+Exit code: 0
+
+Benchmarking: ENC=0, SZ=128, VARIANT=x4_keep_htable
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/dec/128_x4_keep_htable
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4634250 EVP-AES-128-GCM decrypt init operations in 1000013us (4634189.8 ops/sec)
+Did 7079000 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000002us (7078985.8 ops/sec): 113.3 MB/s
+Did 5515000 EVP-AES-128-GCM decrypt (128 bytes) operations in 1000061us (5514663.6 ops/sec): 705.9 MB/s
+Did 4431000 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000198us (4430122.8 ops/sec): 1134.1 MB/s
+Did 3171750 EVP-AES-128-GCM decrypt (512 bytes) operations in 1000059us (3171562.9 ops/sec): 1623.8 MB/s
+Did 1579000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000269us (1578575.4 ops/sec): 2131.1 MB/s
+Did 1174000 EVP-AES-128-GCM decrypt (2048 bytes) operations in 1000689us (1173191.7 ops/sec): 2402.7 MB/s
+Did 639000 EVP-AES-128-GCM decrypt (4096 bytes) operations in 1001202us (638232.8 ops/sec): 2614.2 MB/s
+Did 334000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1000738us (333753.7 ops/sec): 2734.1 MB/s
+Did 171000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1000897us (170846.8 ops/sec): 2799.2 MB/s
+Did 87000 EVP-AES-128-GCM decrypt (32768 bytes) operations in 1008067us (86303.8 ops/sec): 2828.0 MB/s
+Did 44000 EVP-AES-128-GCM decrypt (65536 bytes) operations in 1012093us (43474.3 ops/sec): 2849.1 MB/s
+Did 22000 EVP-AES-128-GCM decrypt (131072 bytes) operations in 1006827us (21850.8 ops/sec): 2864.0 MB/s
+Did 11000 EVP-AES-128-GCM decrypt (262144 bytes) operations in 1005178us (10943.3 ops/sec): 2868.7 MB/s
+Did 5973 EVP-AES-128-GCM decrypt (524288 bytes) operations in 1098899us (5435.4 ops/sec): 2849.7 MB/s
+Did 2981 EVP-AES-128-GCM decrypt (1048576 bytes) operations in 1088704us (2738.1 ops/sec): 2871.1 MB/s
+Exit code: 0
+
+Benchmarking: ENC=0, SZ=128, VARIANT=x4_scalar_iv_mem2
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/dec/128_x4_scalar_iv_mem2
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4551000 EVP-AES-128-GCM decrypt init operations in 1000093us (4550576.8 ops/sec)
+Did 6981750 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000008us (6981694.1 ops/sec): 111.7 MB/s
+Did 5378500 EVP-AES-128-GCM decrypt (128 bytes) operations in 1000035us (5378311.8 ops/sec): 688.4 MB/s
+Did 4356750 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000020us (4356662.9 ops/sec): 1115.3 MB/s
+Did 3156500 EVP-AES-128-GCM decrypt (512 bytes) operations in 1000052us (3156335.9 ops/sec): 1616.0 MB/s
+Did 1600000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000511us (1599182.8 ops/sec): 2158.9 MB/s
+Did 1193000 EVP-AES-128-GCM decrypt (2048 bytes) operations in 1000337us (1192598.1 ops/sec): 2442.4 MB/s
+Did 652000 EVP-AES-128-GCM decrypt (4096 bytes) operations in 1000021us (651986.3 ops/sec): 2670.5 MB/s
+Did 342000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1001028us (341648.8 ops/sec): 2798.8 MB/s
+Did 176000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1004910us (175140.1 ops/sec): 2869.5 MB/s
+Did 89000 EVP-AES-128-GCM decrypt (32768 bytes) operations in 1005931us (88475.3 ops/sec): 2899.2 MB/s
+Did 45000 EVP-AES-128-GCM decrypt (65536 bytes) operations in 1009521us (44575.6 ops/sec): 2921.3 MB/s
+Did 23000 EVP-AES-128-GCM decrypt (131072 bytes) operations in 1027917us (22375.3 ops/sec): 2932.8 MB/s
+Did 12000 EVP-AES-128-GCM decrypt (262144 bytes) operations in 1073657us (11176.8 ops/sec): 2929.9 MB/s
+Did 5640 EVP-AES-128-GCM decrypt (524288 bytes) operations in 1007690us (5597.0 ops/sec): 2934.4 MB/s
+Did 2800 EVP-AES-128-GCM decrypt (1048576 bytes) operations in 1000590us (2798.3 ops/sec): 2934.3 MB/s
+Exit code: 0
+
+Benchmarking: ENC=0, SZ=128, VARIANT=x4_scalar_iv_mem_late_tag
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/dec/128_x4_scalar_iv_mem_late_tag
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4638750 EVP-AES-128-GCM decrypt init operations in 1000010us (4638703.6 ops/sec)
+Did 7060750 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000017us (7060630.0 ops/sec): 113.0 MB/s
+Did 5489250 EVP-AES-128-GCM decrypt (128 bytes) operations in 1000028us (5489096.3 ops/sec): 702.6 MB/s
+Did 4438500 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000035us (4438344.7 ops/sec): 1136.2 MB/s
+Did 3199000 EVP-AES-128-GCM decrypt (512 bytes) operations in 1000044us (3198859.3 ops/sec): 1637.8 MB/s
+Did 1603000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000174us (1602721.1 ops/sec): 2163.7 MB/s
+Did 1195000 EVP-AES-128-GCM decrypt (2048 bytes) operations in 1000188us (1194775.4 ops/sec): 2446.9 MB/s
+Did 652000 EVP-AES-128-GCM decrypt (4096 bytes) operations in 1000463us (651698.3 ops/sec): 2669.4 MB/s
+Did 342000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1001764us (341397.8 ops/sec): 2796.7 MB/s
+Did 175000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1000728us (174872.7 ops/sec): 2865.1 MB/s
+Did 89000 EVP-AES-128-GCM decrypt (32768 bytes) operations in 1008162us (88279.5 ops/sec): 2892.7 MB/s
+Did 45000 EVP-AES-128-GCM decrypt (65536 bytes) operations in 1012433us (44447.4 ops/sec): 2912.9 MB/s
+Did 23000 EVP-AES-128-GCM decrypt (131072 bytes) operations in 1037282us (22173.3 ops/sec): 2906.3 MB/s
+Did 12000 EVP-AES-128-GCM decrypt (262144 bytes) operations in 1076950us (11142.6 ops/sec): 2921.0 MB/s
+Did 5610 EVP-AES-128-GCM decrypt (524288 bytes) operations in 1005051us (5581.8 ops/sec): 2926.5 MB/s
+Did 2800 EVP-AES-128-GCM decrypt (1048576 bytes) operations in 1003208us (2791.0 ops/sec): 2926.6 MB/s
+Exit code: 0
+
+Benchmarking: ENC=0, SZ=128, VARIANT=x4_scalar_iv_mem_late_tag_keep_htable
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/dec/128_x4_scalar_iv_mem_late_tag_keep_htable
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4639000 EVP-AES-128-GCM decrypt init operations in 1000080us (4638628.9 ops/sec)
+Did 7030500 EVP-AES-128-GCM decrypt (16 bytes) operations in 1000026us (7030317.2 ops/sec): 112.5 MB/s
+Did 5524750 EVP-AES-128-GCM decrypt (128 bytes) operations in 1000043us (5524512.4 ops/sec): 707.1 MB/s
+Did 4417750 EVP-AES-128-GCM decrypt (256 bytes) operations in 1000038us (4417582.1 ops/sec): 1130.9 MB/s
+Did 3149000 EVP-AES-128-GCM decrypt (512 bytes) operations in 1000220us (3148307.4 ops/sec): 1611.9 MB/s
+Did 1558000 EVP-AES-128-GCM decrypt (1350 bytes) operations in 1000372us (1557420.6 ops/sec): 2102.5 MB/s
+Did 1156000 EVP-AES-128-GCM decrypt (2048 bytes) operations in 1000804us (1155071.3 ops/sec): 2365.6 MB/s
+Did 627000 EVP-AES-128-GCM decrypt (4096 bytes) operations in 1000253us (626841.4 ops/sec): 2567.5 MB/s
+Did 328000 EVP-AES-128-GCM decrypt (8192 bytes) operations in 1001764us (327422.4 ops/sec): 2682.2 MB/s
+Did 168000 EVP-AES-128-GCM decrypt (16384 bytes) operations in 1003365us (167436.6 ops/sec): 2743.3 MB/s
+Did 85000 EVP-AES-128-GCM decrypt (32768 bytes) operations in 1006001us (84493.0 ops/sec): 2768.7 MB/s
+Did 43000 EVP-AES-128-GCM decrypt (65536 bytes) operations in 1011166us (42525.2 ops/sec): 2786.9 MB/s
+Did 22000 EVP-AES-128-GCM decrypt (131072 bytes) operations in 1031639us (21325.3 ops/sec): 2795.1 MB/s
+Did 11000 EVP-AES-128-GCM decrypt (262144 bytes) operations in 1030190us (10677.6 ops/sec): 2799.1 MB/s
+Did 5841 EVP-AES-128-GCM decrypt (524288 bytes) operations in 1099898us (5310.5 ops/sec): 2784.2 MB/s
+Did 2680 EVP-AES-128-GCM decrypt (1048576 bytes) operations in 1005679us (2664.9 ops/sec): 2794.3 MB/s
+Exit code: 0
+
+Getting variants for ENC=1, SZ=192
+Available variants: awslc
+x4_basic
+x4_dual_acc
+x4_fast_tail
+x4_reload_round_keys_partial
+x4_scalar_iv_mem_late_tag_scalar_rk
+----------------------------------------
+
+Benchmarking: ENC=1, SZ=192, VARIANT=awslc
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: awslc (default)
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4530000 EVP-AES-192-GCM encrypt init operations in 1000106us (4529519.9 ops/sec)
+Did 6508250 EVP-AES-192-GCM encrypt (16 bytes) operations in 1000023us (6508100.3 ops/sec): 104.1 MB/s
+Did 5125000 EVP-AES-192-GCM encrypt (128 bytes) operations in 1000042us (5124784.8 ops/sec): 656.0 MB/s
+Did 3916500 EVP-AES-192-GCM encrypt (256 bytes) operations in 1000041us (3916339.4 ops/sec): 1002.6 MB/s
+Did 2650500 EVP-AES-192-GCM encrypt (512 bytes) operations in 1000017us (2650454.9 ops/sec): 1357.0 MB/s
+Did 1249000 EVP-AES-192-GCM encrypt (1350 bytes) operations in 1000682us (1248148.8 ops/sec): 1685.0 MB/s
+Did 904000 EVP-AES-192-GCM encrypt (2048 bytes) operations in 1000527us (903523.8 ops/sec): 1850.4 MB/s
+Did 482000 EVP-AES-192-GCM encrypt (4096 bytes) operations in 1000995us (481520.9 ops/sec): 1972.3 MB/s
+Did 249000 EVP-AES-192-GCM encrypt (8192 bytes) operations in 1000215us (248946.5 ops/sec): 2039.4 MB/s
+Did 127000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1003109us (126606.4 ops/sec): 2074.3 MB/s
+Did 64000 EVP-AES-192-GCM encrypt (32768 bytes) operations in 1002148us (63862.8 ops/sec): 2092.7 MB/s
+Did 33000 EVP-AES-192-GCM encrypt (65536 bytes) operations in 1030718us (32016.5 ops/sec): 2098.2 MB/s
+Did 17000 EVP-AES-192-GCM encrypt (131072 bytes) operations in 1058865us (16054.9 ops/sec): 2104.4 MB/s
+Did 8060 EVP-AES-192-GCM encrypt (262144 bytes) operations in 1002812us (8037.4 ops/sec): 2107.0 MB/s
+Did 4030 EVP-AES-192-GCM encrypt (524288 bytes) operations in 1002517us (4019.9 ops/sec): 2107.6 MB/s
+Did 2020 EVP-AES-192-GCM encrypt (1048576 bytes) operations in 1005120us (2009.7 ops/sec): 2107.3 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=192, VARIANT=x4_basic
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/192_x4_basic
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4521000 EVP-AES-192-GCM encrypt init operations in 1000042us (4520810.1 ops/sec)
+Did 6935750 EVP-AES-192-GCM encrypt (16 bytes) operations in 1000005us (6935715.3 ops/sec): 111.0 MB/s
+Did 5449000 EVP-AES-192-GCM encrypt (128 bytes) operations in 1000090us (5448509.6 ops/sec): 697.4 MB/s
+Did 4251750 EVP-AES-192-GCM encrypt (256 bytes) operations in 1000015us (4251686.2 ops/sec): 1088.4 MB/s
+Did 2978750 EVP-AES-192-GCM encrypt (512 bytes) operations in 1000033us (2978651.7 ops/sec): 1525.1 MB/s
+Did 1453000 EVP-AES-192-GCM encrypt (1350 bytes) operations in 1000319us (1452536.6 ops/sec): 1960.9 MB/s
+Did 1066000 EVP-AES-192-GCM encrypt (2048 bytes) operations in 1000706us (1065247.9 ops/sec): 2181.6 MB/s
+Did 574000 EVP-AES-192-GCM encrypt (4096 bytes) operations in 1000093us (573946.6 ops/sec): 2350.9 MB/s
+Did 299000 EVP-AES-192-GCM encrypt (8192 bytes) operations in 1002184us (298348.4 ops/sec): 2444.1 MB/s
+Did 153000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1004990us (152240.3 ops/sec): 2494.3 MB/s
+Did 77000 EVP-AES-192-GCM encrypt (32768 bytes) operations in 1001600us (76877.0 ops/sec): 2519.1 MB/s
+Did 39000 EVP-AES-192-GCM encrypt (65536 bytes) operations in 1014426us (38445.4 ops/sec): 2519.6 MB/s
+Did 20000 EVP-AES-192-GCM encrypt (131072 bytes) operations in 1037285us (19281.1 ops/sec): 2527.2 MB/s
+Did 9700 EVP-AES-192-GCM encrypt (262144 bytes) operations in 1004148us (9659.9 ops/sec): 2532.3 MB/s
+Did 4870 EVP-AES-192-GCM encrypt (524288 bytes) operations in 1008575us (4828.6 ops/sec): 2531.6 MB/s
+Did 2420 EVP-AES-192-GCM encrypt (1048576 bytes) operations in 1002700us (2413.5 ops/sec): 2530.7 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=192, VARIANT=x4_dual_acc
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/192_x4_dual_acc
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4618000 EVP-AES-192-GCM encrypt init operations in 1000115us (4617469.0 ops/sec)
+Did 6930500 EVP-AES-192-GCM encrypt (16 bytes) operations in 1000004us (6930472.3 ops/sec): 110.9 MB/s
+Did 5381750 EVP-AES-192-GCM encrypt (128 bytes) operations in 1000044us (5381513.2 ops/sec): 688.8 MB/s
+Did 4224500 EVP-AES-192-GCM encrypt (256 bytes) operations in 1000005us (4224478.9 ops/sec): 1081.5 MB/s
+Did 2958000 EVP-AES-192-GCM encrypt (512 bytes) operations in 1000173us (2957488.4 ops/sec): 1514.2 MB/s
+Did 1431000 EVP-AES-192-GCM encrypt (1350 bytes) operations in 1000176us (1430748.2 ops/sec): 1931.5 MB/s
+Did 1055000 EVP-AES-192-GCM encrypt (2048 bytes) operations in 1000094us (1054900.8 ops/sec): 2160.4 MB/s
+Did 569000 EVP-AES-192-GCM encrypt (4096 bytes) operations in 1001475us (568162.0 ops/sec): 2327.2 MB/s
+Did 296000 EVP-AES-192-GCM encrypt (8192 bytes) operations in 1002044us (295396.2 ops/sec): 2419.9 MB/s
+Did 151000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1001744us (150737.1 ops/sec): 2469.7 MB/s
+Did 77000 EVP-AES-192-GCM encrypt (32768 bytes) operations in 1012323us (76062.7 ops/sec): 2492.4 MB/s
+Did 39000 EVP-AES-192-GCM encrypt (65536 bytes) operations in 1021538us (38177.7 ops/sec): 2502.0 MB/s
+Did 20000 EVP-AES-192-GCM encrypt (131072 bytes) operations in 1044288us (19151.8 ops/sec): 2510.3 MB/s
+Did 10472 EVP-AES-192-GCM encrypt (262144 bytes) operations in 1091122us (9597.5 ops/sec): 2515.9 MB/s
+Did 4830 EVP-AES-192-GCM encrypt (524288 bytes) operations in 1007301us (4795.0 ops/sec): 2514.0 MB/s
+Did 2400 EVP-AES-192-GCM encrypt (1048576 bytes) operations in 1002193us (2394.7 ops/sec): 2511.1 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=192, VARIANT=x4_fast_tail
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/192_x4_fast_tail
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4610000 EVP-AES-192-GCM encrypt init operations in 1000041us (4609811.0 ops/sec)
+Did 6974000 EVP-AES-192-GCM encrypt (16 bytes) operations in 1000142us (6973009.8 ops/sec): 111.6 MB/s
+Did 5402000 EVP-AES-192-GCM encrypt (128 bytes) operations in 1000040us (5401783.9 ops/sec): 691.4 MB/s
+Did 4248000 EVP-AES-192-GCM encrypt (256 bytes) operations in 1000005us (4247978.8 ops/sec): 1087.5 MB/s
+Did 2977250 EVP-AES-192-GCM encrypt (512 bytes) operations in 1000020us (2977190.5 ops/sec): 1524.3 MB/s
+Did 1451000 EVP-AES-192-GCM encrypt (1350 bytes) operations in 1000227us (1450670.7 ops/sec): 1958.4 MB/s
+Did 1066000 EVP-AES-192-GCM encrypt (2048 bytes) operations in 1000775us (1065174.5 ops/sec): 2181.5 MB/s
+Did 575000 EVP-AES-192-GCM encrypt (4096 bytes) operations in 1001663us (574045.4 ops/sec): 2351.3 MB/s
+Did 299000 EVP-AES-192-GCM encrypt (8192 bytes) operations in 1001270us (298620.8 ops/sec): 2446.3 MB/s
+Did 153000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1004015us (152388.2 ops/sec): 2496.7 MB/s
+Did 77000 EVP-AES-192-GCM encrypt (32768 bytes) operations in 1000617us (76952.5 ops/sec): 2521.6 MB/s
+Did 39000 EVP-AES-192-GCM encrypt (65536 bytes) operations in 1009520us (38632.2 ops/sec): 2531.8 MB/s
+Did 20000 EVP-AES-192-GCM encrypt (131072 bytes) operations in 1032232us (19375.5 ops/sec): 2539.6 MB/s
+Did 10670 EVP-AES-192-GCM encrypt (262144 bytes) operations in 1099439us (9704.9 ops/sec): 2544.1 MB/s
+Did 4870 EVP-AES-192-GCM encrypt (524288 bytes) operations in 1003412us (4853.4 ops/sec): 2544.6 MB/s
+Did 2430 EVP-AES-192-GCM encrypt (1048576 bytes) operations in 1001804us (2425.6 ops/sec): 2543.5 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=192, VARIANT=x4_reload_round_keys_partial
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/192_x4_reload_round_keys_partial
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4529000 EVP-AES-192-GCM encrypt init operations in 1000077us (4528651.3 ops/sec)
+Did 7021000 EVP-AES-192-GCM encrypt (16 bytes) operations in 1000078us (7020452.4 ops/sec): 112.3 MB/s
+Did 5376000 EVP-AES-192-GCM encrypt (128 bytes) operations in 1000049us (5375736.6 ops/sec): 688.1 MB/s
+Did 4199750 EVP-AES-192-GCM encrypt (256 bytes) operations in 1000047us (4199552.6 ops/sec): 1075.1 MB/s
+Did 2918750 EVP-AES-192-GCM encrypt (512 bytes) operations in 1000032us (2918656.6 ops/sec): 1494.4 MB/s
+Did 1409000 EVP-AES-192-GCM encrypt (1350 bytes) operations in 1000161us (1408773.2 ops/sec): 1901.8 MB/s
+Did 1032000 EVP-AES-192-GCM encrypt (2048 bytes) operations in 1000932us (1031039.1 ops/sec): 2111.6 MB/s
+Did 555000 EVP-AES-192-GCM encrypt (4096 bytes) operations in 1001116us (554381.3 ops/sec): 2270.7 MB/s
+Did 289000 EVP-AES-192-GCM encrypt (8192 bytes) operations in 1002710us (288218.9 ops/sec): 2361.1 MB/s
+Did 147000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1000946us (146861.1 ops/sec): 2406.2 MB/s
+Did 75000 EVP-AES-192-GCM encrypt (32768 bytes) operations in 1010521us (74219.1 ops/sec): 2432.0 MB/s
+Did 37000 EVP-AES-192-GCM encrypt (65536 bytes) operations in 1002098us (36922.5 ops/sec): 2419.8 MB/s
+Did 19000 EVP-AES-192-GCM encrypt (131072 bytes) operations in 1024831us (18539.6 ops/sec): 2430.0 MB/s
+Did 9999 EVP-AES-192-GCM encrypt (262144 bytes) operations in 1078203us (9273.8 ops/sec): 2431.1 MB/s
+Did 4760 EVP-AES-192-GCM encrypt (524288 bytes) operations in 1028884us (4626.4 ops/sec): 2425.6 MB/s
+Did 2519 EVP-AES-192-GCM encrypt (1048576 bytes) operations in 1094680us (2301.1 ops/sec): 2412.9 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=192, VARIANT=x4_scalar_iv_mem_late_tag_scalar_rk
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/192_x4_scalar_iv_mem_late_tag_scalar_rk
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4592000 EVP-AES-192-GCM encrypt init operations in 1000092us (4591577.6 ops/sec)
+Did 6938000 EVP-AES-192-GCM encrypt (16 bytes) operations in 1000028us (6937805.7 ops/sec): 111.0 MB/s
+Did 5353750 EVP-AES-192-GCM encrypt (128 bytes) operations in 1000026us (5353610.8 ops/sec): 685.3 MB/s
+Did 4230750 EVP-AES-192-GCM encrypt (256 bytes) operations in 1000003us (4230737.3 ops/sec): 1083.1 MB/s
+Did 2976750 EVP-AES-192-GCM encrypt (512 bytes) operations in 1000021us (2976687.5 ops/sec): 1524.1 MB/s
+Did 1447000 EVP-AES-192-GCM encrypt (1350 bytes) operations in 1000201us (1446709.2 ops/sec): 1953.1 MB/s
+Did 1071000 EVP-AES-192-GCM encrypt (2048 bytes) operations in 1000208us (1070777.3 ops/sec): 2193.0 MB/s
+Did 578000 EVP-AES-192-GCM encrypt (4096 bytes) operations in 1000440us (577745.8 ops/sec): 2366.4 MB/s
+Did 301000 EVP-AES-192-GCM encrypt (8192 bytes) operations in 1000757us (300772.3 ops/sec): 2463.9 MB/s
+Did 154000 EVP-AES-192-GCM encrypt (16384 bytes) operations in 1003032us (153534.5 ops/sec): 2515.5 MB/s
+Did 78000 EVP-AES-192-GCM encrypt (32768 bytes) operations in 1007891us (77389.3 ops/sec): 2535.9 MB/s
+Did 39000 EVP-AES-192-GCM encrypt (65536 bytes) operations in 1001361us (38947.0 ops/sec): 2552.4 MB/s
+Did 20000 EVP-AES-192-GCM encrypt (131072 bytes) operations in 1023708us (19536.8 ops/sec): 2560.7 MB/s
+Did 10569 EVP-AES-192-GCM encrypt (262144 bytes) operations in 1081285us (9774.5 ops/sec): 2562.3 MB/s
+Did 4900 EVP-AES-192-GCM encrypt (524288 bytes) operations in 1002958us (4885.5 ops/sec): 2561.4 MB/s
+Did 2450 EVP-AES-192-GCM encrypt (1048576 bytes) operations in 1002983us (2442.7 ops/sec): 2561.4 MB/s
+Exit code: 0
+
+Getting variants for ENC=0, SZ=192
+Available variants: awslc
+x4_basic
+x4_scalar_iv_mem2_late_tag
+----------------------------------------
+
+Benchmarking: ENC=0, SZ=192, VARIANT=awslc
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: awslc (default)
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4618000 EVP-AES-192-GCM decrypt init operations in 1000036us (4617833.8 ops/sec)
+Did 6229750 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000009us (6229693.9 ops/sec): 99.7 MB/s
+Did 5093000 EVP-AES-192-GCM decrypt (128 bytes) operations in 1000069us (5092648.6 ops/sec): 651.9 MB/s
+Did 3973250 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000008us (3973218.2 ops/sec): 1017.1 MB/s
+Did 2734500 EVP-AES-192-GCM decrypt (512 bytes) operations in 1000066us (2734319.5 ops/sec): 1400.0 MB/s
+Did 1309000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1000059us (1308922.8 ops/sec): 1767.0 MB/s
+Did 952000 EVP-AES-192-GCM decrypt (2048 bytes) operations in 1000045us (951957.2 ops/sec): 1949.6 MB/s
+Did 511000 EVP-AES-192-GCM decrypt (4096 bytes) operations in 1000077us (510960.7 ops/sec): 2092.9 MB/s
+Did 266000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1002572us (265317.6 ops/sec): 2173.5 MB/s
+Did 136000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1005721us (135226.4 ops/sec): 2215.5 MB/s
+Did 69000 EVP-AES-192-GCM decrypt (32768 bytes) operations in 1010716us (68268.4 ops/sec): 2237.0 MB/s
+Did 35000 EVP-AES-192-GCM decrypt (65536 bytes) operations in 1024544us (34161.5 ops/sec): 2238.8 MB/s
+Did 18000 EVP-AES-192-GCM decrypt (131072 bytes) operations in 1048220us (17172.0 ops/sec): 2250.8 MB/s
+Did 8620 EVP-AES-192-GCM decrypt (262144 bytes) operations in 1002453us (8598.9 ops/sec): 2254.2 MB/s
+Did 4466 EVP-AES-192-GCM decrypt (524288 bytes) operations in 1041060us (4289.9 ops/sec): 2249.1 MB/s
+Did 2150 EVP-AES-192-GCM decrypt (1048576 bytes) operations in 1001678us (2146.4 ops/sec): 2250.7 MB/s
+Exit code: 0
+
+Benchmarking: ENC=0, SZ=192, VARIANT=x4_basic
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/dec/192_x4_basic
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4619250 EVP-AES-192-GCM decrypt init operations in 1000008us (4619213.0 ops/sec)
+Did 6912000 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000067us (6911536.9 ops/sec): 110.6 MB/s
+Did 5326750 EVP-AES-192-GCM decrypt (128 bytes) operations in 1000041us (5326531.6 ops/sec): 681.8 MB/s
+Did 4210500 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000057us (4210260.0 ops/sec): 1077.8 MB/s
+Did 2962750 EVP-AES-192-GCM decrypt (512 bytes) operations in 1000028us (2962667.0 ops/sec): 1516.9 MB/s
+Did 1451000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1000031us (1450955.0 ops/sec): 1958.8 MB/s
+Did 1067000 EVP-AES-192-GCM decrypt (2048 bytes) operations in 1000059us (1066937.1 ops/sec): 2185.1 MB/s
+Did 577000 EVP-AES-192-GCM decrypt (4096 bytes) operations in 1001345us (576225.0 ops/sec): 2360.2 MB/s
+Did 301000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1002833us (300149.7 ops/sec): 2458.8 MB/s
+Did 154000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1004958us (153240.2 ops/sec): 2510.7 MB/s
+Did 78000 EVP-AES-192-GCM decrypt (32768 bytes) operations in 1007723us (77402.2 ops/sec): 2536.3 MB/s
+Did 39000 EVP-AES-192-GCM decrypt (65536 bytes) operations in 1005178us (38799.1 ops/sec): 2542.7 MB/s
+Did 20000 EVP-AES-192-GCM decrypt (131072 bytes) operations in 1028246us (19450.6 ops/sec): 2549.4 MB/s
+Did 9800 EVP-AES-192-GCM decrypt (262144 bytes) operations in 1007191us (9730.0 ops/sec): 2550.7 MB/s
+Did 4900 EVP-AES-192-GCM decrypt (524288 bytes) operations in 1012256us (4840.7 ops/sec): 2537.9 MB/s
+Did 2629 EVP-AES-192-GCM decrypt (1048576 bytes) operations in 1094057us (2403.0 ops/sec): 2519.7 MB/s
+Exit code: 0
+
+Benchmarking: ENC=0, SZ=192, VARIANT=x4_scalar_iv_mem2_late_tag
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/dec/192_x4_scalar_iv_mem2_late_tag
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4621000 EVP-AES-192-GCM decrypt init operations in 1000085us (4620607.2 ops/sec)
+Did 6759250 EVP-AES-192-GCM decrypt (16 bytes) operations in 1000024us (6759087.8 ops/sec): 108.1 MB/s
+Did 5160500 EVP-AES-192-GCM decrypt (128 bytes) operations in 1000038us (5160303.9 ops/sec): 660.5 MB/s
+Did 4102250 EVP-AES-192-GCM decrypt (256 bytes) operations in 1000038us (4102094.1 ops/sec): 1050.1 MB/s
+Did 2900000 EVP-AES-192-GCM decrypt (512 bytes) operations in 1000119us (2899654.9 ops/sec): 1484.6 MB/s
+Did 1432000 EVP-AES-192-GCM decrypt (1350 bytes) operations in 1000664us (1431049.8 ops/sec): 1931.9 MB/s
+Did 1057000 EVP-AES-192-GCM decrypt (2048 bytes) operations in 1000633us (1056331.3 ops/sec): 2163.4 MB/s
+Did 568000 EVP-AES-192-GCM decrypt (4096 bytes) operations in 1000437us (567751.9 ops/sec): 2325.5 MB/s
+Did 299000 EVP-AES-192-GCM decrypt (8192 bytes) operations in 1002392us (298286.5 ops/sec): 2443.6 MB/s
+Did 153000 EVP-AES-192-GCM decrypt (16384 bytes) operations in 1003649us (152443.7 ops/sec): 2497.6 MB/s
+Did 77000 EVP-AES-192-GCM decrypt (32768 bytes) operations in 1008762us (76331.2 ops/sec): 2501.2 MB/s
+Did 39000 EVP-AES-192-GCM decrypt (65536 bytes) operations in 1006745us (38738.7 ops/sec): 2538.8 MB/s
+Did 20000 EVP-AES-192-GCM decrypt (131072 bytes) operations in 1030863us (19401.2 ops/sec): 2543.0 MB/s
+Did 10571 EVP-AES-192-GCM decrypt (262144 bytes) operations in 1090848us (9690.6 ops/sec): 2540.3 MB/s
+Did 5082 EVP-AES-192-GCM decrypt (524288 bytes) operations in 1055382us (4815.3 ops/sec): 2524.6 MB/s
+Did 2607 EVP-AES-192-GCM decrypt (1048576 bytes) operations in 1075954us (2423.0 ops/sec): 2540.7 MB/s
+Exit code: 0
+
+Getting variants for ENC=1, SZ=256
+Available variants: awslc
+x4_basic
+x4_dual_acc
+x4_fast_tail
+x4_reload_round_keys_partial
+x4_scalar_iv_mem2_late_tag
+x4_scalar_iv_mem2_late_tag_fast_tail
+x4_scalar_iv_mem_late_tag_scalar_rk
+----------------------------------------
+
+Benchmarking: ENC=1, SZ=256, VARIANT=awslc
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: awslc (default)
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4555000 EVP-AES-256-GCM encrypt init operations in 1000186us (4554152.9 ops/sec)
+Did 6343000 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000044us (6342720.9 ops/sec): 101.5 MB/s
+Did 4943250 EVP-AES-256-GCM encrypt (128 bytes) operations in 1000002us (4943240.1 ops/sec): 632.7 MB/s
+Did 3723500 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000047us (3723325.0 ops/sec): 953.2 MB/s
+Did 2477500 EVP-AES-256-GCM encrypt (512 bytes) operations in 1000096us (2477262.2 ops/sec): 1268.4 MB/s
+Did 1149000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000870us (1148001.2 ops/sec): 1549.8 MB/s
+Did 828000 EVP-AES-256-GCM encrypt (2048 bytes) operations in 1001076us (827110.0 ops/sec): 1693.9 MB/s
+Did 439000 EVP-AES-256-GCM encrypt (4096 bytes) operations in 1002062us (438096.6 ops/sec): 1794.4 MB/s
+Did 226000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1000918us (225792.7 ops/sec): 1849.7 MB/s
+Did 115000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1003133us (114640.8 ops/sec): 1878.3 MB/s
+Did 58000 EVP-AES-256-GCM encrypt (32768 bytes) operations in 1003957us (57771.4 ops/sec): 1893.1 MB/s
+Did 29000 EVP-AES-256-GCM encrypt (65536 bytes) operations in 1001451us (28958.0 ops/sec): 1897.8 MB/s
+Did 15000 EVP-AES-256-GCM encrypt (131072 bytes) operations in 1033272us (14517.0 ops/sec): 1902.8 MB/s
+Did 7290 EVP-AES-256-GCM encrypt (262144 bytes) operations in 1003323us (7265.9 ops/sec): 1904.7 MB/s
+Did 3640 EVP-AES-256-GCM encrypt (524288 bytes) operations in 1003806us (3626.2 ops/sec): 1901.2 MB/s
+Did 1820 EVP-AES-256-GCM encrypt (1048576 bytes) operations in 1003176us (1814.2 ops/sec): 1902.4 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=256, VARIANT=x4_basic
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/256_x4_basic
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4455000 EVP-AES-256-GCM encrypt init operations in 1000135us (4454398.7 ops/sec)
+Did 6822250 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000029us (6822052.2 ops/sec): 109.2 MB/s
+Did 5210750 EVP-AES-256-GCM encrypt (128 bytes) operations in 1000004us (5210729.2 ops/sec): 667.0 MB/s
+Did 4021000 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000064us (4020742.7 ops/sec): 1029.3 MB/s
+Did 2761750 EVP-AES-256-GCM encrypt (512 bytes) operations in 1000083us (2761520.8 ops/sec): 1413.9 MB/s
+Did 1315000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000751us (1314013.2 ops/sec): 1773.9 MB/s
+Did 960000 EVP-AES-256-GCM encrypt (2048 bytes) operations in 1000450us (959568.2 ops/sec): 1965.2 MB/s
+Did 514000 EVP-AES-256-GCM encrypt (4096 bytes) operations in 1001543us (513208.1 ops/sec): 2102.1 MB/s
+Did 266000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1000320us (265914.9 ops/sec): 2178.4 MB/s
+Did 136000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1004634us (135372.7 ops/sec): 2217.9 MB/s
+Did 68000 EVP-AES-256-GCM encrypt (32768 bytes) operations in 1001692us (67885.1 ops/sec): 2224.5 MB/s
+Did 35000 EVP-AES-256-GCM encrypt (65536 bytes) operations in 1026018us (34112.5 ops/sec): 2235.6 MB/s
+Did 18000 EVP-AES-256-GCM encrypt (131072 bytes) operations in 1051924us (17111.5 ops/sec): 2242.8 MB/s
+Did 9394 EVP-AES-256-GCM encrypt (262144 bytes) operations in 1096768us (8565.2 ops/sec): 2245.3 MB/s
+Did 4356 EVP-AES-256-GCM encrypt (524288 bytes) operations in 1020471us (4268.6 ops/sec): 2238.0 MB/s
+Did 2150 EVP-AES-256-GCM encrypt (1048576 bytes) operations in 1004112us (2141.2 ops/sec): 2245.2 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=256, VARIANT=x4_dual_acc
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/256_x4_dual_acc
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4463000 EVP-AES-256-GCM encrypt init operations in 1000134us (4462402.0 ops/sec)
+Did 6557000 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000151us (6556010.0 ops/sec): 104.9 MB/s
+Did 5034500 EVP-AES-256-GCM encrypt (128 bytes) operations in 1000050us (5034248.3 ops/sec): 644.4 MB/s
+Did 3917750 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000061us (3917511.0 ops/sec): 1002.9 MB/s
+Did 2714000 EVP-AES-256-GCM encrypt (512 bytes) operations in 1000199us (2713460.0 ops/sec): 1389.3 MB/s
+Did 1305000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000500us (1304347.8 ops/sec): 1760.9 MB/s
+Did 954000 EVP-AES-256-GCM encrypt (2048 bytes) operations in 1000169us (953838.8 ops/sec): 1953.5 MB/s
+Did 512000 EVP-AES-256-GCM encrypt (4096 bytes) operations in 1000837us (511571.8 ops/sec): 2095.4 MB/s
+Did 266000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1001997us (265469.9 ops/sec): 2174.7 MB/s
+Did 136000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1005361us (135274.8 ops/sec): 2216.3 MB/s
+Did 69000 EVP-AES-256-GCM encrypt (32768 bytes) operations in 1010845us (68259.7 ops/sec): 2236.7 MB/s
+Did 35000 EVP-AES-256-GCM encrypt (65536 bytes) operations in 1021331us (34269.0 ops/sec): 2245.9 MB/s
+Did 18000 EVP-AES-256-GCM encrypt (131072 bytes) operations in 1047499us (17183.8 ops/sec): 2252.3 MB/s
+Did 9394 EVP-AES-256-GCM encrypt (262144 bytes) operations in 1092454us (8599.0 ops/sec): 2254.2 MB/s
+Did 4310 EVP-AES-256-GCM encrypt (524288 bytes) operations in 1004613us (4290.2 ops/sec): 2249.3 MB/s
+Did 2150 EVP-AES-256-GCM encrypt (1048576 bytes) operations in 1000752us (2148.4 ops/sec): 2252.7 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=256, VARIANT=x4_fast_tail
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/256_x4_fast_tail
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4456000 EVP-AES-256-GCM encrypt init operations in 1000196us (4455126.8 ops/sec)
+Did 6805000 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000006us (6804959.2 ops/sec): 108.9 MB/s
+Did 5197500 EVP-AES-256-GCM encrypt (128 bytes) operations in 1000021us (5197390.9 ops/sec): 665.3 MB/s
+Did 4002000 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000067us (4001731.9 ops/sec): 1024.4 MB/s
+Did 2728000 EVP-AES-256-GCM encrypt (512 bytes) operations in 1000131us (2727642.7 ops/sec): 1396.6 MB/s
+Did 1290000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000166us (1289785.9 ops/sec): 1741.2 MB/s
+Did 939000 EVP-AES-256-GCM encrypt (2048 bytes) operations in 1000844us (938208.2 ops/sec): 1921.5 MB/s
+Did 501000 EVP-AES-256-GCM encrypt (4096 bytes) operations in 1001047us (500476.0 ops/sec): 2049.9 MB/s
+Did 259000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1000367us (258905.0 ops/sec): 2120.9 MB/s
+Did 132000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1001798us (131763.1 ops/sec): 2158.8 MB/s
+Did 67000 EVP-AES-256-GCM encrypt (32768 bytes) operations in 1008499us (66435.4 ops/sec): 2177.0 MB/s
+Did 34000 EVP-AES-256-GCM encrypt (65536 bytes) operations in 1020015us (33332.8 ops/sec): 2184.5 MB/s
+Did 17000 EVP-AES-256-GCM encrypt (131072 bytes) operations in 1017250us (16711.7 ops/sec): 2190.4 MB/s
+Did 8400 EVP-AES-256-GCM encrypt (262144 bytes) operations in 1003950us (8367.0 ops/sec): 2193.3 MB/s
+Did 4213 EVP-AES-256-GCM encrypt (524288 bytes) operations in 1008510us (4177.4 ops/sec): 2190.2 MB/s
+Did 2100 EVP-AES-256-GCM encrypt (1048576 bytes) operations in 1004769us (2090.0 ops/sec): 2191.6 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=256, VARIANT=x4_reload_round_keys_partial
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/256_x4_reload_round_keys_partial
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4510000 EVP-AES-256-GCM encrypt init operations in 1000132us (4509404.8 ops/sec)
+Did 6866500 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000018us (6866376.4 ops/sec): 109.9 MB/s
+Did 5157750 EVP-AES-256-GCM encrypt (128 bytes) operations in 1000030us (5157595.3 ops/sec): 660.2 MB/s
+Did 3993000 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000142us (3992433.1 ops/sec): 1022.1 MB/s
+Did 2727250 EVP-AES-256-GCM encrypt (512 bytes) operations in 1000064us (2727075.5 ops/sec): 1396.3 MB/s
+Did 1299000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000269us (1298650.7 ops/sec): 1753.2 MB/s
+Did 943000 EVP-AES-256-GCM encrypt (2048 bytes) operations in 1000373us (942648.4 ops/sec): 1930.5 MB/s
+Did 504000 EVP-AES-256-GCM encrypt (4096 bytes) operations in 1001213us (503389.4 ops/sec): 2061.9 MB/s
+Did 261000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1001468us (260617.4 ops/sec): 2135.0 MB/s
+Did 133000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1002703us (132641.5 ops/sec): 2173.2 MB/s
+Did 67000 EVP-AES-256-GCM encrypt (32768 bytes) operations in 1001395us (66906.7 ops/sec): 2192.4 MB/s
+Did 34000 EVP-AES-256-GCM encrypt (65536 bytes) operations in 1008925us (33699.2 ops/sec): 2208.5 MB/s
+Did 17000 EVP-AES-256-GCM encrypt (131072 bytes) operations in 1006165us (16895.8 ops/sec): 2214.6 MB/s
+Did 8470 EVP-AES-256-GCM encrypt (262144 bytes) operations in 1001427us (8457.9 ops/sec): 2217.2 MB/s
+Did 4270 EVP-AES-256-GCM encrypt (524288 bytes) operations in 1011149us (4222.9 ops/sec): 2214.0 MB/s
+Did 2288 EVP-AES-256-GCM encrypt (1048576 bytes) operations in 1082269us (2114.1 ops/sec): 2216.8 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=256, VARIANT=x4_scalar_iv_mem2_late_tag
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/256_x4_scalar_iv_mem2_late_tag
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4501000 EVP-AES-256-GCM encrypt init operations in 1000120us (4500459.9 ops/sec)
+Did 6626750 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000030us (6626551.2 ops/sec): 106.0 MB/s
+Did 5034750 EVP-AES-256-GCM encrypt (128 bytes) operations in 1000043us (5034533.5 ops/sec): 644.4 MB/s
+Did 3907500 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000021us (3907417.9 ops/sec): 1000.3 MB/s
+Did 2703000 EVP-AES-256-GCM encrypt (512 bytes) operations in 1000233us (2702370.3 ops/sec): 1383.6 MB/s
+Did 1288000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000693us (1287108.0 ops/sec): 1737.6 MB/s
+Did 949000 EVP-AES-256-GCM encrypt (2048 bytes) operations in 1000635us (948397.8 ops/sec): 1942.3 MB/s
+Did 509000 EVP-AES-256-GCM encrypt (4096 bytes) operations in 1001325us (508326.5 ops/sec): 2082.1 MB/s
+Did 264000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1001322us (263651.5 ops/sec): 2159.8 MB/s
+Did 135000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1004737us (134363.5 ops/sec): 2201.4 MB/s
+Did 68000 EVP-AES-256-GCM encrypt (32768 bytes) operations in 1003218us (67781.9 ops/sec): 2221.1 MB/s
+Did 35000 EVP-AES-256-GCM encrypt (65536 bytes) operations in 1028890us (34017.2 ops/sec): 2229.4 MB/s
+Did 18000 EVP-AES-256-GCM encrypt (131072 bytes) operations in 1055161us (17059.0 ops/sec): 2236.0 MB/s
+Did 9394 EVP-AES-256-GCM encrypt (262144 bytes) operations in 1099707us (8542.3 ops/sec): 2239.3 MB/s
+Did 4279 EVP-AES-256-GCM encrypt (524288 bytes) operations in 1009601us (4238.3 ops/sec): 2222.1 MB/s
+Did 2068 EVP-AES-256-GCM encrypt (1048576 bytes) operations in 1034078us (1999.8 ops/sec): 2097.0 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=256, VARIANT=x4_scalar_iv_mem2_late_tag_fast_tail
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/256_x4_scalar_iv_mem2_late_tag_fast_tail
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4504000 EVP-AES-256-GCM encrypt init operations in 1000098us (4503558.7 ops/sec)
+Did 6624000 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000137us (6623092.6 ops/sec): 106.0 MB/s
+Did 4995250 EVP-AES-256-GCM encrypt (128 bytes) operations in 1000039us (4995055.2 ops/sec): 639.4 MB/s
+Did 3908750 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000053us (3908542.8 ops/sec): 1000.6 MB/s
+Did 2717000 EVP-AES-256-GCM encrypt (512 bytes) operations in 1000282us (2716234.0 ops/sec): 1390.7 MB/s
+Did 1301000 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000225us (1300707.3 ops/sec): 1756.0 MB/s
+Did 959000 EVP-AES-256-GCM encrypt (2048 bytes) operations in 1000271us (958740.2 ops/sec): 1963.5 MB/s
+Did 515000 EVP-AES-256-GCM encrypt (4096 bytes) operations in 1000597us (514692.7 ops/sec): 2108.2 MB/s
+Did 268000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1003045us (267186.4 ops/sec): 2188.8 MB/s
+Did 137000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1005819us (136207.4 ops/sec): 2231.6 MB/s
+Did 69000 EVP-AES-256-GCM encrypt (32768 bytes) operations in 1003610us (68751.8 ops/sec): 2252.9 MB/s
+Did 35000 EVP-AES-256-GCM encrypt (65536 bytes) operations in 1014557us (34497.8 ops/sec): 2260.8 MB/s
+Did 18000 EVP-AES-256-GCM encrypt (131072 bytes) operations in 1040588us (17297.9 ops/sec): 2267.3 MB/s
+Did 8866 EVP-AES-256-GCM encrypt (262144 bytes) operations in 1024718us (8652.1 ops/sec): 2268.1 MB/s
+Did 4368 EVP-AES-256-GCM encrypt (524288 bytes) operations in 1081583us (4038.5 ops/sec): 2117.4 MB/s
+Did 1925 EVP-AES-256-GCM encrypt (1048576 bytes) operations in 1071601us (1796.4 ops/sec): 1883.6 MB/s
+Exit code: 0
+
+Benchmarking: ENC=1, SZ=256, VARIANT=x4_scalar_iv_mem_late_tag_scalar_rk
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/enc/256_x4_scalar_iv_mem_late_tag_scalar_rk
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4462000 EVP-AES-256-GCM encrypt init operations in 1000062us (4461723.4 ops/sec)
+Did 6795750 EVP-AES-256-GCM encrypt (16 bytes) operations in 1000030us (6795546.1 ops/sec): 108.7 MB/s
+Did 5162500 EVP-AES-256-GCM encrypt (128 bytes) operations in 1000033us (5162329.6 ops/sec): 660.8 MB/s
+Did 4009500 EVP-AES-256-GCM encrypt (256 bytes) operations in 1000038us (4009347.6 ops/sec): 1026.4 MB/s
+Did 2762000 EVP-AES-256-GCM encrypt (512 bytes) operations in 1000010us (2761972.4 ops/sec): 1414.1 MB/s
+Did 1310750 EVP-AES-256-GCM encrypt (1350 bytes) operations in 1000046us (1310689.7 ops/sec): 1769.4 MB/s
+Did 965000 EVP-AES-256-GCM encrypt (2048 bytes) operations in 1000765us (964262.3 ops/sec): 1974.8 MB/s
+Did 517000 EVP-AES-256-GCM encrypt (4096 bytes) operations in 1001334us (516311.2 ops/sec): 2114.8 MB/s
+Did 268000 EVP-AES-256-GCM encrypt (8192 bytes) operations in 1001436us (267615.7 ops/sec): 2192.3 MB/s
+Did 137000 EVP-AES-256-GCM encrypt (16384 bytes) operations in 1004963us (136323.4 ops/sec): 2233.5 MB/s
+Did 69000 EVP-AES-256-GCM encrypt (32768 bytes) operations in 1003515us (68758.3 ops/sec): 2253.1 MB/s
+Did 35000 EVP-AES-256-GCM encrypt (65536 bytes) operations in 1014154us (34511.5 ops/sec): 2261.7 MB/s
+Did 18000 EVP-AES-256-GCM encrypt (131072 bytes) operations in 1040196us (17304.4 ops/sec): 2268.1 MB/s
+Did 8690 EVP-AES-256-GCM encrypt (262144 bytes) operations in 1005152us (8645.5 ops/sec): 2266.4 MB/s
+Did 4340 EVP-AES-256-GCM encrypt (524288 bytes) operations in 1002232us (4330.3 ops/sec): 2270.3 MB/s
+Did 2332 EVP-AES-256-GCM encrypt (1048576 bytes) operations in 1078105us (2163.1 ops/sec): 2268.1 MB/s
+Exit code: 0
+
+Getting variants for ENC=0, SZ=256
+Available variants: awslc
+x4_basic
+x4_scalar_iv_mem2_late_tag
+----------------------------------------
+
+Benchmarking: ENC=0, SZ=256, VARIANT=awslc
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: awslc (default)
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4561500 EVP-AES-256-GCM decrypt init operations in 1000024us (4561390.5 ops/sec)
+Did 6058750 EVP-AES-256-GCM decrypt (16 bytes) operations in 1000030us (6058568.2 ops/sec): 96.9 MB/s
+Did 4886750 EVP-AES-256-GCM decrypt (128 bytes) operations in 1000002us (4886740.2 ops/sec): 625.5 MB/s
+Did 3744000 EVP-AES-256-GCM decrypt (256 bytes) operations in 1000212us (3743206.4 ops/sec): 958.3 MB/s
+Did 2535250 EVP-AES-256-GCM decrypt (512 bytes) operations in 1000060us (2535097.9 ops/sec): 1298.0 MB/s
+Did 1198000 EVP-AES-256-GCM decrypt (1350 bytes) operations in 1000761us (1197089.0 ops/sec): 1616.1 MB/s
+Did 868000 EVP-AES-256-GCM decrypt (2048 bytes) operations in 1000885us (867232.5 ops/sec): 1776.1 MB/s
+Did 463000 EVP-AES-256-GCM decrypt (4096 bytes) operations in 1000956us (462557.8 ops/sec): 1894.6 MB/s
+Did 240000 EVP-AES-256-GCM decrypt (8192 bytes) operations in 1003212us (239231.6 ops/sec): 1959.8 MB/s
+Did 122000 EVP-AES-256-GCM decrypt (16384 bytes) operations in 1002502us (121695.5 ops/sec): 1993.9 MB/s
+Did 62000 EVP-AES-256-GCM decrypt (32768 bytes) operations in 1010035us (61384.0 ops/sec): 2011.4 MB/s
+Did 31000 EVP-AES-256-GCM decrypt (65536 bytes) operations in 1007522us (30768.6 ops/sec): 2016.4 MB/s
+Did 16000 EVP-AES-256-GCM decrypt (131072 bytes) operations in 1036397us (15438.1 ops/sec): 2023.5 MB/s
+Did 7750 EVP-AES-256-GCM decrypt (262144 bytes) operations in 1002790us (7728.4 ops/sec): 2026.0 MB/s
+Did 3870 EVP-AES-256-GCM decrypt (524288 bytes) operations in 1002886us (3858.9 ops/sec): 2023.2 MB/s
+Did 2101 EVP-AES-256-GCM decrypt (1048576 bytes) operations in 1088482us (1930.2 ops/sec): 2024.0 MB/s
+Exit code: 0
+
+Benchmarking: ENC=0, SZ=256, VARIANT=x4_basic
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/dec/256_x4_basic
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4556000 EVP-AES-256-GCM decrypt init operations in 1000057us (4555740.3 ops/sec)
+Did 6721500 EVP-AES-256-GCM decrypt (16 bytes) operations in 1000011us (6721426.1 ops/sec): 107.5 MB/s
+Did 5005750 EVP-AES-256-GCM decrypt (128 bytes) operations in 1000049us (5005504.7 ops/sec): 640.7 MB/s
+Did 3901250 EVP-AES-256-GCM decrypt (256 bytes) operations in 1000038us (3901101.8 ops/sec): 998.7 MB/s
+Did 2703000 EVP-AES-256-GCM decrypt (512 bytes) operations in 1000069us (2702813.5 ops/sec): 1383.8 MB/s
+Did 1305000 EVP-AES-256-GCM decrypt (1350 bytes) operations in 1000090us (1304882.6 ops/sec): 1761.6 MB/s
+Did 953000 EVP-AES-256-GCM decrypt (2048 bytes) operations in 1000224us (952786.6 ops/sec): 1951.3 MB/s
+Did 512000 EVP-AES-256-GCM decrypt (4096 bytes) operations in 1001428us (511269.9 ops/sec): 2094.2 MB/s
+Did 266000 EVP-AES-256-GCM decrypt (8192 bytes) operations in 1002172us (265423.5 ops/sec): 2174.3 MB/s
+Did 136000 EVP-AES-256-GCM decrypt (16384 bytes) operations in 1005542us (135250.4 ops/sec): 2215.9 MB/s
+Did 69000 EVP-AES-256-GCM decrypt (32768 bytes) operations in 1010943us (68253.1 ops/sec): 2236.5 MB/s
+Did 35000 EVP-AES-256-GCM decrypt (65536 bytes) operations in 1020392us (34300.5 ops/sec): 2247.9 MB/s
+Did 18000 EVP-AES-256-GCM decrypt (131072 bytes) operations in 1046107us (17206.7 ops/sec): 2255.3 MB/s
+Did 8690 EVP-AES-256-GCM decrypt (262144 bytes) operations in 1008682us (8615.2 ops/sec): 2258.4 MB/s
+Did 4576 EVP-AES-256-GCM decrypt (524288 bytes) operations in 1062438us (4307.1 ops/sec): 2258.1 MB/s
+Did 2343 EVP-AES-256-GCM decrypt (1048576 bytes) operations in 1087682us (2154.1 ops/sec): 2258.8 MB/s
+Exit code: 0
+
+Benchmarking: ENC=0, SZ=256, VARIANT=x4_scalar_iv_mem2_late_tag
+...
+Environment variable VERBOSE not set. Defaulting to VERBOSE=0 (silent mode).
+Environment variable CHUNKS not set. Defaulting to CHUNKS=16,128,256,512,1350,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576.
+* Testing variant: opt/dec/256_x4_scalar_iv_mem2_late_tag
+ - Copy... OK!
+ - Build... OK!
+ - Test... OK!
+ - Bench...
+Did 4530750 EVP-AES-256-GCM decrypt init operations in 1000002us (4530740.9 ops/sec)
+Did 6308000 EVP-AES-256-GCM decrypt (16 bytes) operations in 1000035us (6307779.2 ops/sec): 100.9 MB/s
+Did 4809000 EVP-AES-256-GCM decrypt (128 bytes) operations in 1000205us (4808014.4 ops/sec): 615.4 MB/s
+Did 3762250 EVP-AES-256-GCM decrypt (256 bytes) operations in 1000053us (3762050.6 ops/sec): 963.1 MB/s
+Did 2626750 EVP-AES-256-GCM decrypt (512 bytes) operations in 1000045us (2626631.8 ops/sec): 1344.8 MB/s
+Did 1273000 EVP-AES-256-GCM decrypt (1350 bytes) operations in 1000444us (1272435.0 ops/sec): 1717.8 MB/s
+Did 936000 EVP-AES-256-GCM decrypt (2048 bytes) operations in 1000670us (935373.3 ops/sec): 1915.6 MB/s
+Did 504000 EVP-AES-256-GCM decrypt (4096 bytes) operations in 1001493us (503248.6 ops/sec): 2061.3 MB/s
+Did 262000 EVP-AES-256-GCM decrypt (8192 bytes) operations in 1001485us (261611.5 ops/sec): 2143.1 MB/s
+Did 134000 EVP-AES-256-GCM decrypt (16384 bytes) operations in 1004220us (133436.9 ops/sec): 2186.2 MB/s
+Did 68000 EVP-AES-256-GCM decrypt (32768 bytes) operations in 1012914us (67133.0 ops/sec): 2199.8 MB/s
+Did 34000 EVP-AES-256-GCM decrypt (65536 bytes) operations in 1009272us (33687.6 ops/sec): 2207.8 MB/s
+Did 17000 EVP-AES-256-GCM decrypt (131072 bytes) operations in 1006190us (16895.4 ops/sec): 2214.5 MB/s
+Did 8470 EVP-AES-256-GCM decrypt (262144 bytes) operations in 1002473us (8449.1 ops/sec): 2214.9 MB/s
+Did 4488 EVP-AES-256-GCM decrypt (524288 bytes) operations in 1062629us (4223.5 ops/sec): 2214.3 MB/s
+Did 2321 EVP-AES-256-GCM decrypt (1048576 bytes) operations in 1099698us (2110.6 ops/sec): 2213.1 MB/s
+Exit code: 0
+
+All benchmarks completed at Wed Jan  7 17:42:44 UTC 2026

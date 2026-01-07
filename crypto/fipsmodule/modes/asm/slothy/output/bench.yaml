@@ -1,0 +1,1750 @@
+ENC0_SZ128_awslc:
+  enc: 0
+  performance:
+    16:
+      mbps: 102.5
+    128:
+      mbps: 679.7
+    256:
+      mbps: 1065.8
+    512:
+      mbps: 1489.1
+    1350:
+      mbps: 1902.8
+    2048:
+      mbps: 2112.6
+    4096:
+      mbps: 2277.1
+    8192:
+      mbps: 2369.6
+    16384:
+      mbps: 2418.7
+    32768:
+      mbps: 2444.1
+    65536:
+      mbps: 2455.6
+    131072:
+      mbps: 2465.7
+    262144:
+      mbps: 2469.4
+    524288:
+      mbps: 2463.2
+    1048576:
+      mbps: 2471.5
+  sz: 128
+  variant: awslc
+ENC0_SZ128_x4_basic:
+  enc: 0
+  performance:
+    16:
+      mbps: 113.2
+    128:
+      mbps: 708.9
+    256:
+      mbps: 1129.9
+    512:
+      mbps: 1606.0
+    1350:
+      mbps: 2090.4
+    2048:
+      mbps: 2344.8
+    4096:
+      mbps: 2541.7
+    8192:
+      mbps: 2652.8
+    16384:
+      mbps: 2712.9
+    32768:
+      mbps: 2743.8
+    65536:
+      mbps: 2758.5
+    131072:
+      mbps: 2772.4
+    262144:
+      mbps: 2775.7
+    524288:
+      mbps: 2746.0
+    1048576:
+      mbps: 2780.5
+  sz: 128
+  variant: x4_basic
+ENC0_SZ128_x4_keep_htable:
+  enc: 0
+  performance:
+    16:
+      mbps: 113.3
+    128:
+      mbps: 705.9
+    256:
+      mbps: 1134.1
+    512:
+      mbps: 1623.8
+    1350:
+      mbps: 2131.1
+    2048:
+      mbps: 2402.7
+    4096:
+      mbps: 2614.2
+    8192:
+      mbps: 2734.1
+    16384:
+      mbps: 2799.2
+    32768:
+      mbps: 2828.0
+    65536:
+      mbps: 2849.1
+    131072:
+      mbps: 2864.0
+    262144:
+      mbps: 2868.7
+    524288:
+      mbps: 2849.7
+    1048576:
+      mbps: 2871.1
+  sz: 128
+  variant: x4_keep_htable
+ENC0_SZ128_x4_scalar_iv_mem2:
+  enc: 0
+  performance:
+    16:
+      mbps: 111.7
+    128:
+      mbps: 688.4
+    256:
+      mbps: 1115.3
+    512:
+      mbps: 1616.0
+    1350:
+      mbps: 2158.9
+    2048:
+      mbps: 2442.4
+    4096:
+      mbps: 2670.5
+    8192:
+      mbps: 2798.8
+    16384:
+      mbps: 2869.5
+    32768:
+      mbps: 2899.2
+    65536:
+      mbps: 2921.3
+    131072:
+      mbps: 2932.8
+    262144:
+      mbps: 2929.9
+    524288:
+      mbps: 2934.4
+    1048576:
+      mbps: 2934.3
+  sz: 128
+  variant: x4_scalar_iv_mem2
+ENC0_SZ128_x4_scalar_iv_mem_late_tag:
+  enc: 0
+  performance:
+    16:
+      mbps: 113.0
+    128:
+      mbps: 702.6
+    256:
+      mbps: 1136.2
+    512:
+      mbps: 1637.8
+    1350:
+      mbps: 2163.7
+    2048:
+      mbps: 2446.9
+    4096:
+      mbps: 2669.4
+    8192:
+      mbps: 2796.7
+    16384:
+      mbps: 2865.1
+    32768:
+      mbps: 2892.7
+    65536:
+      mbps: 2912.9
+    131072:
+      mbps: 2906.3
+    262144:
+      mbps: 2921.0
+    524288:
+      mbps: 2926.5
+    1048576:
+      mbps: 2926.6
+  sz: 128
+  variant: x4_scalar_iv_mem_late_tag
+ENC0_SZ128_x4_scalar_iv_mem_late_tag_keep_htable:
+  enc: 0
+  performance:
+    16:
+      mbps: 112.5
+    128:
+      mbps: 707.1
+    256:
+      mbps: 1130.9
+    512:
+      mbps: 1611.9
+    1350:
+      mbps: 2102.5
+    2048:
+      mbps: 2365.6
+    4096:
+      mbps: 2567.5
+    8192:
+      mbps: 2682.2
+    16384:
+      mbps: 2743.3
+    32768:
+      mbps: 2768.7
+    65536:
+      mbps: 2786.9
+    131072:
+      mbps: 2795.1
+    262144:
+      mbps: 2799.1
+    524288:
+      mbps: 2784.2
+    1048576:
+      mbps: 2794.3
+  sz: 128
+  variant: x4_scalar_iv_mem_late_tag_keep_htable
+ENC0_SZ192_awslc:
+  enc: 0
+  performance:
+    16:
+      mbps: 99.7
+    128:
+      mbps: 651.9
+    256:
+      mbps: 1017.1
+    512:
+      mbps: 1400.0
+    1350:
+      mbps: 1767.0
+    2048:
+      mbps: 1949.6
+    4096:
+      mbps: 2092.9
+    8192:
+      mbps: 2173.5
+    16384:
+      mbps: 2215.5
+    32768:
+      mbps: 2237.0
+    65536:
+      mbps: 2238.8
+    131072:
+      mbps: 2250.8
+    262144:
+      mbps: 2254.2
+    524288:
+      mbps: 2249.1
+    1048576:
+      mbps: 2250.7
+  sz: 192
+  variant: awslc
+ENC0_SZ192_x4_basic:
+  enc: 0
+  performance:
+    16:
+      mbps: 110.6
+    128:
+      mbps: 681.8
+    256:
+      mbps: 1077.8
+    512:
+      mbps: 1516.9
+    1350:
+      mbps: 1958.8
+    2048:
+      mbps: 2185.1
+    4096:
+      mbps: 2360.2
+    8192:
+      mbps: 2458.8
+    16384:
+      mbps: 2510.7
+    32768:
+      mbps: 2536.3
+    65536:
+      mbps: 2542.7
+    131072:
+      mbps: 2549.4
+    262144:
+      mbps: 2550.7
+    524288:
+      mbps: 2537.9
+    1048576:
+      mbps: 2519.7
+  sz: 192
+  variant: x4_basic
+ENC0_SZ192_x4_scalar_iv_mem2_late_tag:
+  enc: 0
+  performance:
+    16:
+      mbps: 108.1
+    128:
+      mbps: 660.5
+    256:
+      mbps: 1050.1
+    512:
+      mbps: 1484.6
+    1350:
+      mbps: 1931.9
+    2048:
+      mbps: 2163.4
+    4096:
+      mbps: 2325.5
+    8192:
+      mbps: 2443.6
+    16384:
+      mbps: 2497.6
+    32768:
+      mbps: 2501.2
+    65536:
+      mbps: 2538.8
+    131072:
+      mbps: 2543.0
+    262144:
+      mbps: 2540.3
+    524288:
+      mbps: 2524.6
+    1048576:
+      mbps: 2540.7
+  sz: 192
+  variant: x4_scalar_iv_mem2_late_tag
+ENC0_SZ256_awslc:
+  enc: 0
+  performance:
+    16:
+      mbps: 96.9
+    128:
+      mbps: 625.5
+    256:
+      mbps: 958.3
+    512:
+      mbps: 1298.0
+    1350:
+      mbps: 1616.1
+    2048:
+      mbps: 1776.1
+    4096:
+      mbps: 1894.6
+    8192:
+      mbps: 1959.8
+    16384:
+      mbps: 1993.9
+    32768:
+      mbps: 2011.4
+    65536:
+      mbps: 2016.4
+    131072:
+      mbps: 2023.5
+    262144:
+      mbps: 2026.0
+    524288:
+      mbps: 2023.2
+    1048576:
+      mbps: 2024.0
+  sz: 256
+  variant: awslc
+ENC0_SZ256_x4_basic:
+  enc: 0
+  performance:
+    16:
+      mbps: 107.5
+    128:
+      mbps: 640.7
+    256:
+      mbps: 998.7
+    512:
+      mbps: 1383.8
+    1350:
+      mbps: 1761.6
+    2048:
+      mbps: 1951.3
+    4096:
+      mbps: 2094.2
+    8192:
+      mbps: 2174.3
+    16384:
+      mbps: 2215.9
+    32768:
+      mbps: 2236.5
+    65536:
+      mbps: 2247.9
+    131072:
+      mbps: 2255.3
+    262144:
+      mbps: 2258.4
+    524288:
+      mbps: 2258.1
+    1048576:
+      mbps: 2258.8
+  sz: 256
+  variant: x4_basic
+ENC0_SZ256_x4_scalar_iv_mem2_late_tag:
+  enc: 0
+  performance:
+    16:
+      mbps: 100.9
+    128:
+      mbps: 615.4
+    256:
+      mbps: 963.1
+    512:
+      mbps: 1344.8
+    1350:
+      mbps: 1717.8
+    2048:
+      mbps: 1915.6
+    4096:
+      mbps: 2061.3
+    8192:
+      mbps: 2143.1
+    16384:
+      mbps: 2186.2
+    32768:
+      mbps: 2199.8
+    65536:
+      mbps: 2207.8
+    131072:
+      mbps: 2214.5
+    262144:
+      mbps: 2214.9
+    524288:
+      mbps: 2214.3
+    1048576:
+      mbps: 2213.1
+  sz: 256
+  variant: x4_scalar_iv_mem2_late_tag
+ENC1_SZ128_awslc:
+  enc: 1
+  performance:
+    16:
+      mbps: 106.8
+    128:
+      mbps: 684.0
+    256:
+      mbps: 1052.7
+    512:
+      mbps: 1437.0
+    1350:
+      mbps: 1802.0
+    2048:
+      mbps: 1981.6
+    4096:
+      mbps: 2118.9
+    8192:
+      mbps: 2195.3
+    16384:
+      mbps: 2234.5
+    32768:
+      mbps: 2255.7
+    65536:
+      mbps: 2264.4
+    131072:
+      mbps: 2272.8
+    262144:
+      mbps: 2275.3
+    524288:
+      mbps: 2273.4
+    1048576:
+      mbps: 2276.3
+  sz: 128
+  variant: awslc
+ENC1_SZ128_x4_basic:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.0
+    128:
+      mbps: 720.9
+    256:
+      mbps: 1134.0
+    512:
+      mbps: 1586.1
+    1350:
+      mbps: 2025.5
+    2048:
+      mbps: 2262.0
+    4096:
+      mbps: 2436.7
+    8192:
+      mbps: 2535.1
+    16384:
+      mbps: 2586.9
+    32768:
+      mbps: 2612.9
+    65536:
+      mbps: 2610.6
+    131072:
+      mbps: 2617.1
+    262144:
+      mbps: 2620.0
+    524288:
+      mbps: 2622.1
+    1048576:
+      mbps: 2614.1
+  sz: 128
+  variant: x4_basic
+ENC1_SZ128_x4_dual_acc:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.1
+    128:
+      mbps: 717.6
+    256:
+      mbps: 1150.0
+    512:
+      mbps: 1632.8
+    1350:
+      mbps: 2116.5
+    2048:
+      mbps: 2384.1
+    4096:
+      mbps: 2582.7
+    8192:
+      mbps: 2694.0
+    16384:
+      mbps: 2753.9
+    32768:
+      mbps: 2783.9
+    65536:
+      mbps: 2803.8
+    131072:
+      mbps: 2812.9
+    262144:
+      mbps: 2815.3
+    524288:
+      mbps: 2801.7
+    1048576:
+      mbps: 2816.2
+  sz: 128
+  variant: x4_dual_acc
+ENC1_SZ128_x4_dual_acc_keep_htable:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.3
+    128:
+      mbps: 727.4
+    256:
+      mbps: 1163.1
+    512:
+      mbps: 1658.0
+    1350:
+      mbps: 2149.6
+    2048:
+      mbps: 2426.0
+    4096:
+      mbps: 2629.4
+    8192:
+      mbps: 2744.8
+    16384:
+      mbps: 2806.5
+    32768:
+      mbps: 2835.3
+    65536:
+      mbps: 2847.8
+    131072:
+      mbps: 2858.8
+    262144:
+      mbps: 2864.4
+    524288:
+      mbps: 2865.3
+    1048576:
+      mbps: 2864.7
+  sz: 128
+  variant: x4_dual_acc_keep_htable
+ENC1_SZ128_x4_fast_tail:
+  enc: 1
+  performance:
+    16:
+      mbps: 113.8
+    128:
+      mbps: 716.5
+    256:
+      mbps: 1151.8
+    512:
+      mbps: 1636.8
+    1350:
+      mbps: 2123.3
+    2048:
+      mbps: 2390.9
+    4096:
+      mbps: 2591.8
+    8192:
+      mbps: 2697.5
+    16384:
+      mbps: 2765.4
+    32768:
+      mbps: 2795.3
+    65536:
+      mbps: 2788.5
+    131072:
+      mbps: 2797.5
+    262144:
+      mbps: 2806.1
+    524288:
+      mbps: 2793.3
+    1048576:
+      mbps: 2809.5
+  sz: 128
+  variant: x4_fast_tail
+ENC1_SZ128_x4_ilp:
+  enc: 1
+  performance:
+    16:
+      mbps: 112.8
+    128:
+      mbps: 709.8
+    256:
+      mbps: 1134.6
+    512:
+      mbps: 1605.8
+    1350:
+      mbps: 2074.0
+    2048:
+      mbps: 2330.7
+    4096:
+      mbps: 2522.0
+    8192:
+      mbps: 2629.1
+    16384:
+      mbps: 2687.4
+    32768:
+      mbps: 2715.0
+    65536:
+      mbps: 2724.4
+    131072:
+      mbps: 2735.8
+    262144:
+      mbps: 2741.2
+    524288:
+      mbps: 2741.2
+    1048576:
+      mbps: 2740.6
+  sz: 128
+  variant: x4_ilp
+ENC1_SZ128_x4_keep_htable:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.6
+    128:
+      mbps: 720.7
+    256:
+      mbps: 1148.0
+    512:
+      mbps: 1631.6
+    1350:
+      mbps: 2112.7
+    2048:
+      mbps: 2383.8
+    4096:
+      mbps: 2584.5
+    8192:
+      mbps: 2697.1
+    16384:
+      mbps: 2758.2
+    32768:
+      mbps: 2788.0
+    65536:
+      mbps: 2814.1
+    131072:
+      mbps: 2823.5
+    262144:
+      mbps: 2826.1
+    524288:
+      mbps: 2828.1
+    1048576:
+      mbps: 2819.7
+  sz: 128
+  variant: x4_keep_htable
+ENC1_SZ128_x4_keep_htable_rotate:
+  enc: 1
+  performance:
+    16:
+      mbps: 106.3
+    128:
+      mbps: 666.1
+    256:
+      mbps: 1085.5
+    512:
+      mbps: 1575.8
+    1350:
+      mbps: 2108.8
+    2048:
+      mbps: 2385.2
+    4096:
+      mbps: 2609.5
+    8192:
+      mbps: 2738.4
+    16384:
+      mbps: 2807.5
+    32768:
+      mbps: 2843.2
+    65536:
+      mbps: 2836.1
+    131072:
+      mbps: 2847.6
+    262144:
+      mbps: 2853.2
+    524288:
+      mbps: 2854.0
+    1048576:
+      mbps: 2857.0
+  sz: 128
+  variant: x4_keep_htable_rotate
+ENC1_SZ128_x4_late_tag:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.1
+    128:
+      mbps: 719.2
+    256:
+      mbps: 1130.0
+    512:
+      mbps: 1584.0
+    1350:
+      mbps: 2021.5
+    2048:
+      mbps: 2262.2
+    4096:
+      mbps: 2437.2
+    8192:
+      mbps: 2535.1
+    16384:
+      mbps: 2587.2
+    32768:
+      mbps: 2608.2
+    65536:
+      mbps: 2629.6
+    131072:
+      mbps: 2639.1
+    262144:
+      mbps: 2641.2
+    524288:
+      mbps: 2626.8
+    1048576:
+      mbps: 2632.8
+  sz: 128
+  variant: x4_late_tag
+ENC1_SZ128_x4_reload_round_keys_full:
+  enc: 1
+  performance:
+    16:
+      mbps: 115.9
+    128:
+      mbps: 719.9
+    256:
+      mbps: 1140.7
+    512:
+      mbps: 1602.7
+    1350:
+      mbps: 2049.8
+    2048:
+      mbps: 2295.1
+    4096:
+      mbps: 2476.0
+    8192:
+      mbps: 2578.5
+    16384:
+      mbps: 2632.1
+    32768:
+      mbps: 2659.1
+    65536:
+      mbps: 2670.1
+    131072:
+      mbps: 2679.2
+    262144:
+      mbps: 2693.1
+    524288:
+      mbps: 2683.0
+    1048576:
+      mbps: 2687.0
+  sz: 128
+  variant: x4_reload_round_keys_full
+ENC1_SZ128_x4_reload_round_keys_partial:
+  enc: 1
+  performance:
+    16:
+      mbps: 116.0
+    128:
+      mbps: 724.6
+    256:
+      mbps: 1135.1
+    512:
+      mbps: 1577.4
+    1350:
+      mbps: 1993.4
+    2048:
+      mbps: 2219.9
+    4096:
+      mbps: 2387.8
+    8192:
+      mbps: 2477.9
+    16384:
+      mbps: 2528.5
+    32768:
+      mbps: 2552.4
+    65536:
+      mbps: 2620.3
+    131072:
+      mbps: 2615.6
+    262144:
+      mbps: 2622.6
+    524288:
+      mbps: 2619.2
+    1048576:
+      mbps: 2622.9
+  sz: 128
+  variant: x4_reload_round_keys_partial
+ENC1_SZ128_x4_scalar_iv:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.5
+    128:
+      mbps: 711.8
+    256:
+      mbps: 1128.7
+    512:
+      mbps: 1591.2
+    1350:
+      mbps: 2025.8
+    2048:
+      mbps: 2288.7
+    4096:
+      mbps: 2474.8
+    8192:
+      mbps: 2578.3
+    16384:
+      mbps: 2634.1
+    32768:
+      mbps: 2662.4
+    65536:
+      mbps: 2665.6
+    131072:
+      mbps: 2675.1
+    262144:
+      mbps: 2680.5
+    524288:
+      mbps: 2673.9
+    1048576:
+      mbps: 2671.1
+  sz: 128
+  variant: x4_scalar_iv
+ENC1_SZ128_x4_scalar_iv2:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.6
+    128:
+      mbps: 713.0
+    256:
+      mbps: 1121.8
+    512:
+      mbps: 1575.3
+    1350:
+      mbps: 2001.6
+    2048:
+      mbps: 2254.1
+    4096:
+      mbps: 2432.4
+    8192:
+      mbps: 2532.9
+    16384:
+      mbps: 2585.8
+    32768:
+      mbps: 2610.2
+    65536:
+      mbps: 2629.9
+    131072:
+      mbps: 2637.4
+    262144:
+      mbps: 2641.2
+    524288:
+      mbps: 2632.5
+    1048576:
+      mbps: 2639.6
+  sz: 128
+  variant: x4_scalar_iv2
+ENC1_SZ128_x4_scalar_iv2_late_tag_keep_htable_scalar_rk:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.0
+    128:
+      mbps: 715.3
+    256:
+      mbps: 1132.1
+    512:
+      mbps: 1597.6
+    1350:
+      mbps: 2039.8
+    2048:
+      mbps: 2304.5
+    4096:
+      mbps: 2489.6
+    8192:
+      mbps: 2593.7
+    16384:
+      mbps: 2649.1
+    32768:
+      mbps: 2664.9
+    65536:
+      mbps: 2677.0
+    131072:
+      mbps: 2684.0
+    262144:
+      mbps: 2689.4
+    524288:
+      mbps: 2665.7
+    1048576:
+      mbps: 2669.5
+  sz: 128
+  variant: x4_scalar_iv2_late_tag_keep_htable_scalar_rk
+ENC1_SZ128_x4_scalar_iv2_mem_late_tag_keep_htable_scalar_rk:
+  enc: 1
+  performance:
+    16:
+      mbps: 111.5
+    128:
+      mbps: 704.4
+    256:
+      mbps: 1128.6
+    512:
+      mbps: 1618.5
+    1350:
+      mbps: 2104.9
+    2048:
+      mbps: 2401.7
+    4096:
+      mbps: 2611.6
+    8192:
+      mbps: 2731.2
+    16384:
+      mbps: 2795.0
+    32768:
+      mbps: 2822.7
+    65536:
+      mbps: 2840.4
+    131072:
+      mbps: 2850.0
+    262144:
+      mbps: 2848.7
+    524288:
+      mbps: 2842.7
+    1048576:
+      mbps: 2832.4
+  sz: 128
+  variant: x4_scalar_iv2_mem_late_tag_keep_htable_scalar_rk
+ENC1_SZ128_x4_scalar_iv_mem:
+  enc: 1
+  performance:
+    16:
+      mbps: 113.5
+    128:
+      mbps: 693.4
+    256:
+      mbps: 1142.4
+    512:
+      mbps: 1639.5
+    1350:
+      mbps: 2143.4
+    2048:
+      mbps: 2436.9
+    4096:
+      mbps: 2653.9
+    8192:
+      mbps: 2777.5
+    16384:
+      mbps: 2844.1
+    32768:
+      mbps: 2865.4
+    65536:
+      mbps: 2885.9
+    131072:
+      mbps: 2896.4
+    262144:
+      mbps: 2895.1
+    524288:
+      mbps: 2881.4
+    1048576:
+      mbps: 2885.7
+  sz: 128
+  variant: x4_scalar_iv_mem
+ENC1_SZ128_x4_scalar_iv_mem2:
+  enc: 1
+  performance:
+    16:
+      mbps: 108.1
+    128:
+      mbps: 669.0
+    256:
+      mbps: 1092.7
+    512:
+      mbps: 1592.7
+    1350:
+      mbps: 2112.7
+    2048:
+      mbps: 2425.5
+    4096:
+      mbps: 2659.7
+    8192:
+      mbps: 2790.4
+    16384:
+      mbps: 2859.8
+    32768:
+      mbps: 2889.3
+    65536:
+      mbps: 2915.0
+    131072:
+      mbps: 2919.9
+    262144:
+      mbps: 2929.8
+    524288:
+      mbps: 2860.8
+    1048576:
+      mbps: 2927.5
+  sz: 128
+  variant: x4_scalar_iv_mem2
+ENC1_SZ128_x4_scalar_iv_mem2_late_tag:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.1
+    128:
+      mbps: 715.4
+    256:
+      mbps: 1145.1
+    512:
+      mbps: 1624.0
+    1350:
+      mbps: 2090.6
+    2048:
+      mbps: 2366.2
+    4096:
+      mbps: 2563.1
+    8192:
+      mbps: 2674.1
+    16384:
+      mbps: 2733.0
+    32768:
+      mbps: 2757.4
+    65536:
+      mbps: 2775.5
+    131072:
+      mbps: 2784.0
+    262144:
+      mbps: 2775.4
+    524288:
+      mbps: 2786.1
+    1048576:
+      mbps: 2787.8
+  sz: 128
+  variant: x4_scalar_iv_mem2_late_tag
+ENC1_SZ128_x4_scalar_iv_mem2_late_tag_keep_htable_scalar_rk:
+  enc: 1
+  performance:
+    16:
+      mbps: 111.4
+    128:
+      mbps: 688.1
+    256:
+      mbps: 1095.7
+    512:
+      mbps: 1545.5
+    1350:
+      mbps: 1974.0
+    2048:
+      mbps: 2235.2
+    4096:
+      mbps: 2415.1
+    8192:
+      mbps: 2516.1
+    16384:
+      mbps: 2570.2
+    32768:
+      mbps: 2581.6
+    65536:
+      mbps: 2578.6
+    131072:
+      mbps: 2627.9
+    262144:
+      mbps: 2607.3
+    524288:
+      mbps: 2596.8
+    1048576:
+      mbps: 2599.8
+  sz: 128
+  variant: x4_scalar_iv_mem2_late_tag_keep_htable_scalar_rk
+ENC1_SZ128_x4_scalar_iv_mem_late_tag:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.5
+    128:
+      mbps: 713.0
+    256:
+      mbps: 1147.0
+    512:
+      mbps: 1642.5
+    1350:
+      mbps: 2130.2
+    2048:
+      mbps: 2425.3
+    4096:
+      mbps: 2634.5
+    8192:
+      mbps: 2753.7
+    16384:
+      mbps: 2817.6
+    32768:
+      mbps: 2843.6
+    65536:
+      mbps: 2862.2
+    131072:
+      mbps: 2871.9
+    262144:
+      mbps: 2876.9
+    524288:
+      mbps: 2868.7
+    1048576:
+      mbps: 2871.3
+  sz: 128
+  variant: x4_scalar_iv_mem_late_tag
+ENC1_SZ128_x4_scalar_iv_mem_late_tag_keep_htable:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.3
+    128:
+      mbps: 717.2
+    256:
+      mbps: 1160.2
+    512:
+      mbps: 1663.4
+    1350:
+      mbps: 2172.0
+    2048:
+      mbps: 2471.4
+    4096:
+      mbps: 2688.9
+    8192:
+      mbps: 2813.4
+    16384:
+      mbps: 2880.4
+    32768:
+      mbps: 2904.3
+    65536:
+      mbps: 2927.7
+    131072:
+      mbps: 2937.8
+    262144:
+      mbps: 2917.0
+    524288:
+      mbps: 2939.3
+    1048576:
+      mbps: 2942.0
+  sz: 128
+  variant: x4_scalar_iv_mem_late_tag_keep_htable
+ENC1_SZ128_x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.1
+    128:
+      mbps: 718.8
+    256:
+      mbps: 1152.2
+    512:
+      mbps: 1638.5
+    1350:
+      mbps: 2112.4
+    2048:
+      mbps: 2397.6
+    4096:
+      mbps: 2599.7
+    8192:
+      mbps: 2713.3
+    16384:
+      mbps: 2774.4
+    32768:
+      mbps: 2797.0
+    65536:
+      mbps: 2811.7
+    131072:
+      mbps: 2820.8
+    262144:
+      mbps: 2822.5
+    524288:
+      mbps: 2809.1
+    1048576:
+      mbps: 2812.1
+  sz: 128
+  variant: x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk
+ENC1_SZ128_x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk_v1:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.1
+    128:
+      mbps: 703.9
+    256:
+      mbps: 1130.0
+    512:
+      mbps: 1608.4
+    1350:
+      mbps: 2078.0
+    2048:
+      mbps: 2359.3
+    4096:
+      mbps: 2558.7
+    8192:
+      mbps: 2671.4
+    16384:
+      mbps: 2732.2
+    32768:
+      mbps: 2762.2
+    65536:
+      mbps: 2773.4
+    131072:
+      mbps: 2783.7
+    262144:
+      mbps: 2788.9
+    524288:
+      mbps: 2789.7
+    1048576:
+      mbps: 2787.9
+  sz: 128
+  variant: x4_scalar_iv_mem_late_tag_keep_htable_scalar_rk_v1
+ENC1_SZ128_x4_scalar_iv_mem_late_tag_scalar_rk:
+  enc: 1
+  performance:
+    16:
+      mbps: 114.1
+    128:
+      mbps: 710.7
+    256:
+      mbps: 1152.4
+    512:
+      mbps: 1656.4
+    1350:
+      mbps: 2164.3
+    2048:
+      mbps: 2466.2
+    4096:
+      mbps: 2686.9
+    8192:
+      mbps: 2812.8
+    16384:
+      mbps: 2879.7
+    32768:
+      mbps: 2909.3
+    65536:
+      mbps: 2926.3
+    131072:
+      mbps: 2920.6
+    262144:
+      mbps: 2942.1
+    524288:
+      mbps: 2929.0
+    1048576:
+      mbps: 2937.8
+  sz: 128
+  variant: x4_scalar_iv_mem_late_tag_scalar_rk
+ENC1_SZ192_awslc:
+  enc: 1
+  performance:
+    16:
+      mbps: 104.1
+    128:
+      mbps: 656.0
+    256:
+      mbps: 1002.6
+    512:
+      mbps: 1357.0
+    1350:
+      mbps: 1685.0
+    2048:
+      mbps: 1850.4
+    4096:
+      mbps: 1972.3
+    8192:
+      mbps: 2039.4
+    16384:
+      mbps: 2074.3
+    32768:
+      mbps: 2092.7
+    65536:
+      mbps: 2098.2
+    131072:
+      mbps: 2104.4
+    262144:
+      mbps: 2107.0
+    524288:
+      mbps: 2107.6
+    1048576:
+      mbps: 2107.3
+  sz: 192
+  variant: awslc
+ENC1_SZ192_x4_basic:
+  enc: 1
+  performance:
+    16:
+      mbps: 111.0
+    128:
+      mbps: 697.4
+    256:
+      mbps: 1088.4
+    512:
+      mbps: 1525.1
+    1350:
+      mbps: 1960.9
+    2048:
+      mbps: 2181.6
+    4096:
+      mbps: 2350.9
+    8192:
+      mbps: 2444.1
+    16384:
+      mbps: 2494.3
+    32768:
+      mbps: 2519.1
+    65536:
+      mbps: 2519.6
+    131072:
+      mbps: 2527.2
+    262144:
+      mbps: 2532.3
+    524288:
+      mbps: 2531.6
+    1048576:
+      mbps: 2530.7
+  sz: 192
+  variant: x4_basic
+ENC1_SZ192_x4_dual_acc:
+  enc: 1
+  performance:
+    16:
+      mbps: 110.9
+    128:
+      mbps: 688.8
+    256:
+      mbps: 1081.5
+    512:
+      mbps: 1514.2
+    1350:
+      mbps: 1931.5
+    2048:
+      mbps: 2160.4
+    4096:
+      mbps: 2327.2
+    8192:
+      mbps: 2419.9
+    16384:
+      mbps: 2469.7
+    32768:
+      mbps: 2492.4
+    65536:
+      mbps: 2502.0
+    131072:
+      mbps: 2510.3
+    262144:
+      mbps: 2515.9
+    524288:
+      mbps: 2514.0
+    1048576:
+      mbps: 2511.1
+  sz: 192
+  variant: x4_dual_acc
+ENC1_SZ192_x4_fast_tail:
+  enc: 1
+  performance:
+    16:
+      mbps: 111.6
+    128:
+      mbps: 691.4
+    256:
+      mbps: 1087.5
+    512:
+      mbps: 1524.3
+    1350:
+      mbps: 1958.4
+    2048:
+      mbps: 2181.5
+    4096:
+      mbps: 2351.3
+    8192:
+      mbps: 2446.3
+    16384:
+      mbps: 2496.7
+    32768:
+      mbps: 2521.6
+    65536:
+      mbps: 2531.8
+    131072:
+      mbps: 2539.6
+    262144:
+      mbps: 2544.1
+    524288:
+      mbps: 2544.6
+    1048576:
+      mbps: 2543.5
+  sz: 192
+  variant: x4_fast_tail
+ENC1_SZ192_x4_reload_round_keys_partial:
+  enc: 1
+  performance:
+    16:
+      mbps: 112.3
+    128:
+      mbps: 688.1
+    256:
+      mbps: 1075.1
+    512:
+      mbps: 1494.4
+    1350:
+      mbps: 1901.8
+    2048:
+      mbps: 2111.6
+    4096:
+      mbps: 2270.7
+    8192:
+      mbps: 2361.1
+    16384:
+      mbps: 2406.2
+    32768:
+      mbps: 2432.0
+    65536:
+      mbps: 2419.8
+    131072:
+      mbps: 2430.0
+    262144:
+      mbps: 2431.1
+    524288:
+      mbps: 2425.6
+    1048576:
+      mbps: 2412.9
+  sz: 192
+  variant: x4_reload_round_keys_partial
+ENC1_SZ192_x4_scalar_iv_mem_late_tag_scalar_rk:
+  enc: 1
+  performance:
+    16:
+      mbps: 111.0
+    128:
+      mbps: 685.3
+    256:
+      mbps: 1083.1
+    512:
+      mbps: 1524.1
+    1350:
+      mbps: 1953.1
+    2048:
+      mbps: 2193.0
+    4096:
+      mbps: 2366.4
+    8192:
+      mbps: 2463.9
+    16384:
+      mbps: 2515.5
+    32768:
+      mbps: 2535.9
+    65536:
+      mbps: 2552.4
+    131072:
+      mbps: 2560.7
+    262144:
+      mbps: 2562.3
+    524288:
+      mbps: 2561.4
+    1048576:
+      mbps: 2561.4
+  sz: 192
+  variant: x4_scalar_iv_mem_late_tag_scalar_rk
+ENC1_SZ256_awslc:
+  enc: 1
+  performance:
+    16:
+      mbps: 101.5
+    128:
+      mbps: 632.7
+    256:
+      mbps: 953.2
+    512:
+      mbps: 1268.4
+    1350:
+      mbps: 1549.8
+    2048:
+      mbps: 1693.9
+    4096:
+      mbps: 1794.4
+    8192:
+      mbps: 1849.7
+    16384:
+      mbps: 1878.3
+    32768:
+      mbps: 1893.1
+    65536:
+      mbps: 1897.8
+    131072:
+      mbps: 1902.8
+    262144:
+      mbps: 1904.7
+    524288:
+      mbps: 1901.2
+    1048576:
+      mbps: 1902.4
+  sz: 256
+  variant: awslc
+ENC1_SZ256_x4_basic:
+  enc: 1
+  performance:
+    16:
+      mbps: 109.2
+    128:
+      mbps: 667.0
+    256:
+      mbps: 1029.3
+    512:
+      mbps: 1413.9
+    1350:
+      mbps: 1773.9
+    2048:
+      mbps: 1965.2
+    4096:
+      mbps: 2102.1
+    8192:
+      mbps: 2178.4
+    16384:
+      mbps: 2217.9
+    32768:
+      mbps: 2224.5
+    65536:
+      mbps: 2235.6
+    131072:
+      mbps: 2242.8
+    262144:
+      mbps: 2245.3
+    524288:
+      mbps: 2238.0
+    1048576:
+      mbps: 2245.2
+  sz: 256
+  variant: x4_basic
+ENC1_SZ256_x4_dual_acc:
+  enc: 1
+  performance:
+    16:
+      mbps: 104.9
+    128:
+      mbps: 644.4
+    256:
+      mbps: 1002.9
+    512:
+      mbps: 1389.3
+    1350:
+      mbps: 1760.9
+    2048:
+      mbps: 1953.5
+    4096:
+      mbps: 2095.4
+    8192:
+      mbps: 2174.7
+    16384:
+      mbps: 2216.3
+    32768:
+      mbps: 2236.7
+    65536:
+      mbps: 2245.9
+    131072:
+      mbps: 2252.3
+    262144:
+      mbps: 2254.2
+    524288:
+      mbps: 2249.3
+    1048576:
+      mbps: 2252.7
+  sz: 256
+  variant: x4_dual_acc
+ENC1_SZ256_x4_fast_tail:
+  enc: 1
+  performance:
+    16:
+      mbps: 108.9
+    128:
+      mbps: 665.3
+    256:
+      mbps: 1024.4
+    512:
+      mbps: 1396.6
+    1350:
+      mbps: 1741.2
+    2048:
+      mbps: 1921.5
+    4096:
+      mbps: 2049.9
+    8192:
+      mbps: 2120.9
+    16384:
+      mbps: 2158.8
+    32768:
+      mbps: 2177.0
+    65536:
+      mbps: 2184.5
+    131072:
+      mbps: 2190.4
+    262144:
+      mbps: 2193.3
+    524288:
+      mbps: 2190.2
+    1048576:
+      mbps: 2191.6
+  sz: 256
+  variant: x4_fast_tail
+ENC1_SZ256_x4_reload_round_keys_partial:
+  enc: 1
+  performance:
+    16:
+      mbps: 109.9
+    128:
+      mbps: 660.2
+    256:
+      mbps: 1022.1
+    512:
+      mbps: 1396.3
+    1350:
+      mbps: 1753.2
+    2048:
+      mbps: 1930.5
+    4096:
+      mbps: 2061.9
+    8192:
+      mbps: 2135.0
+    16384:
+      mbps: 2173.2
+    32768:
+      mbps: 2192.4
+    65536:
+      mbps: 2208.5
+    131072:
+      mbps: 2214.6
+    262144:
+      mbps: 2217.2
+    524288:
+      mbps: 2214.0
+    1048576:
+      mbps: 2216.8
+  sz: 256
+  variant: x4_reload_round_keys_partial
+ENC1_SZ256_x4_scalar_iv_mem2_late_tag:
+  enc: 1
+  performance:
+    16:
+      mbps: 106.0
+    128:
+      mbps: 644.4
+    256:
+      mbps: 1000.3
+    512:
+      mbps: 1383.6
+    1350:
+      mbps: 1737.6
+    2048:
+      mbps: 1942.3
+    4096:
+      mbps: 2082.1
+    8192:
+      mbps: 2159.8
+    16384:
+      mbps: 2201.4
+    32768:
+      mbps: 2221.1
+    65536:
+      mbps: 2229.4
+    131072:
+      mbps: 2236.0
+    262144:
+      mbps: 2239.3
+    524288:
+      mbps: 2222.1
+    1048576:
+      mbps: 2097.0
+  sz: 256
+  variant: x4_scalar_iv_mem2_late_tag
+ENC1_SZ256_x4_scalar_iv_mem2_late_tag_fast_tail:
+  enc: 1
+  performance:
+    16:
+      mbps: 106.0
+    128:
+      mbps: 639.4
+    256:
+      mbps: 1000.6
+    512:
+      mbps: 1390.7
+    1350:
+      mbps: 1756.0
+    2048:
+      mbps: 1963.5
+    4096:
+      mbps: 2108.2
+    8192:
+      mbps: 2188.8
+    16384:
+      mbps: 2231.6
+    32768:
+      mbps: 2252.9
+    65536:
+      mbps: 2260.8
+    131072:
+      mbps: 2267.3
+    262144:
+      mbps: 2268.1
+    524288:
+      mbps: 2117.4
+    1048576:
+      mbps: 1883.6
+  sz: 256
+  variant: x4_scalar_iv_mem2_late_tag_fast_tail
+ENC1_SZ256_x4_scalar_iv_mem_late_tag_scalar_rk:
+  enc: 1
+  performance:
+    16:
+      mbps: 108.7
+    128:
+      mbps: 660.8
+    256:
+      mbps: 1026.4
+    512:
+      mbps: 1414.1
+    1350:
+      mbps: 1769.4
+    2048:
+      mbps: 1974.8
+    4096:
+      mbps: 2114.8
+    8192:
+      mbps: 2192.3
+    16384:
+      mbps: 2233.5
+    32768:
+      mbps: 2253.1
+    65536:
+      mbps: 2261.7
+    131072:
+      mbps: 2268.1
+    262144:
+      mbps: 2266.4
+    524288:
+      mbps: 2270.3
+    1048576:
+      mbps: 2268.1
+  sz: 256
+  variant: x4_scalar_iv_mem_late_tag_scalar_rk
